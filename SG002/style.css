@@ -386,6 +386,23 @@ h1 {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
+/* Efek animasi gambar bergerak (mengajak klik) */
+@keyframes denyutFoto {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.04); }
+}
+
+.gallery-overlay img.ajak-klik {
+    animation: denyutFoto 2s ease-in-out infinite;
+    cursor: zoom-in;
+}
+
+.gallery-overlay img:hover {
+    transform: scale(1.06);
+    transition: transform 0.3s ease;
+    border-color: #ec407a;
+}
+
 /* ---------- Kotak Balasan di dalam Overlay ---------- */
 .overlay-reply {
     display: block !important;
