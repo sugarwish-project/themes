@@ -22,7 +22,7 @@ const WHATSAPP = {
 const KECEPATAN_KETIK = 40;          // milidetik per huruf
 
 /* =========================================================
-   KODE UTAMA
+   KODE KONTROL
    ========================================================= */
 (() => {
     const $ = (id) => document.getElementById(id);
@@ -31,9 +31,51 @@ const KECEPATAN_KETIK = 40;          // milidetik per huruf
     const acak = (min, max) => Math.random() * (max - min) + min;
     const pilih = (daftar) => daftar[Math.floor(Math.random() * daftar.length)];
 
-    let amplopTerbuka = false;
+    /* ---------- Logic Amplop Layar 1 ---------- */
+    const envelope = $('envelope');
+    const instruction = $('instruction');
+    let terbuka = false;
 
-    /* ---------- Hati ---------- */
+    function bukaAmplop() {
+        if (terbuka) return;
+        terbuka = true;
+
+        envelope.classList.add('open');
+        envelope.removeAttribute('tabindex');
+        instruction.textContent = 'Sebentar ya, sayang... 💌';
+
+        const kotak = envelope.getBoundingClientRect();
+        if (!kurangGerak) {
+            semburHati(kotak.left + kotak.width / 2, kotak.top + kotak.height / 2, 14);
+            setTimeout(() => semburHati(kotak.left + kotak.width / 2, kotak.top, 10), 700);
+        }
+
+        // Animasi transisi layar amplop ke pesan
+        setTimeout(() => {
+            $('layarAmplop').classList.add('pergi');
+            document.body.classList.remove('terkunci');
+            $('halamanPesan').hidden = false;
+
+            // Mulai efek ketik pesan setelah amplop menghilang
+            mulaiKetikPesan();
+
+            setTimeout(() => {
+                $('layarAmplop').style.display = 'none';
+            }, 700);
+        }, 2200);
+    }
+
+    if (envelope) {
+        envelope.addEventListener('click', bukaAmplop);
+        envelope.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                bukaAmplop();
+            }
+        });
+    }
+
+    /* ---------- Efek Hati Melayang ---------- */
     function hatiNaik() {
         const el = document.createElement('span');
         el.className = 'hati-naik';
@@ -65,55 +107,15 @@ const KECEPATAN_KETIK = 40;          // milidetik per huruf
 
     if (!kurangGerak) {
         hatiNaik();
-        setInterval(hatiNaik, 900);
+        setInterval(hatiNaik, 1100);
     }
 
-    // Ketuk di mana saja = hati kecil muncul
     document.addEventListener('pointerdown', (e) => {
-        if (e.target.closest('textarea, .lightbox')) return;
+        if (e.target.closest('textarea, .lightbox, .envelope')) return;
         semburHati(e.clientX, e.clientY);
     });
 
-    /* ---------- Buka Amplop & Transisi Layar ---------- */
-    const envelope = $('envelope');
-    const instruction = $('instruction');
-    const layarAmplop = $('layarAmplop');
-    const halamanPesan = $('halamanPesan');
-
-    function bukaAmplop() {
-        if (amplopTerbuka) return;
-        amplopTerbuka = true;
-
-        envelope.classList.add('open');
-        envelope.removeAttribute('tabindex');
-        instruction.textContent = 'Sebentar ya, sayang... 💌';
-
-        const kotak = envelope.getBoundingClientRect();
-        if (!kurangGerak) {
-            semburHati(kotak.left + kotak.width / 2, kotak.top + kotak.height / 2, 14);
-            setTimeout(() => semburHati(kotak.left + kotak.width / 2, kotak.top, 10), 700);
-        }
-
-        // Jalankan audio otomatis ketika amplop dibuka
-        audio.play().catch(() => {});
-
-        setTimeout(() => {
-            layarAmplop.classList.add('pergi');
-            document.body.classList.remove('terkunci');
-            halamanPesan.hidden = false;
-            mulaiKetikPesan();
-        }, 2400);
-    }
-
-    envelope.addEventListener('click', bukaAmplop);
-    envelope.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            bukaAmplop();
-        }
-    });
-
-    /* ---------- Isi teks ---------- */
+    /* ---------- Isi Teks Layar Pesan ---------- */
     $('judul').textContent = PESAN.judul;
     $('subtitle').textContent = PESAN.subtitle;
     $('tahun').textContent = new Date().getFullYear();
@@ -142,7 +144,6 @@ const KECEPATAN_KETIK = 40;          // milidetik per huruf
 
     $('kotakPesan').addEventListener('pointerdown', () => { lewati = true; });
 
-    /* ---------- Tombol kirim muncul halus ---------- */
     function tampilkanBalasan() {
         const box = $('replyBox');
         const tombol = $('kirimBtn');
@@ -170,7 +171,7 @@ const KECEPATAN_KETIK = 40;          // milidetik per huruf
         });
         const hurufTtd = siapkanHuruf($('tandaTangan'), PESAN.tandaTangan);
 
-        await tunggu(900);
+        await tunggu(400);
         for (const huruf of blok) {
             await ketik(huruf);
             await tunggu(500);
@@ -183,7 +184,7 @@ const KECEPATAN_KETIK = 40;          // milidetik per huruf
         tampilkanBalasan();
     }
 
-    /* ---------- Kirim ke WhatsApp ---------- */
+    /* ---------- Kirim Ke WhatsApp ---------- */
     const kolom = $('pesanBalasan');
     const notif = $('notif');
 
@@ -221,7 +222,7 @@ const KECEPATAN_KETIK = 40;          // milidetik per huruf
         }
     });
 
-    /* ---------- Musik ---------- */
+    /* ---------- Pemutar Musik ---------- */
     const audio = $('background-music');
     const musikToggle = $('musikToggle');
 
@@ -238,15 +239,14 @@ const KECEPATAN_KETIK = 40;          // milidetik per huruf
         if (audio.paused) audio.play().catch(() => {}); else audio.pause();
     });
 
-    audio.play().catch(() => {
-        document.addEventListener('pointerdown', (e) => {
-            if (e.target.closest('#musikToggle')) return;
-            audio.play().catch(() => {});
-        }, { once: true });
-    });
+    document.addEventListener('pointerdown', (e) => {
+        if (e.target.closest('#musikToggle')) return;
+        audio.play().catch(() => {});
+    }, { once: true });
+
     perbaruiMusik();
 
-    /* ---------- Foto: ketuk untuk memperbesar ---------- */
+    /* ---------- Lightbox Galeri ---------- */
     const lightbox = document.createElement('div');
     lightbox.className = 'lightbox';
     lightbox.hidden = true;
