@@ -14,6 +14,7 @@
     <div class="layar-amplop" id="layarAmplop">
         <div class="envelope-container" id="envelopeContainer">
             <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Ketuk amplop untuk membuka pesan">
+
                 <div class="sticker left-top">⭐</div>
                 <div class="sticker right-bottom">🎁</div>
 
@@ -29,9 +30,9 @@
         </div>
     </div>
 
-    <!-- ========== LAYAR 2: PESAN (1 LAYAR HP) ========== -->
+    <!-- ========== LAYAR 2: PESAN ========== -->
     <main class="halaman-pesan" id="halamanPesan" hidden>
-        <div class="container-1layar">
+        <div class="container">
             <h1 id="judul"></h1>
             <p class="subtitle" id="subtitle"></p>
 
@@ -41,44 +42,63 @@
                 <p class="hint-lewati" id="hintLewati">ketuk kotak ini untuk melewati ✨</p>
             </div>
 
-            <!-- Tombol Pemicu Overlay -->
-            <button type="button" class="btn-hadiah" id="btnHadiah" hidden>
-                Hadiah Manis 🎁✨
-            </button>
+            <!-- Tombol Hadiah Manis (Memicu Overlay) -->
+            <div class="container-btn-hadiah" id="containerBtnHadiah" hidden>
+                <button type="button" class="btn-hadiah-manis" id="btnHadiahManis">🎁 Hadiah Manis 💖</button>
+            </div>
+
+            <!-- (Elemen asli tetap dipertahankan) -->
+            <section class="reply-box" id="replyBox" hidden>
+                <p class="reply-title">Balas pesanku, dong 💌</p>
+                <textarea id="pesanBalasan" rows="4" maxlength="500"
+                          placeholder="Tulis balasanmu di sini..."
+                          aria-label="Kolom balasan pesan"></textarea>
+                <p class="notif" id="notif" role="alert"></p>
+                <button type="button" class="btn-kirim" id="kirimBtn">Kirim pesan 💌</button>
+            </section>
+
+            <div class="title-photos" hidden>Photos 📸</div>
+            <div class="gallery" id="galeri" hidden>
+                <img src="https://rakuryuchi.wordpress.com/wp-content/uploads/2025/11/laras2-1.jpeg" alt="Foto Kenangan 1" loading="lazy">
+                <img src="https://rakuryuchi.wordpress.com/wp-content/uploads/2025/11/laras1.jpeg" alt="Foto Kenangan 2" loading="lazy">
+            </div>
+        </div>
+
+        <!-- ========== OVERLAY HADIAH MANIS (FOTO & BALASAN WA) ========== -->
+        <div class="overlay-hadiah" id="overlayHadiah" hidden>
+            <div class="overlay-content">
+                <button type="button" class="close-overlay" id="tutupOverlay" aria-label="Tutup Overlay">&times;</button>
+                
+                <h2 class="overlay-title">Kenangan Indah Kita 📸✨</h2>
+                
+                <!-- Galeri Foto Berjajar -->
+                <div class="gallery-overlay">
+                    <img src="https://rakuryuchi.wordpress.com/wp-content/uploads/2025/11/laras2-1.jpeg" alt="Foto Kenangan 1" loading="lazy">
+                    <img src="https://rakuryuchi.wordpress.com/wp-content/uploads/2025/11/laras1.jpeg" alt="Foto Kenangan 2" loading="lazy">
+                </div>
+
+                <!-- Kotak Balasan WhatsApp di Dalam Overlay -->
+                <section class="reply-box show overlay-reply" id="replyBoxOverlay">
+                    <p class="reply-title">Balas pesanku, dong 💌</p>
+                    <textarea id="pesanBalasanOverlay" rows="3" maxlength="500"
+                              placeholder="Tulis balasanmu di sini..."
+                              aria-label="Kolom balasan pesan"></textarea>
+                    <p class="notif" id="notifOverlay" role="alert"></p>
+                    <button type="button" class="btn-kirim muncul berdetak" id="kirimBtnOverlay">Kirim pesan 💌</button>
+                </section>
+            </div>
         </div>
 
         <button type="button" class="music-toggle" id="musikToggle" aria-label="Putar atau jeda musik">🎵</button>
 
         <footer>
-            &copy; <span id="tahun">2026</span> Kisah Cinta Kita
+            &copy; <span id="tahun">2025</span> Kisah Cinta Kita
         </footer>
     </main>
 
-    <!-- ========== OVERLAY / POP-UP HADIAH & BALAS WA ========== -->
-    <div class="overlay-hadiah" id="overlayHadiah" hidden>
-        <div class="modal-content">
-            <button class="btn-tutup" id="btnTutupOverlay">&times;</button>
-            
-            <h3 class="overlay-title">Hadiah Manis Spesial ✨</h3>
-
-            <!-- 2 Foto Berjajar -->
-            <div class="foto-berjajar">
-                <img src="https://rakuryuchi.wordpress.com/wp-content/uploads/2025/11/laras2-1.jpeg" alt="Foto 1">
-                <img src="https://rakuryuchi.wordpress.com/wp-content/uploads/2025/11/laras1.jpeg" alt="Foto 2">
-            </div>
-
-            <!-- Kolom Kirim/Balas WA -->
-            <section class="reply-box-overlay">
-                <p class="reply-title">Balas pesanku di sini 💌</p>
-                <textarea id="pesanBalasan" rows="3" maxlength="500" placeholder="Tulis balasan manis kamu..."></textarea>
-                <p class="notif" id="notif" role="alert"></p>
-                <button type="button" class="btn-kirim" id="kirimBtn">Kirim ke WhatsApp 💬</button>
-            </section>
-        </div>
-    </div>
-
     <audio id="background-music" loop preload="auto">
         <source src="https://github.com/masrahmat-id/romance/raw/main/tiw-niw-niw.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
     </audio>
 
     <script src="script.js"></script>
