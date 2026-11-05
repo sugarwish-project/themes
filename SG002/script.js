@@ -40,6 +40,11 @@ const KECEPATAN_KETIK = 40;          // milidetik per huruf
         if (terbuka) return;
         terbuka = true;
 
+       const audio = $('background-music');
+        if (audio) {
+            audio.play().catch(() => {});
+        }
+
         envelope.classList.add('open');
         envelope.removeAttribute('tabindex');
         instruction.textContent = 'Sebentar ya, sayang... 💌';
@@ -239,10 +244,10 @@ const KECEPATAN_KETIK = 40;          // milidetik per huruf
         if (audio.paused) audio.play().catch(() => {}); else audio.pause();
     });
 
-    document.addEventListener('pointerdown', (e) => {
-        if (e.target.closest('#musikToggle')) return;
-        audio.play().catch(() => {});
-    }, { once: true });
+    //document.addEventListener('pointerdown', (e) => {
+        //if (e.target.closest('#musikToggle')) return;
+        //audio.play().catch(() => {});
+    //}, { once: true });
 
     perbaruiMusik();
 
