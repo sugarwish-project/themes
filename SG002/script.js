@@ -2,19 +2,19 @@
    PENGATURAN - ubah teks dan nomor di sini saja
    ========================================================= */
 const PESAN = {
-    judul: 'Untuk Cintaku, Larasati 🥰',
+    judul: 'Untuk Cintaku, Florencya 🥰',
     subtitle: 'Setiap detik bersamamu adalah melodi terindah dalam hidupku.',
     paragraf: [
         'Sejak hari kita bertemu, dunia saya menjadi lebih cerah dan penuh warna. Kamu adalah inspirasi, sahabat terbaik, dan cinta sejati saya.',
         'Terima kasih sudah menjadi bagian dari cerita indah ini. Aku mencintaimu, hari ini, esok, dan selamanya.'
     ],
-    tandaTangan: '- Rahmat'
+    tandaTangan: '- Raku'
 };
 
 const WHATSAPP = {
     nomor: '6283853324945',          // format internasional, tanpa + atau 0 di depan
     pembuka: 'Halo sayang ❤️',
-    pengirim: 'Larasati',
+    pengirim: 'Florencya',
     notifKosong: 'Pesannya jangan dikosongin dong 🥺',
     notifBerhasil: 'Membuka WhatsApp... 💕'
 };
@@ -254,3 +254,31 @@ const KECEPATAN_KETIK = 40;          // milidetik per huruf
 
     perbaruiMusik();
 })();
+
+/* ---------- Fungsi Lightbox Galeri Overlay ---------- */
+    const lightboxOverlay = $('lightboxOverlay');
+    const fotoBesar = $('fotoBesar');
+
+    const tutupLightbox = () => {
+        if (lightboxOverlay) lightboxOverlay.hidden = true;
+    };
+
+    if (lightboxOverlay) {
+        lightboxOverlay.addEventListener('click', tutupLightbox);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') tutupLightbox();
+        });
+    }
+
+    // Mengaktifkan klik pada setiap foto di dalam overlay
+    document.querySelectorAll('.gallery-overlay img').forEach((img) => {
+        img.style.cursor = 'zoom-in';
+        img.addEventListener('click', (e) => {
+            e.stopPropagation(); // Mencegah overlay utama ikut tertutup
+            if (fotoBesar && lightboxOverlay) {
+                fotoBesar.src = img.src;
+                fotoBesar.alt = img.alt;
+                lightboxOverlay.hidden = false;
+            }
+        });
+    });
