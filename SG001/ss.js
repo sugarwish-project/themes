@@ -1,4 +1,4 @@
-function DekaTutorial(linkMusik, linkBackground, teksUcapan, nomorWa) {
+function SugarWish(linkMusik, linkBackground, teksUcapan, nomorWa) {
   var _0x3ccf69 = document.querySelector(".bg");
   var _0x14ed47 = document.querySelector(".pesan");
   
@@ -82,4 +82,4 @@ var background = "bg.webp";
 var ucapanSurat = "Dear Kamu,##Ini adalah contoh web ucapan online.";
 var nomorWhatsapp = "628xxxxxxxxxx"; 
 
-DekaTutorial(musik, background, ucapanSurat, nomorWhatsapp);
+SugarWish(musik, background, ucapanSurat, nomorWhatsapp);
