@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pesan Dariku Untukmu</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
+    
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Custom CSS Anda -->
+    <link rel="stylesheet" type="text/css" href="ss.css" />
+  </head>
+  <body>
+    <div class="bg"></div>
+
+    <!-- Tampilan Awal (Kartu Surat) -->
+    <div class="content animate__animated animate__bounceInDown">
+      <div class="card">
+        <div>
+          <h3>Ada pesan buat kamu</h3>
+        </div>
+        <img class="surat" src="spesial_mail.png" alt="MAIL" style="cursor: pointer;" />
+        <p>Tekan untuk membuka</p>
+      </div>
+    </div>
+    
+    <div class="content2" style="display: none;">
+      <div class="paper animate__animated animate__bounceIn" id="content2">
+        <div class="paper-content">
+          <textarea oncontextmenu="return false" class="pesan" disabled></textarea>
+        </div>
+      </div>
+      <div class="wa">
+        <button>Kirim Pesan</button>
+      </div>
+    </div>
+    
+    <script src="ss.js"></script>
+  </body>
+</html>
