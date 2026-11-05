@@ -21,7 +21,7 @@ body {
   background-attachment: fixed;
 }
 
-/* Overlay Background Gelap Penuh Layar */
+/* Background Utama Tanpa Overlay Hitam */
 .bg {
   position: fixed;
   top: 0;
@@ -29,7 +29,6 @@ body {
   width: 100vw;
   height: 100vh;
   background: url("bg.webp") no-repeat center center / cover;
-  filter: brightness(0.5);
   z-index: 1;
 }
 
