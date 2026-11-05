@@ -77,7 +77,7 @@ function SugarWish(linkMusik, linkBackground, teksUcapan, nomorWa) {
 // ==========================================
 // PENGATURAN KONTEN
 // ==========================================
-var musik = "http://sugarwish.github.io/musik/Virgoun_Surat_Cinta_Untuk-Starla.mp3";
+var musik = "https://sugarwish.github.io/musik/Virgoun_Surat_Cinta_Untuk-Starla.mp3";
 var background = "bg.webp";
 var ucapanSurat = "Dear Kamu,##Ini adalah contoh web ucapan online.";
 var nomorWhatsapp = "628xxxxxxxxxx"; 
