@@ -2,19 +2,19 @@
    PENGATURAN - ubah teks dan nomor di sini saja
    ========================================================= */
 const PESAN = {
-    judul: 'Untuk Cintaku, Florencya 🥰',
+    judul: 'Untuk Cintaku, Larasati 🥰',
     subtitle: 'Setiap detik bersamamu adalah melodi terindah dalam hidupku.',
     paragraf: [
         'Sejak hari kita bertemu, dunia saya menjadi lebih cerah dan penuh warna. Kamu adalah inspirasi, sahabat terbaik, dan cinta sejati saya.',
         'Terima kasih sudah menjadi bagian dari cerita indah ini. Aku mencintaimu, hari ini, esok, dan selamanya.'
     ],
-    tandaTangan: '- Raku'
+    tandaTangan: '- Rahmat'
 };
 
 const WHATSAPP = {
     nomor: '6283853324945',          // format internasional, tanpa + atau 0 di depan
     pembuka: 'Halo sayang ❤️',
-    pengirim: 'Florencya',
+    pengirim: 'Larasati',
     notifKosong: 'Pesannya jangan dikosongin dong 🥺',
     notifBerhasil: 'Membuka WhatsApp... 💕'
 };
@@ -36,9 +36,24 @@ const KECEPATAN_KETIK = 40;          // milidetik per huruf
     const instruction = $('instruction');
     let terbuka = false;
 
+    /* Fungsi untuk meminta tampilan Layar Penuh (Full Screen) */
+    function mintaLayarPenuh() {
+        const doc = document.documentElement;
+        if (doc.requestFullscreen) {
+            doc.requestFullscreen().catch(() => {});
+        } else if (doc.webkitRequestFullscreen) { /* Safari / Chrome lama */
+            doc.webkitRequestFullscreen().catch(() => {});
+        } else if (doc.msRequestFullscreen) { /* IE / Edge lama */
+            doc.msRequestFullscreen().catch(() => {});
+        }
+    }
+
     function bukaAmplop() {
         if (terbuka) return;
         terbuka = true;
+
+        // Otomatis aktifkan mode Layar Penuh saat amplop diklik
+        mintaLayarPenuh();
 
         const audio = $('background-music');
         if (audio) {
@@ -253,9 +268,8 @@ const KECEPATAN_KETIK = 40;          // milidetik per huruf
     });
 
     perbaruiMusik();
-})();
 
-/* ---------- Fungsi Lightbox Galeri Overlay ---------- */
+    /* ---------- Lightbox Foto Besar Overlay ---------- */
     const lightboxOverlay = $('lightboxOverlay');
     const fotoBesar = $('fotoBesar');
 
@@ -270,11 +284,10 @@ const KECEPATAN_KETIK = 40;          // milidetik per huruf
         });
     }
 
-    // Mengaktifkan klik pada setiap foto di dalam overlay
     document.querySelectorAll('.gallery-overlay img').forEach((img) => {
         img.style.cursor = 'zoom-in';
         img.addEventListener('click', (e) => {
-            e.stopPropagation(); // Mencegah overlay utama ikut tertutup
+            e.stopPropagation();
             if (fotoBesar && lightboxOverlay) {
                 fotoBesar.src = img.src;
                 fotoBesar.alt = img.alt;
@@ -282,3 +295,4 @@ const KECEPATAN_KETIK = 40;          // milidetik per huruf
             }
         });
     });
+})();
