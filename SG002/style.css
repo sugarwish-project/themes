@@ -3,8 +3,8 @@
 body {
     font-family: 'Georgia', serif;
     /* Latar belakang SVG disesuaikan agar cocok untuk HP dan Laptop */
-    background: url('bg-alitle-love-letter.svg') center center / cover no-repeat fixed, 
-                linear-gradient(to right, #ffdde1, #ee9ca7);
+    background: url('bg-alitle-love-letter.svg') center center / cover no-repeat, 
+            linear-gradient(to right, #ffdde1, #ee9ca7);
     color: #444;
     text-align: center;
     margin: 0;
@@ -30,8 +30,8 @@ body.terkunci { overflow: hidden; height: 100vh; }
     justify-content: center;
     overflow: hidden;
     font-family: 'Handlee', 'Georgia', cursive;
-    background: url('bg-alitle-love-letter.svg') center center / cover no-repeat fixed,
-                linear-gradient(135deg, #ffdde1, #ee9ca7);
+    background: url('bg-alitle-love-letter.svg') center center / cover no-repeat,
+            linear-gradient(135deg, #ffdde1, #ee9ca7);
     transition: opacity 0.7s ease;
 }
 
