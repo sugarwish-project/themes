@@ -1,24 +1,39 @@
-@import url(https://fonts.googleapis.com/css?family=Ubuntu);
-@import url(https://fonts.googleapis.com/css?family=Handlee);
-* {
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+@import url('https://fonts.googleapis.com/css?family=Handlee');
+
+/* Reset dasar & kunci tinggi penuh layar */
+*, *::before, *::after {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
   font-family: "Ubuntu", sans-serif;
 }
-body {
-  background: #eed9af;
-  background-image: url("bg.webp");
-  background-size: cover;
-  background-position: center;
-}
-.bg {
-  position: absolute;
-  height: 100%;
+
+html, body {
   width: 100%;
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.5);
+  height: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
+
+body {
+  background: #eed9af url("bg.webp") no-repeat center center / cover;
+  background-attachment: fixed;
+}
+
+/* Overlay Background Gelap Penuh Layar */
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("bg.webp") no-repeat center center / cover;
+  filter: brightness(0.5);
+  z-index: 1;
+}
+
+/* Konten Utama */
 .content {
   position: fixed;
   top: 0;
@@ -32,6 +47,7 @@ body {
   align-items: center;
   z-index: 2;
 }
+
 .card {
   background: white;
   padding: 35px 40px;
@@ -39,12 +55,14 @@ body {
   border: 3px solid brown;
   box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.308);
 }
+
 .content img.surat {
   margin: 25px auto;
   animation: animasi1 1s ease infinite;
   height: 90px;
   cursor: pointer;
 }
+
 @keyframes animasi1 {
   0% {
     transform: scale(1.03);
@@ -56,65 +74,73 @@ body {
     transform: scale(1.03);
   }
 }
+
 @keyframes animasi2 {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0);
   }
   50% {
     transform: translateY(5px);
   }
 }
+
+/* Konten Kedua */
 .content2 {
   position: fixed;
   z-index: 3;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0; /* background: rgba(0, 0, 0, 0.575); */
-  display: none; /* background-image: url("bg.webp"); */
+  bottom: 0;
+  display: none;
   background-size: cover;
-  background-position: center; /* display: flex; */
+  background-position: center;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 .content2 .wa {
-  text-align: center; /* display: none; */
+  text-align: center;
   visibility: hidden;
 }
+
 .content2 .wa.show {
   visibility: visible;
   animation: anm-up 0.5s ease, animasi2 1s ease-in-out 0.5s infinite;
 }
+
 @keyframes anm-up {
   from {
     opacity: 0;
     transform: translateY(50px);
   }
 }
+
 .content2 .wa button {
-  /* background-image: linear-gradient(to top left, #ff009d, #ff004c); */
   background: white;
   padding: 7px 20px;
   margin: 30px auto;
   border-radius: 10px;
   font-size: 1.1rem;
-  font-weight: 600; /* color: white; */
+  font-weight: 600;
   border: 3px solid brown;
   box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.308);
+  cursor: pointer;
 }
+
+/* Elemen Kertas */
 .paper {
   position: relative;
   width: 90%;
-  max-width: 800px; /* min-width: 360px; */
+  max-width: 800px;
   height: 480px;
-  margin: 0 auto;
-  margin-top: 40px;
-  background: #fafafa; /* border-radius: 10px; */ /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
+  margin: 40px auto 0;
+  background: #fafafa;
   box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.308);
   overflow: hidden;
 }
+
 .paper:before {
   content: "";
   position: absolute;
@@ -127,6 +153,7 @@ body {
   border-right: 3px solid rgb(255, 129, 129);
   box-sizing: border-box;
 }
+
 .paper-content {
   position: absolute;
   top: 30px;
@@ -136,6 +163,7 @@ body {
   background: linear-gradient(transparent, transparent 28px, #91d1d3 28px);
   background-size: 30px 30px;
 }
+
 .paper-content textarea {
   width: 100%;
   max-width: 100%;
@@ -152,10 +180,9 @@ body {
   font-size: 17px;
   box-sizing: border-box;
   z-index: 1;
-}
-textarea {
   resize: none;
 }
+
 .paper::after {
   position: absolute;
   content: "";
@@ -163,27 +190,45 @@ textarea {
   right: 0;
   top: 0;
   bottom: 0;
+  pointer-events: none;
 }
 
+/* SweetAlert Custom Styles */
 .swal2-popup {
-  padding-bottom: 0;
   padding-top: 25px;
+  padding-bottom: 0;
   background-color: rgb(255, 255, 255);
-  /* color: black; */
-  /* width: 85vw; */
-  /* max-width: 400px; */
-  /* border-radius: 20px; */
+  border-radius: 20px;
   overflow: hidden;
 }
+
 .swal2-image {
   height: 130px;
 }
+
 .swal2-title {
-  padding: 0px !important;
+  padding: 40px 0 0 0 !important;
   font-size: 1.2em;
-  font-weight: 500;
+  font-weight: 600;
 }
 
+.swal2-actions {
+  margin: 0 !important;
+  padding: 10px 0 20px 0;
+}
+
+.swal2-actions button {
+  border-radius: 10px !important;
+  background: rgb(142, 65, 65) !important;
+  box-shadow: none !important;
+  font-weight: 600;
+}
+
+.swal2-loading {
+  padding-bottom: 20px;
+}
+
+/* Preloader */
 .preload {
   position: fixed;
   top: 0;
@@ -192,32 +237,4 @@ textarea {
   bottom: 0;
   background: black;
   z-index: 9999999;
-}
-
-.swal2-popup {
-  padding-bottom: 0;
-  border-radius: 20px;
-  overflow: hidden;
-}
-.swal2-title {
-  font-size: 1.2em;
-  font-weight: 600;
-  padding-top: 40px;
-}
-.swal2-actions {
-  margin: 0 !important;
-  padding: 20px 0;
-  padding-top: 10px;
-}
-.swal2-actions button {
-  border-radius: 10px !important;
-  background: rgb(142, 65, 65) !important;
-  box-shadow: none !important;
-  font-weight: 600;
-}
-.swal2-loading {
-  padding-bottom: 20px;
-}
-textarea {
-  resize: none;
 }
