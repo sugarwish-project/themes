@@ -2,21 +2,25 @@
 
 body {
     font-family: 'Georgia', serif;
+    /* Latar belakang SVG disesuaikan agar cocok untuk HP dan Laptop */
     background: url('bg-alitle-love-letter.svg') center center / cover no-repeat, 
-                linear-gradient(to right, #ffdde1, #ee9ca7);
+            linear-gradient(to right, #ffdde1, #ee9ca7);
     color: #444;
     text-align: center;
     margin: 0;
     padding: 0;
-    height: 100vh;
-    overflow: hidden; /* Mencegah halaman utama bisa di-scrolll */
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
+/* Selama amplop belum dibuka, halaman tidak bisa digulir */
 body.terkunci { overflow: hidden; height: 100vh; }
 
-/* LAYAR 1: AMPLOP */
+/* =========================================================
+   LAYAR 1: AMPLOP
+   ========================================================= */
 .layar-amplop {
     position: fixed;
     inset: 0;
@@ -24,247 +28,429 @@ body.terkunci { overflow: hidden; height: 100vh; }
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    font-family: 'Handlee', 'Georgia', cursive;
     background: url('bg-alitle-love-letter.svg') center center / cover no-repeat,
-                linear-gradient(135deg, #ffdde1, #ee9ca7);
+            linear-gradient(135deg, #ffdde1, #ee9ca7);
     transition: opacity 0.7s ease;
 }
+
 .layar-amplop.pergi { opacity: 0; pointer-events: none; }
 
-.envelope-container { text-align: center; padding: 20px; }
+.envelope-container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 70px 20px 20px;
+}
+
 .envelope {
     position: relative;
-    width: min(320px, 80vw);
+    width: min(340px, 82vw);
     aspect-ratio: 3 / 2;
-    margin: 0 auto 20px;
+    margin: 0 auto 30px;
     cursor: pointer;
+    outline: none;
     animation: melayang 3.2s ease-in-out infinite;
+    -webkit-tap-highlight-color: transparent;
 }
-.envelope.open { animation: none; }
+
+.envelope:focus-visible { outline: 3px solid #fff; outline-offset: 8px; border-radius: 12px; }
+
+.envelope.open { animation: none; cursor: default; }
 
 @keyframes melayang {
     0%, 100% { transform: translateY(0); }
     50%      { transform: translateY(-7px); }
 }
 
-.envelope-back { position: absolute; inset: 0; background: #e57393; border-radius: 10px; }
+.envelope-back {
+    position: absolute;
+    inset: 0;
+    background: #e57393;
+    border-radius: 10px;
+    box-shadow: 0 16px 32px rgba(160, 30, 80, 0.3);
+}
+
+/* Surat di dalam amplop */
 .envelope-message {
-    position: absolute; left: 7%; right: 7%; top: 8%; height: 84%; z-index: 2;
-    display: flex; flex-direction: column; justify-content: center;
-    background: #fffafc; border: 2px dashed #f8bbd0; border-radius: 8px; color: #c2185b;
+    position: absolute;
+    left: 7%;
+    right: 7%;
+    top: 8%;
+    height: 84%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 14px;
+    background: #fffafc;
+    border: 2px dashed #f8bbd0;
+    border-radius: 8px;
+    color: #c2185b;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     transition: transform 1s cubic-bezier(0.3, 1.3, 0.5, 1) 0.55s;
 }
+
+.envelope-message h2 { margin: 0 0 6px; font-size: 1.25em; }
+.envelope-message p  { margin: 0; font-size: 0.95em; color: #7a4a5a; }
+
 .envelope.open .envelope-message { transform: translateY(-45%); }
 
+/* Bagian depan (kantong) */
 .envelope-front {
-    position: absolute; inset: 0; z-index: 3;
+    position: absolute;
+    inset: 0;
+    z-index: 3;
     background: linear-gradient(160deg, #f8a5c2, #f06292);
     clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
     border-radius: 10px;
 }
+
+/* Tutup amplop (flap) */
 .envelope-flap {
-    position: absolute; top: 0; left: 0; width: 100%; height: 55%; z-index: 4;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 55%;
+    z-index: 4;
     background: linear-gradient(#f06292, #d81b60);
     clip-path: polygon(0 0, 100% 0, 50% 100%);
     transform-origin: top center;
-    transition: transform 0.7s ease;
+    transform: perspective(700px) rotateX(0deg);
+    transition: transform 0.7s ease, z-index 0s 0.35s;
 }
-.envelope.open .envelope-flap { transform: perspective(700px) rotateX(180deg); z-index: 1; }
 
+.envelope.open .envelope-flap {
+    transform: perspective(700px) rotateX(180deg);
+    z-index: 1;
+}
+
+/* Segel hati */
 .seal {
-    position: absolute; left: 50%; top: 52%; z-index: 6; font-size: 2rem;
-    transform: translate(-50%, -50%); animation: segel-berdetak 1.6s ease-in-out infinite;
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    z-index: 6;
+    font-size: 2rem;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.25));
+    transition: transform 0.5s ease, opacity 0.4s ease;
+    animation: segel-berdetak 1.6s ease-in-out infinite;
 }
-.envelope.open .seal { opacity: 0; transform: translate(-50%, -50%) scale(2); }
-@keyframes segel-berdetak { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.18); } }
 
-.sticker { position: absolute; z-index: 7; font-size: 1.8rem; pointer-events: none; }
-.sticker.left-top { top: -12px; left: -10px; transform: rotate(-15deg); }
-.sticker.right-bottom { bottom: -12px; right: -10px; transform: rotate(15deg); }
+.envelope.open .seal {
+    animation: none;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2);
+}
 
-.instruction { color: #fff; font-size: 1.2em; animation: denyut 2s ease-in-out infinite; }
-@keyframes denyut { 0%, 100% { opacity: 0.75; } 50% { opacity: 1; } }
+@keyframes segel-berdetak {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50%      { transform: translate(-50%, -50%) scale(1.18); }
+}
 
-/* LAYAR 2: TAMPILAN PESAN PAS 1 LAYAR HP */
+/* Stiker */
+.sticker {
+    position: absolute;
+    z-index: 7;
+    font-size: 2rem;
+    pointer-events: none;
+}
+
+.sticker.left-top     { top: -16px;    left: -14px;  transform: rotate(-15deg); }
+.sticker.right-bottom { bottom: -16px; right: -14px; transform: rotate(15deg); }
+
+/* Teks petunjuk */
+.instruction {
+    margin: 0;
+    color: #fff;
+    font-size: 1.3em;
+    text-shadow: 0 2px 6px rgba(160, 30, 80, 0.4);
+    animation: denyut 2s ease-in-out infinite;
+}
+
+@keyframes denyut {
+    0%, 100% { opacity: 0.75; }
+    50%      { opacity: 1; }
+}
+
+/* =========================================================
+   LAYAR 2: PESAN (DISESUAIKAN AGAR SATU LAYAR HP)
+   ========================================================= */
 .halaman-pesan {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     height: 100vh;
-    justify-content: space-between;
+    overflow: hidden;
+}
+.halaman-pesan[hidden] { display: none; }
+
+.container {
+    width: 100%;
+    max-width: 650px;
+    margin: auto;
+    padding: 20px 24px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    animation: masuk 1s ease both;
 }
 
-.container-1layar {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-    max-width: 480px;
-    margin: 0 auto;
-    width: 100%;
+@keyframes masuk {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* Dekorasi Hati Kecil di Pojok */
+.container::before, .container::after {
+    content: '❤️';
+    position: absolute;
+    font-size: 2.5em;
+    opacity: 0.2;
+    z-index: 0;
+}
+
+.container::before {
+    top: -10px;
+    left: -10px;
+    transform: rotate(-20deg);
+}
+
+.container::after {
+    bottom: -10px;
+    right: -10px;
+    transform: rotate(20deg);
 }
 
 h1 {
     color: #d81b60;
-    font-size: clamp(1.4rem, 5vw, 2rem);
-    margin: 0 0 4px;
+    font-size: clamp(1.6rem, 6vw, 2.5rem);
+    line-height: 1.2;
+    margin: 0 0 8px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1;
 }
 
 .subtitle {
     color: #666;
     font-style: italic;
-    font-size: 0.9em;
-    margin: 0 0 12px;
+    font-size: 1em;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
 }
 
 .message-box {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: #fff0f5;
     border: 1px solid #ffcdd2;
-    padding: 16px;
-    border-radius: 16px;
+    padding: 18px;
+    margin: 15px 0;
+    border-radius: 12px;
     line-height: 1.5;
+    font-size: 1.05em;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    position: relative;
+    z-index: 1;
     font-family: 'Handlee', 'Georgia', cursive;
-    font-size: 1em;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    width: 100%;
     cursor: pointer;
+    max-height: 220px;
+    overflow-y: auto;
+}
+.message-box p { margin: 0 0 0.8em; }
+
+.signature {
+    text-align: right;
+    font-weight: bold;
+    color: #d81b60;
+    margin-top: 10px;
+    font-size: 1em;
+}
+
+/* ---------- Efek ketik ---------- */
+.huruf { opacity: 0; transition: opacity 0.25s ease; }
+.huruf.tampak { opacity: 1; }
+
+.hint-lewati {
+    margin: 8px 0 0 !important;
+    font-size: 0.65em;
+    color: #b0788a;
+    transition: opacity 0.6s ease;
+}
+.hint-lewati.hilang { opacity: 0; }
+
+/* ---------- Tombol Hadiah Manis ---------- */
+.container-btn-hadiah {
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+.container-btn-hadiah.muncul {
+    opacity: 1;
+    transform: none;
+}
+
+.btn-hadiah-manis {
+    padding: 12px 28px;
+    font-family: 'Handlee', 'Georgia', cursive;
+    font-size: 1.2em;
+    color: #fff;
+    background: linear-gradient(135deg, #ec407a, #d81b60);
+    border: none;
+    border-radius: 999px;
+    box-shadow: 0 6px 16px rgba(216, 27, 96, 0.35);
+    cursor: pointer;
+    animation: detak 1.8s ease-in-out infinite;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-hadiah-manis:hover { transform: scale(1.05); box-shadow: 0 8px 22px rgba(216, 27, 96, 0.5); }
+.btn-hadiah-manis:active { transform: scale(0.95); }
+
+/* ---------- Kotak balasan (Asli / Tersembunyi di layar utama) ---------- */
+.reply-box { display: none; }
+
+/* =========================================================
+   OVERLAY HADIAH MANIS (FOTO & BALASAN)
+   ========================================================= */
+.overlay-hadiah {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(70, 10, 35, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    animation: memudar 0.3s ease;
+}
+.overlay-hadiah[hidden] { display: none; }
+
+.overlay-content {
+    background: #fff;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 25px 20px;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.close-overlay {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #d81b60;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.overlay-title {
+    color: #d81b60;
+    font-family: 'Handlee', 'Georgia', cursive;
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* ---------- Galeri di dalam Overlay ---------- */
+.gallery-overlay {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.gallery-overlay img {
+    width: 45%;
+    max-width: 180px;
+    height: 120px;
+    object-fit: cover;
+    border: 4px solid #fff0f5;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- Kotak Balasan di dalam Overlay ---------- */
+.overlay-reply {
+    display: block !important;
+    background: #fff0f5;
+    border: 2px dashed #f48fb1;
+    border-radius: 14px;
+    padding: 16px;
+    margin: 0;
     text-align: left;
 }
 
-.signature { text-align: right; font-weight: bold; color: #d81b60; margin-top: 10px; }
-.huruf { opacity: 0; transition: opacity 0.25s ease; }
-.huruf.tampak { opacity: 1; }
-.hint-lewati { font-size: 0.7em; color: #b0788a; text-align: center; margin-top: 8px !important; }
-.hint-lewati.hilang { opacity: 0; }
+.overlay-reply .reply-title {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    text-align: center;
+}
 
-/* TOMBOL HADIAH MANIS */
-.btn-hadiah {
-    margin-top: 16px;
-    padding: 12px 28px;
+.overlay-reply textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    font-family: 'Handlee', 'Georgia', cursive;
+    font-size: 1.05em;
+    color: #444;
+    background: #fff;
+    border: 2px solid #f8bbd0;
+    border-radius: 10px;
+    outline: none;
+    resize: none;
+}
+
+.overlay-reply textarea:focus {
+    border-color: #ec407a;
+    box-shadow: 0 0 0 3px rgba(236, 64, 122, 0.15);
+}
+
+.notif {
+    min-height: 1.4em;
+    margin: 6px 0;
+    color: #c2185b;
+    font-family: 'Handlee', 'Georgia', cursive;
+    font-size: 0.95em;
+    text-align: center;
+}
+.notif.ok { color: #2e7d32; }
+
+.btn-kirim {
+    width: 100%;
+    padding: 12px;
     font-family: 'Handlee', 'Georgia', cursive;
     font-size: 1.15em;
     color: #fff;
     background: linear-gradient(135deg, #ec407a, #d81b60);
     border: none;
     border-radius: 999px;
-    box-shadow: 0 4px 14px rgba(216, 27, 96, 0.4);
+    box-shadow: 0 4px 12px rgba(216, 27, 96, 0.35);
     cursor: pointer;
-    animation: detak 1.8s ease-in-out infinite;
-}
-.btn-hadiah:active { transform: scale(0.95); }
-
-@keyframes detak {
-    0%, 100% { transform: scale(1); }
-    50%      { transform: scale(1.05); }
+    margin-top: 5px;
 }
 
-/* OVERLAY (POP-UP HADIAH & WA) */
-.overlay-hadiah {
-    position: fixed;
-    inset: 0;
-    z-index: 300;
-    background: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    animation: memudar 0.3s ease;
-}
-.overlay-hadiah[hidden] { display: none; }
-
-.modal-content {
-    background: #fff;
-    border-radius: 20px;
-    padding: 20px 16px;
-    width: 100%;
-    max-width: 380px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    text-align: center;
-}
-
-.btn-tutup {
-    position: absolute;
-    top: 10px;
-    right: 14px;
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    color: #888;
-    cursor: pointer;
-}
-
-.overlay-title {
-    color: #d81b60;
-    font-family: 'Handlee', cursive;
-    margin: 0 0 14px;
-    font-size: 1.25em;
-}
-
-/* 2 Foto Berjajar di Overlay */
-.foto-berjajar {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    margin-bottom: 16px;
-}
-
-.foto-berjajar img {
-    width: 48%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 3px solid #f8bbd0;
-}
-
-.reply-box-overlay {
-    background: #fff0f5;
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px dashed #f48fb1;
-}
-
-.reply-title {
-    margin: 0 0 8px;
-    color: #c2185b;
-    font-family: 'Handlee', cursive;
-    font-size: 1.05em;
-}
-
-.reply-box-overlay textarea {
-    width: 100%;
-    padding: 10px;
-    font-family: 'Handlee', cursive;
-    font-size: 1em;
-    border: 1.5px solid #f8bbd0;
-    border-radius: 8px;
-    outline: none;
-    resize: none;
-}
-
-.notif { font-family: 'Handlee', cursive; font-size: 0.9em; margin: 4px 0; color: #c2185b; }
-.notif.ok { color: #2e7d32; }
-
-.btn-kirim {
-    margin-top: 8px;
-    padding: 10px 20px;
-    font-family: 'Handlee', cursive;
-    font-size: 1em;
-    color: #fff;
-    background: linear-gradient(135deg, #ec407a, #d81b60);
-    border: none;
-    border-radius: 999px;
-    cursor: pointer;
-}
-
-/* PEMUTAR MUSIK & FOOTER */
+/* ---------- Musik ---------- */
 .music-toggle {
     position: fixed;
-    right: 14px;
-    bottom: 45px;
+    right: 18px;
+    bottom: 50px;
     z-index: 20;
     width: 42px;
     height: 42px;
@@ -272,15 +458,53 @@ h1 {
     background: #fff;
     border: 2px solid #f8bbd0;
     border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
     cursor: pointer;
+    transition: transform 0.2s;
 }
 
 footer {
-    padding: 8px;
+    padding: 10px;
     color: white;
     background-color: #d81b60;
+    margin-top: auto;
     font-size: 0.8em;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+/* =========================================================
+   HATI
+   ========================================================= */
+.hati-naik {
+    position: fixed;
+    bottom: -40px;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    animation: naik linear forwards;
+}
+
+@keyframes naik {
+    0%   { transform: translate(0, 0) rotate(0); opacity: 0; }
+    10%  { opacity: 0.7; }
+    100% { transform: translate(var(--geser), -115vh) rotate(var(--putar)); opacity: 0; }
+}
+
+.hati-burst {
+    position: fixed;
+    z-index: 350;
+    pointer-events: none;
+    animation: burst 1s ease-out forwards;
+}
+
+@keyframes burst {
+    0%   { transform: translate(-50%, -50%) scale(0.4); opacity: 1; }
+    100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.3); opacity: 0; }
 }
 
 @keyframes memudar { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes detak {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.06); }
+}
