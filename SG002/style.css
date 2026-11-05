@@ -9,7 +9,7 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    overflow: hidden; /* Mencegah halaman utama bisa di-scroll */
+    overflow: hidden; /* Mencegah halaman utama bisa di-scrolll */
     display: flex;
     flex-direction: column;
 }
