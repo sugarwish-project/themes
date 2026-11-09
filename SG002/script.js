@@ -5,10 +5,10 @@ const PESAN = {
     judul: 'Untuk Cintaku, Larasati 🥰',
     subtitle: 'Setiap detik bersamamu adalah melodi terindah dalam hidupku.',
     paragraf: [
-        'Sejak hari kita bertemu, dunia saya menjadi lebih cerah dan penuh warna. Kamu adalah inspirasi, sahabat terbaik, dan cinta sejati saya.',
+        'Sejak hari kita bertemu, dunia-ku menjadi lebih cerah dan penuh warna. Kamu adalah inspirasi, sahabat terbaik, dan cinta sejati-ku.',
         'Terima kasih sudah menjadi bagian dari cerita indah ini. Aku mencintaimu, hari ini, esok, dan selamanya.'
     ],
-    tandaTangan: '- Rahmat'
+    tandaTangan: '- Leonardo'
 };
 
 const WHATSAPP = {
