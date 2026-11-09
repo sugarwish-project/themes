@@ -1,0 +1,43 @@
+{
+  "name": "SugarWish",
+  "short_name": "SugarWish",
+  "description": "Aplikasi Web Custom Ucapan SugarWish",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FF69B4",
+  "orientation": "portrait",
+  "scope": "./",
+  "icons": [
+    {
+      "src": "asset/logo.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "asset/logo.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    },
+    {
+      "src": "asset/logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "asset/logo.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "asset/logo.png",
+      "type": "image/png",
+      "sizes": "384x384"
+    },
+    {
+      "src": "asset/logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
