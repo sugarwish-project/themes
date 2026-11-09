@@ -260,7 +260,7 @@ h1 {
     z-index: 1;
     font-family: 'Handlee', 'Georgia', cursive;
     cursor: pointer;
-    max-height: 220px;
+    max-height: 250px;
     overflow-y: auto;
 }
 .message-box p { margin: 0 0 0.8em; }
