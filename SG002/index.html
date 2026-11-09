@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pesan Khusus Untukmu ❤️</title>
 
+      <meta name="theme-color" content="#ffffff">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <meta name="msapplication-navbutton-color" content="#ffffff">
+
     <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -107,5 +112,16 @@
     </audio>
 
     <script src="script.js"></script>
+    
+    <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then((reg) => console.log('Service Worker berhasil didaftarkan: ', reg.scope))
+        .catch((err) => console.log('Pendaftaran Service Worker gagal: ', err));
+    });
+  }
+</script>
+    
 </body>
 </html>
