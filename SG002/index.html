@@ -12,6 +12,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="maintenance.css">
 </head>
 <body class="terkunci">
 
@@ -110,6 +111,22 @@
         <source src="/musik/Nadhif%20Basalamah%20-%20kota%20ini%20tak%20sama%20tanpamu.m4a#t=38" type="audio/mpeg">
         Browser Anda tidak mendukung elemen audio.
     </audio>
-    <script src="script.js"></script>    
+    <script src="script.js"></script>
+    <script src="maintenance.js"></script>
+    <script>
+    document.addEventListener('click', function() {
+      const elem = document.documentElement;
+
+      if (!document.fullscreenElement) {
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+          elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+          elem.msRequestFullscreen();
+        }
+      }
+    });
+  </script>
 </body>
 </html>
