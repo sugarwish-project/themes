@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Pesan Khusus Untukmu ❤️</title>
-    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
@@ -111,18 +110,6 @@
         <source src="/musik/Nadhif%20Basalamah%20-%20kota%20ini%20tak%20sama%20tanpamu.m4a#t=38" type="audio/mpeg">
         Browser Anda tidak mendukung elemen audio.
     </audio>
-
-    <script src="script.js"></script>
-    
-    <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then((reg) => console.log('Service Worker berhasil didaftarkan: ', reg.scope))
-        .catch((err) => console.log('Pendaftaran Service Worker gagal: ', err));
-    });
-  }
-</script>
-    
+    <script src="script.js"></script>    
 </body>
 </html>
