@@ -1,78 +1,52 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f8eee8">
-  <meta name="description" content="Sebuah album kecil penuh kenangan dan cerita.">
-  <title>Special For You ♡</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="/asset/maintenance.css">
-</head>
-<body>
-  <div class="preload" aria-label="Memuat album">
-    <span></span><span></span><span></span>
-    <p>Menyiapkan sesuatu yang spesial…</p>
-  </div>
-
-  <main class="main">
-    <div class="ambient ambient-one"></div>
-    <div class="ambient ambient-two"></div>
-    <div class="sparkles" aria-hidden="true"></div>
-    <header class="topbar">
-      <span class="brand-mark">✿</span>
-      <span class="brand-name">little moments</span>
-      <button class="sound-toggle" type="button" aria-label="Matikan musik" title="Musik">
-        <span class="sound-icon">♫</span><span class="sound-label">Musik</span>
-      </button>
-    </header>
-
-    <section class="intro" aria-live="polite">
-      <p class="eyebrow">A LITTLE GIFT, JUST FOR YOU</p>
-      <h1>Every page holds<br><em>a little memory.</em></h1>
-      <p class="intro-copy">Satu demi satu, mari buka cerita kecil yang sudah disiapkan untukmu.</p>
-    </section>
-
-    <section class="album-stage" aria-label="Album kenangan">
-      <div class="book-shell">
-        <div class="book fs" aria-label="Album foto"></div>
-        <div class="book-shadow"></div>
-      </div>
-      <div class="page-caption">
-        <span class="caption-line"></span>
-        <span class="page-label">COVER</span>
-        <span class="caption-line"></span>
-      </div>
-    </section>
-
-    <section class="controls" aria-label="Kontrol album">
-      <button class="open-btn primary-btn" type="button"><span>✧</span> Buka album <span>✧</span></button>
-      <div class="nav">
-        <button class="prev-btn icon-btn" type="button" aria-label="Halaman sebelumnya" disabled>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18 9 12l6-6"/></svg>
-        </button>
-        <div class="page-progress">
-          <span class="page-count">01 / 07</span>
-          <span class="progress-track"><span class="progress-fill"></span></span>
+<html lang="id" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.4/dist/sweetalert2.all.min.js"></script>
+    <meta name="theme-color" content="#ffebcd">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/asset/maintenance.css">
+    <title>Special For You</title>
+  </head>
+  <body>
+    <div class="preload">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="main" style="background-image: url('/asset/themes/img/The Butterfly Garden BG.webp')">
+      <div class="bg-love"></div>
+      <div class="elements">
+        <img src="/asset/themes/animasi/bg1.webp" class="bg" />
+        <div class="butterfly">
+          <img src="/asset/themes/animasi/butterfly.webp" />
         </div>
-        <button class="next-btn icon-btn" type="button" aria-label="Halaman berikutnya">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-        </button>
+        <img src="/asset/themes/animasi/flower.webp" class="flower" />
       </div>
-      <button class="pesan-btn secondary-btn" type="button">Kirim pesan untukku <span>♡</span></button>
-      <p class="hint">Gunakan tombol panah atau keyboard ← → untuk membalik halaman</p>
-    </section>
+      <div class="book fs"></div>
 
-    <footer class="footer"><span>MADE WITH</span> <span class="heart">♥</span> <span>AND A LOT OF LOVE</span></footer>
-  </main>
-
-  <audio class="background-music" preload="none" loop src="/musik/ANDMESH - ANUGERAH TERINDAH - VIDEO LIRIK - LIRIK LAGU TERBARU - Reff.mp3"></audio>
-  <audio class="click-sound" preload="auto" src="/musik/sfx/klik.mp3"></audio>
-  <script src="s.js"></script>
-  <script src="/asset/maintenance.js"></script>
+      <div class="btn-container">
+        <button class="open-btn show">Open</button>
+        <p class="hint">Ketuk untuk membuka albumnya</p>
+        <div class="nav">
+          <button class="prev-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#fff" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+            </svg>
+          </button>
+          <button class="next-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#fff" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8" />
+            </svg>
+          </button>
+        </div>
+        <div class="page-info" aria-live="polite"></div>
+        <button class="pesan-btn">Kirim Pesan</button>
+      </div>
+    </div>
+    <button class="mute-btn" aria-label="Matikan musik">&#9835;</button>
+    <script src="s.js"></script>
+    <script src="/asset/maintenance.js"></script>
 </body>
 </html>
