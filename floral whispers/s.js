@@ -210,7 +210,7 @@ konten = [{
   ucapan: "Mau custom website ucapan online?"
 }, {
   gambar: "/asset/themes/animasi/pentol/Stiker 15.gif",
-  ucapan: "Order aja di Deka Tutorial"
+  ucapan: "Order aja di SugarWish.my.id"
 }, {
   gambar: "/asset/themes/animasi/pentol/Stiker 36.gif",
   ucapan: "Bebas custom ucapan, foto sama musik"
