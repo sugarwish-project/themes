@@ -1,23 +1,19 @@
-// 1. UBAH PENGECEKAN HOSTNAME (Sudah di-bypass || true)
-if (location.hostname == "web.dariku.my.id" || true) { 
-  
-  // =========================================================================
+// =========================================================================
   // LINK GAMBAR BERURUTAN (1.jpg sampai 6.jpg + gambar cover & back)
-  // Sesuai dengan instruksi Anda menggunakan aset gambar dari 'yan/'
   // =========================================================================
   const konten = [
-    "https://dekatutorial.github.io/yan/1.jpg", // Halaman Depan / Cover
-    "https://dekatutorial.github.io/yan/1.jpg", // Halaman 1
-    "https://dekatutorial.github.io/yan/2.jpg", // Halaman 2
-    "https://dekatutorial.github.io/yan/3.jpg", // Halaman 3
-    "https://dekatutorial.github.io/yan/4.jpg", // Halaman 4
-    "https://dekatutorial.github.io/yan/5.jpg", // Halaman 5
-    "https://dekatutorial.github.io/yan/6.jpg", // Halaman 6
-    "https://dekatutorial.github.io/yan/6.jpg"  // Halaman Belakang / Back Cover
+    "https://giftycreative.com/asset/401/p0.webp", // Halaman Depan / Cover
+    "https://giftycreative.com/asset/401/p1.webp", // Halaman 1
+    "https://giftycreative.com/asset/401/p2.webp", // Halaman 2
+    "https://giftycreative.com/asset/401/p3.webp", // Halaman 3
+    "https://giftycreative.com/asset/401/p4.webp", // Halaman 4
+    "https://giftycreative.com/asset/401/p5.webp", // Halaman 5
+    "https://giftycreative.com/asset/401/p6.webp", // Halaman 6
+    "https://giftycreative.com/asset/401/p7.webp"  // Halaman Belakang / Back Cover
   ];
   // =========================================================================
 
-  musik = "https://dekatutorial.github.io/musik/ANDMESH%20-%20ANUGERAH%20TERINDAH%20-%20VIDEO%20LIRIK%20-%20LIRIK%20LAGU%20TERBARU.mp3";
+  musik = "/musik/ANDMESH - ANUGERAH TERINDAH - VIDEO LIRIK - LIRIK LAGU TERBARU - Reff.mp3";
   isKlikAudio = 1;
   const swalo = Swal.mixin({
     allowOutsideClick: false,
@@ -28,7 +24,7 @@ if (location.hostname == "web.dariku.my.id" || true) {
       klikA.play();
     }
     const {
-      value: _0xccd798
+      value: pesanInput
     } = await swalo.fire({
       title: "Tulis pesan",
       input: "textarea",
@@ -37,7 +33,7 @@ if (location.hostname == "web.dariku.my.id" || true) {
     if (isKlikAudio) {
       klikA.play();
     }
-    if (_0xccd798) {
+    if (pesanInput) {
       swalo.fire({
         title: "Mengirim pesan",
         didOpen: () => {
@@ -45,7 +41,7 @@ if (location.hostname == "web.dariku.my.id" || true) {
         }
       });
       
-      sendToDb(_0xccd798, async () => {
+      sendToDb(pesanInput, async () => {
         await swalo.fire({
           icon: "success",
           title: "Pesan berhasil dikirim!"
@@ -62,22 +58,22 @@ if (location.hostname == "web.dariku.my.id" || true) {
       kirimPesan();
     }
   }
-  function sendToDb(_0x57b7ce, _0xa14d33) {
-    const _0x194a25 = new FormData();
-    _0x194a25.append("pesan", _0x57b7ce);
+  function sendToDb(pesanText, callback) {
+    const formData = new FormData();
+    formData.append("pesan", pesanText);
     fetch("func.php?act=add", {
       method: "POST",
-      body: _0x194a25
-    }).then(_0x249ee8 => _0x249ee8.json()).then(async _0x446ce4 => {
-      if (_0x446ce4.Status == 200) {
-        _0xa14d33();
+      body: formData
+    }).then(res => res.json()).then(async responseData => {
+      if (responseData.Status == 200) {
+        callback();
       }
     }).catch(err => {
       console.log("Gagal mengirim ke DB, menjalankan callback...", err);
-      _0xa14d33(); 
+      callback(); 
     });
   }
-  var klikA = new Audio("https://dekatutorial.github.io/ct/klk.mp3");
+  var klikA = new Audio("/musik/sfx/klik.mp3");
   klikA.autoplay = false;
   klikA.loop = false;
   const musikA = new Audio(musik);
@@ -129,25 +125,25 @@ if (location.hostname == "web.dariku.my.id" || true) {
     book.classList.remove("fs");
     book.classList.remove("bs");
   }
-  function closeBook(_0x34f2c6) {
-    if (_0x34f2c6) {
+  function closeBook(isFirstPage) {
+    if (isFirstPage) {
       book.classList.add("fs");
       book.style.transform = "translateX(0%)";
-      papers.forEach((_0x17d0c7, _0x1b4c74) => {
-        _0x17d0c7.querySelector(".front").style.transform = "rotateY(0deg)";
-        _0x17d0c7.querySelector(".back").style.transform = "rotateY(0deg)";
+      papers.forEach((paperItem) => {
+        paperItem.querySelector(".front").style.transform = "rotateY(0deg)";
+        paperItem.querySelector(".back").style.transform = "rotateY(0deg)";
       });
     } else {
       book.classList.add("bs");
       book.style.transform = "translateX(100%)";
-      papers.forEach((_0x3c8a45, _0x4e1186) => {
-        _0x3c8a45.querySelector(".front").style.transform = "rotateY(-180deg)";
-        _0x3c8a45.querySelector(".back").style.transform = "rotateY(-180deg)";
+      papers.forEach((paperItem) => {
+        paperItem.querySelector(".front").style.transform = "rotateY(-180deg)";
+        paperItem.querySelector(".back").style.transform = "rotateY(-180deg)";
       });
     }
-    papers.forEach((_0xb4606e, _0x5aa256) => {
-      const _0x4e9663 = _0xb4606e.querySelector(".back");
-      _0x4e9663.style.boxShadow = "7px 5px 12px rgba(0, 0, 0, 0)";
+    papers.forEach((paperItem) => {
+      const backSide = paperItem.querySelector(".back");
+      backSide.style.boxShadow = "7px 5px 12px rgba(0, 0, 0, 0)";
     });
   }
   const papers = document.querySelectorAll(".paper");
@@ -155,15 +151,15 @@ if (location.hostname == "web.dariku.my.id" || true) {
   let currentLocation = 0;
   let zInd = paperTotal;
   let dataZIndex = [];
-  papers.forEach(_0x32a0a6 => {
-    _0x32a0a6.style.zIndex = zInd;
+  papers.forEach(paperItem => {
+    paperItem.style.zIndex = zInd;
     dataZIndex.push(zInd);
     zInd--;
   });
   let clck = 1;
-  function clickHandler(_0x71586) {
+  function clickHandler(isNext) {
     if (clck) {
-      if (_0x71586) {
+      if (isNext) {
         goNextPage();
       } else {
         goPrevPage();
@@ -179,19 +175,18 @@ if (location.hostname == "web.dariku.my.id" || true) {
       pesanBtn.classList.add("show");
     }
     if (currentLocation < paperTotal) {
-      let _0x156d39 = 250;
+      let timeoutDelay = 250;
       if (currentLocation == 0) {
-        _0x156d39 = 300;
+        timeoutDelay = 300;
       }
       if (currentLocation == paperTotal - 1) {
-        _0x156d39 = 200;
+        timeoutDelay = 200;
       }
-      const _0x2bb17a = currentLocation;
+      const currentIndex = currentLocation;
       setTimeout(() => {
-        papers[_0x2bb17a].style.zIndex = "" + _0x2bb17a;
-      }, _0x156d39);
-      const _0x291c99 = currentLocation;
-      paperHandler(_0x291c99);
+        papers[currentIndex].style.zIndex = "" + currentIndex;
+      }, timeoutDelay);
+      paperHandler(currentIndex);
       if (currentLocation == paperTotal - 1) {
         closeBook(0);
       } else {
@@ -203,19 +198,19 @@ if (location.hostname == "web.dariku.my.id" || true) {
   function goPrevPage() {
     if (currentLocation > 0 && currentLocation <= paperTotal) {
       currentLocation--;
-      let _0xb12655 = 250;
+      let timeoutDelay = 250;
       if (currentLocation == 0) {
-        _0xb12655 = 200;
+        timeoutDelay = 200;
       }
       if (currentLocation == paperTotal - 1) {
-        _0xb12655 = 300;
+        timeoutDelay = 300;
       }
-      const _0x228bbf = currentLocation;
+      const currentIndex = currentLocation;
       setTimeout(() => {
-        papers[_0x228bbf].style.zIndex = "" + dataZIndex[_0x228bbf];
-      }, _0xb12655);
-      const _0x36e60c = currentLocation - 1;
-      paperHandler(_0x36e60c);
+        papers[currentIndex].style.zIndex = "" + dataZIndex[currentIndex];
+      }, timeoutDelay);
+      const prevIndex = currentLocation - 1;
+      paperHandler(prevIndex);
       if (currentLocation == 0) {
         closeBook(1);
       }
@@ -224,45 +219,42 @@ if (location.hostname == "web.dariku.my.id" || true) {
       }
     }
   }
-  function paperHandler(_0x1dc0b9) {
-    papers.forEach((_0x4503b4, _0x372738) => {
-      const _0x43b133 = _0x4503b4.querySelector(".front");
-      const _0x5da1bd = _0x4503b4.querySelector(".back");
-      if (_0x1dc0b9 >= 0) {
-        if (_0x372738 >= _0x1dc0b9 - 2 && _0x372738 <= _0x1dc0b9 + 3) {
-          _0x5da1bd.style.boxShadow = "7px 5px 12px rgba(0, 0, 0, 0.2)";
+  function paperHandler(targetIndex) {
+    papers.forEach((paperItem, paperIndex) => {
+      const frontSide = paperItem.querySelector(".front");
+      const backSide = paperItem.querySelector(".back");
+      if (targetIndex >= 0) {
+        if (paperIndex >= targetIndex - 2 && paperIndex <= targetIndex + 3) {
+          backSide.style.boxShadow = "7px 5px 12px rgba(0, 0, 0, 0.2)";
         } else {
-          _0x5da1bd.style.boxShadow = "7px 5px 12px rgba(0, 0, 0, 0)";
+          backSide.style.boxShadow = "7px 5px 12px rgba(0, 0, 0, 0)";
         }
-        if (_0x372738 == _0x1dc0b9) {
-          _0x43b133.style.transform = "rotateY(-150deg)";
-          _0x5da1bd.style.transform = "rotateY(-150deg)";
-        } else if (_0x372738 == _0x1dc0b9 - 1) {
-          _0x43b133.style.transform = "rotateY(-160deg)  scaleX(105%)";
-          _0x5da1bd.style.transform = "rotateY(-160deg)  scaleX(105%)";
-        } else if (_0x372738 <= _0x1dc0b9 - 2) {
-          _0x43b133.style.transform = "rotateY(-170deg)  scaleX(110%)";
-          _0x5da1bd.style.transform = "rotateY(-170deg)  scaleX(110%)";
-        } else if (_0x372738 == _0x1dc0b9 + 1) {
-          _0x43b133.style.transform = "rotateY(-30deg)";
-          _0x5da1bd.style.transform = "rotateY(-30deg)";
-        } else if (_0x372738 == _0x1dc0b9 + 2) {
-          _0x43b133.style.transform = "rotateY(-20deg)  scaleX(105%)";
-          _0x5da1bd.style.transform = "rotateY(-20deg)  scaleX(105%)";
-        } else if (_0x372738 >= _0x1dc0b9 + 3) {
-          _0x43b133.style.transform = "rotateY(-10deg) scaleX(110%)";
-          _0x5da1bd.style.transform = "rotateY(-10deg) scaleX(110%)";
+        if (paperIndex == targetIndex) {
+          frontSide.style.transform = "rotateY(-150deg)";
+          backSide.style.transform = "rotateY(-150deg)";
+        } else if (paperIndex == targetIndex - 1) {
+          frontSide.style.transform = "rotateY(-160deg)  scaleX(105%)";
+          backSide.style.transform = "rotateY(-160deg)  scaleX(105%)";
+        } else if (paperIndex <= targetIndex - 2) {
+          frontSide.style.transform = "rotateY(-170deg)  scaleX(110%)";
+          backSide.style.transform = "rotateY(-170deg)  scaleX(110%)";
+        } else if (paperIndex == targetIndex + 1) {
+          frontSide.style.transform = "rotateY(-30deg)";
+          backSide.style.transform = "rotateY(-30deg)";
+        } else if (paperIndex == targetIndex + 2) {
+          frontSide.style.transform = "rotateY(-20deg)  scaleX(105%)";
+          backSide.style.transform = "rotateY(-20deg)  scaleX(105%)";
+        } else if (paperIndex >= targetIndex + 3) {
+          frontSide.style.transform = "rotateY(-10deg) scaleX(110%)";
+          backSide.style.transform = "rotateY(-10deg) scaleX(110%)";
         }
       }
     });
   }
   window.onload = () => {
-    const _0xe75c58 = document.querySelector(".preload");
-    _0xe75c58.style = "transition: .5s ease all; opacity: 0";
+    const preloadEl = document.querySelector(".preload");
+    preloadEl.style = "transition: .5s ease all; opacity: 0";
     setTimeout(() => {
-      _0xe75c58.remove();
+      preloadEl.remove();
     }, 500);
   };
-} else {
-  location.assign("https://youtube.com/DekaTutorial");
-}
