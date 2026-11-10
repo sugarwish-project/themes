@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Tidak Ditemukan - Mengalihkan...</title>
+    
+    <!-- Cara 1: Fallback otomatis menggunakan HTML Meta Refresh (redirect dalam 0 detik) -->
+    <meta http-equiv="refresh" content="0;url=/">
+    
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            padding: 2rem;
+            max-width: 400px;
+        }
+        h1 { font-size: 2rem; margin-bottom: 0.5rem; color: #0f172a; }
+        p { color: #64748b; margin-bottom: 1.5rem; }
+        a {
+            display: inline-block;
+            background-color: #0167fa;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover { background-color: #0152cc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Oops! Halaman Hilang</h1>
+        <p>Sepertinya halaman yang Anda cari tidak ditemukan. Anda akan segera dialihkan ke beranda.</p>
+        <a href="/#theme">Kembali ke Beranda Sekarang</a>
+    </div>
+
+    <!-- Cara 2: Redirect menggunakan JavaScript untuk memastikan keamanan path (Berguna jika pakai Custom Domain atau Subpath) -->
+    <script>
+        // Mengarahkan kembali ke root/home dari repository
+        window.location.replace("/#theme");
+    </script>
+</body>
+</html>
