@@ -1,15 +1,15 @@
 // =========================================================================
-  // LINK GAMBAR BERURUTAN (1.jpg sampai 6.jpg + gambar cover & back)
+  // ALBUM
   // =========================================================================
   const konten = [
-    "https://giftycreative.com/asset/401/p0.webp", // Halaman Depan / Cover
-    "https://giftycreative.com/asset/401/p1.webp", // Halaman 1
-    "https://giftycreative.com/asset/401/p2.webp", // Halaman 2
-    "https://giftycreative.com/asset/401/p3.webp", // Halaman 3
-    "https://giftycreative.com/asset/401/p4.webp", // Halaman 4
-    "https://giftycreative.com/asset/401/p5.webp", // Halaman 5
-    "https://giftycreative.com/asset/401/p6.webp", // Halaman 6
-    "https://giftycreative.com/asset/401/p7.webp"  // Halaman Belakang / Back Cover
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto1.webp", // Halaman Depan / Cover
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto2.webp", // Halaman 1
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto3.webp", // Halaman 2
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto4.webp", // Halaman 3
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto5.webp", // Halaman 4
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto6.webp", // Halaman 5
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto7.webp", // Halaman 6
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto8.webp"  // Halaman Belakang / Back Cover
   ];
   // =========================================================================
 
