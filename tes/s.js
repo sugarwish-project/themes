@@ -1,192 +1,300 @@
-(() => {
-  "use strict";
-
-  const pages = [
-    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto1.webp",
-    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto2.webp",
-    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto3.webp",
-    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto4.webp",
-    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto5.webp",
-    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto6.webp",
-    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto7.webp",
-    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto8.webp"
+// =========================================================================
+  // ALBUM
+  // =========================================================================
+  const konten = [
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto1.webp", // Halaman Depan / Cover
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto2.webp", // Halaman 1
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto3.webp", // Halaman 2
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto4.webp", // Halaman 3
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto5.webp", // Halaman 4
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto6.webp", // Halaman 5
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto7.webp", // Halaman 6
+    "/asset/themes/img/Scrapbook/The%20Butterfly%20Garden/foto8.webp"  // Halaman Belakang / Back Cover
   ];
+  // =========================================================================
 
-  const book = document.querySelector(".book");
-  const openBtn = document.querySelector(".open-btn");
+  musik = "/musik/ANDMESH - ANUGERAH TERINDAH - VIDEO LIRIK - LIRIK LAGU TERBARU - Reff.mp3";
+  isKlikAudio = 1;
+  const swalo = Swal.mixin({
+    allowOutsideClick: false,
+    reverseButtons: true
+  });
+  const NOMOR_WA = ""; // isi nomor tujuan, contoh: "6281234567890" (kosong = tidak membuka WhatsApp)
+  const klik = () => { if (isKlikAudio) { klikA.currentTime = 0; klikA.play().catch(() => {}); } };
+  async function kirimPesan() {
+    klik();
+    const { value: pesanInput } = await swalo.fire({
+      title: "Tulis pesan",
+      input: "textarea",
+      inputPlaceholder: "Tulis apa saja yang ingin kamu sampaikan...",
+      confirmButtonText: "Kirim",
+      inputValidator: v => (!v || !v.trim()) ? "Jangan dikosongin ya :)" : undefined
+    });
+    klik();
+    if (!pesanInput) return;
+    swalo.fire({ title: "Mengirim pesan", didOpen: () => swalo.showLoading() });
+    sendToDb(pesanInput.trim(), async () => {
+      await swalo.fire({
+        icon: "success",
+        title: "Pesan berhasil dikirim!",
+        confirmButtonText: NOMOR_WA ? "Buka WhatsApp" : "OK"
+      });
+      klik();
+      if (NOMOR_WA) window.open("https://wa.me/" + NOMOR_WA + "?text=" + encodeURIComponent(pesanInput.trim()), "_blank");
+    });
+  }
+    function sendToDb(pesanText, callback) {
+    const formData = new FormData();
+    formData.append("pesan", pesanText);
+    fetch("func.php?act=add", {
+      method: "POST",
+      body: formData
+    }).then(res => res.json()).then(async responseData => {
+      if (responseData.Status == 200) {
+        callback();
+      }
+    }).catch(err => {
+      console.log("Gagal mengirim ke DB, menjalankan callback...", err);
+      callback(); 
+    });
+  }
+  var klikA = new Audio("/musik/sfx/klik.mp3");
+  klikA.autoplay = false;
+  klikA.loop = false;
+  const musikA = new Audio(musik);
+  musikA.autoplay = true;
+  musikA.loop = true;
   const prevBtn = document.querySelector(".prev-btn");
   const nextBtn = document.querySelector(".next-btn");
-  const nav = document.querySelector(".nav");
+  const book = document.querySelector(".book");
+  const btnContainer = document.querySelector(".btn-container");
+  const openBtn = document.querySelector(".open-btn");
+  const navBtn = document.querySelector(".nav");
   const pesanBtn = document.querySelector(".pesan-btn");
-  const pageCount = document.querySelector(".page-count");
-  const progress = document.querySelector(".progress-fill");
-  const pageLabel = document.querySelector(".page-label");
-  const music = document.querySelector(".background-music");
-  const clickAudio = document.querySelector(".click-sound");
-  const soundToggle = document.querySelector(".sound-toggle");
-  const total = pages.length - 1;
-  let current = 0;
-  let locked = false;
-  let musicEnabled = true;
-
-  const playClick = () => {
-    if (!clickAudio) return;
-    clickAudio.currentTime = 0;
-    clickAudio.play().catch(() => {});
+  
+  for (let i = 0; i < konten.length - 1; i++) {
+    const paperE = document.createElement("div");
+    paperE.classList.add("paper");
+    paperE.innerHTML = "\n        <div class=\"front\">\n          <div class=\"front-content\" style=\"--bg: url('" + konten[i] + "')\"></div>\n        </div>\n        <div class=\"back\">\n          <div class=\"back-content\" style=\"--bg: url('" + konten[i + 1] + "')\"></div>\n        </div>";
+    book.appendChild(paperE);
+  }
+  
+  openBtn.onclick = () => {
+    musikA.play();
+    if (isKlikAudio) {
+      klikA.play();
+    }
+    clickHandler(1);
+    btnContainer.classList.add("hide");
+    setTimeout(() => {
+      openBtn.classList.remove("show");
+      navBtn.classList.add("show");
+      btnContainer.classList.remove("hide");
+    }, 500);
   };
-
-  // Build the layered pages from the supplied scrapbook photographs.
-  for (let i = 0; i < total; i++) {
-    const paper = document.createElement("div");
-    paper.className = "paper";
-    paper.style.zIndex = String(total - i);
-    paper.innerHTML = `
-      <div class="front"><div class="front-content" style="--bg:url('${pages[i]}')"></div></div>
-      <div class="back"><div class="back-content" style="--bg:url('${pages[i + 1]}')"></div></div>`;
-    book.appendChild(paper);
-  }
-  const papers = [...book.querySelectorAll(".paper")];
-
-  function updateUI() {
-    const shown = Math.min(current + 1, total);
-    pageCount.textContent = `${String(shown).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
-    progress.style.width = `${(shown / total) * 100}%`;
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current >= total;
-    pageLabel.textContent = current === 0 ? "COVER" : current >= total ? "BACK COVER" : `PAGE ${String(current).padStart(2, "0")}`;
-    pesanBtn.classList.toggle("show", current >= total);
-  }
-
+  pesanBtn.onclick = kirimPesan;
+  prevBtn.addEventListener("click", () => {
+    if (isKlikAudio) {
+      klikA.play();
+    }
+    clickHandler(0);
+  });
+  nextBtn.addEventListener("click", () => {
+    if (isKlikAudio) {
+      klikA.play();
+    }
+    clickHandler(1);
+  });
   function openBook() {
     book.style.transform = "translateX(50%)";
-    book.classList.remove("fs", "bs");
+    book.classList.remove("fs");
+    book.classList.remove("bs");
   }
-  function closeBook(atStart) {
-    book.style.transform = atStart ? "translateX(0%)" : "translateX(100%)";
-    book.classList.toggle("fs", atStart);
-    book.classList.toggle("bs", !atStart);
-  }
-
-  function setPageState(target) {
-    papers.forEach((paper, index) => {
-      const front = paper.querySelector(".front");
-      const back = paper.querySelector(".back");
-      const angle = index < target ? -180 : 0;
-      front.style.transform = `rotateY(${angle}deg)`;
-      back.style.transform = `rotateY(${angle}deg)`;
-      paper.style.zIndex = index < target ? String(index + 1) : String(total - index);
-    });
-    if (target === 0) closeBook(true);
-    else if (target === total) closeBook(false);
-    else openBook();
-    current = target;
-    updateUI();
-  }
-
-  function turn(direction) {
-    if (locked) return;
-    const target = Math.max(0, Math.min(total, current + direction));
-    if (target === current) return;
-    locked = true;
-    playClick();
-    setPageState(target);
-    window.setTimeout(() => { locked = false; }, 720);
-  }
-
-  openBtn.addEventListener("click", async () => {
-    playClick();
-    openBtn.style.display = "none";
-    nav.classList.add("show");
-    if (musicEnabled && music) {
-      try { await music.play(); } catch (_) { /* Browser may require another user gesture. */ }
-    }
-    turn(1);
-  });
-  prevBtn.addEventListener("click", () => turn(-1));
-  nextBtn.addEventListener("click", () => turn(1));
-
-  soundToggle.addEventListener("click", async () => {
-    musicEnabled = !musicEnabled;
-    if (musicEnabled) {
-      try { await music.play(); } catch (_) {}
-      soundToggle.querySelector(".sound-label").textContent = "Musik";
-      soundToggle.setAttribute("aria-label", "Matikan musik");
+  function closeBook(isFirstPage) {
+    if (isFirstPage) {
+      book.classList.add("fs");
+      book.style.transform = "translateX(0%)";
+      papers.forEach((paperItem) => {
+        paperItem.querySelector(".front").style.transform = "rotateY(0deg)";
+        paperItem.querySelector(".back").style.transform = "rotateY(0deg)";
+      });
     } else {
-      music.pause();
-      soundToggle.querySelector(".sound-label").textContent = "Senyap";
-      soundToggle.setAttribute("aria-label", "Nyalakan musik");
+      book.classList.add("bs");
+      book.style.transform = "translateX(100%)";
+      papers.forEach((paperItem) => {
+        paperItem.querySelector(".front").style.transform = "rotateY(-180deg)";
+        paperItem.querySelector(".back").style.transform = "rotateY(-180deg)";
+      });
     }
+    papers.forEach((paperItem) => {
+      const backSide = paperItem.querySelector(".back");
+      backSide.style.boxShadow = "7px 5px 12px rgba(0, 0, 0, 0)";
+    });
+  }
+  const papers = document.querySelectorAll(".paper");
+  const paperTotal = papers.length;
+  let currentLocation = 0;
+  let zInd = paperTotal;
+  let dataZIndex = [];
+  papers.forEach(paperItem => {
+    paperItem.style.zIndex = zInd;
+    dataZIndex.push(zInd);
+    zInd--;
   });
+  let clck = 1;
+  function clickHandler(isNext) {
+    if (clck) {
+      if (isNext) {
+        goNextPage();
+      } else {
+        goPrevPage();
+      }
+      clck = 0;
+      setTimeout(() => {
+        clck = 1;
+      }, 500);
+    }
+  }
+  function goNextPage() {
+    if (currentLocation == paperTotal - 1) {
+      pesanBtn.classList.add("show");
+    }
+    if (currentLocation < paperTotal) {
+      let timeoutDelay = 250;
+      if (currentLocation == 0) {
+        timeoutDelay = 300;
+      }
+      if (currentLocation == paperTotal - 1) {
+        timeoutDelay = 200;
+      }
+      const currentIndex = currentLocation;
+      setTimeout(() => {
+        papers[currentIndex].style.zIndex = "" + currentIndex;
+      }, timeoutDelay);
+      paperHandler(currentIndex);
+      if (currentLocation == paperTotal - 1) {
+        closeBook(0);
+      } else {
+        openBook();
+      }
+      currentLocation++;
+    }
+  }
+  function goPrevPage() {
+    if (currentLocation > 0 && currentLocation <= paperTotal) {
+      currentLocation--;
+      let timeoutDelay = 250;
+      if (currentLocation == 0) {
+        timeoutDelay = 200;
+      }
+      if (currentLocation == paperTotal - 1) {
+        timeoutDelay = 300;
+      }
+      const currentIndex = currentLocation;
+      setTimeout(() => {
+        papers[currentIndex].style.zIndex = "" + dataZIndex[currentIndex];
+      }, timeoutDelay);
+      const prevIndex = currentLocation - 1;
+      paperHandler(prevIndex);
+      if (currentLocation == 0) {
+        closeBook(1);
+      }
+      if (currentLocation == paperTotal - 1) {
+        openBook();
+      }
+    }
+  }
+  function paperHandler(targetIndex) {
+    papers.forEach((paperItem, paperIndex) => {
+      const frontSide = paperItem.querySelector(".front");
+      const backSide = paperItem.querySelector(".back");
+      if (targetIndex >= 0) {
+        if (paperIndex >= targetIndex - 2 && paperIndex <= targetIndex + 3) {
+          backSide.style.boxShadow = "7px 5px 12px rgba(0, 0, 0, 0.2)";
+        } else {
+          backSide.style.boxShadow = "7px 5px 12px rgba(0, 0, 0, 0)";
+        }
+        if (paperIndex == targetIndex) {
+          frontSide.style.transform = "rotateY(-150deg)";
+          backSide.style.transform = "rotateY(-150deg)";
+        } else if (paperIndex == targetIndex - 1) {
+          frontSide.style.transform = "rotateY(-160deg)  scaleX(105%)";
+          backSide.style.transform = "rotateY(-160deg)  scaleX(105%)";
+        } else if (paperIndex <= targetIndex - 2) {
+          frontSide.style.transform = "rotateY(-170deg)  scaleX(110%)";
+          backSide.style.transform = "rotateY(-170deg)  scaleX(110%)";
+        } else if (paperIndex == targetIndex + 1) {
+          frontSide.style.transform = "rotateY(-30deg)";
+          backSide.style.transform = "rotateY(-30deg)";
+        } else if (paperIndex == targetIndex + 2) {
+          frontSide.style.transform = "rotateY(-20deg)  scaleX(105%)";
+          backSide.style.transform = "rotateY(-20deg)  scaleX(105%)";
+        } else if (paperIndex >= targetIndex + 3) {
+          frontSide.style.transform = "rotateY(-10deg) scaleX(110%)";
+          backSide.style.transform = "rotateY(-10deg) scaleX(110%)";
+        }
+      }
+    });
+  }
+  window.onload = () => {
+    const preloadEl = document.querySelector(".preload");
+    preloadEl.style = "transition: .5s ease all; opacity: 0";
+    setTimeout(() => {
+      preloadEl.remove();
+    }, 500);
+  };
 
-  document.addEventListener("keydown", event => {
-    if (event.key === "ArrowRight" && nav.classList.contains("show")) turn(1);
-    if (event.key === "ArrowLeft" && nav.classList.contains("show")) turn(-1);
+
+  // =========================================================================
+  // PENINGKATAN: hati jatuh, info halaman, tombol musik, keyboard & swipe
+  // =========================================================================
+  const goFull = () => {
+    const el = document.documentElement;
+    if (!document.fullscreenElement && el.requestFullscreen) el.requestFullscreen().catch(() => {});
+  };
+  const info = document.querySelector(".page-info");
+  const muteBtn = document.querySelector(".mute-btn");
+  const swalAktif = () => document.querySelector(".swal2-container");
+
+  const _clickHandler = clickHandler;
+  clickHandler = function (n) {
+    _clickHandler(n);
+    info.textContent = currentLocation > 0 ? currentLocation + " / " + paperTotal : "";
+  };
+  const _open = openBtn.onclick;
+  openBtn.onclick = () => { _open(); muteBtn.classList.add("show"); goFull(); };
+
+  muteBtn.onclick = () => {
+    musikA.muted = !musikA.muted;
+    muteBtn.classList.toggle("off", musikA.muted);
+    muteBtn.setAttribute("aria-label", musikA.muted ? "Nyalakan musik" : "Matikan musik");
+  };
+
+  document.addEventListener("keydown", e => {
+    if (swalAktif() || !navBtn.classList.contains("show")) return;
+    if (e.key === "ArrowRight") nextBtn.click();
+    if (e.key === "ArrowLeft") prevBtn.click();
   });
-
-  // Swipe support for touch screens.
-  let touchStartX = null;
-  book.addEventListener("touchstart", event => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
-  book.addEventListener("touchend", event => {
-    if (touchStartX === null) return;
-    const delta = event.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(delta) > 45) turn(delta < 0 ? 1 : -1);
-    touchStartX = null;
+  let tx = null;
+  document.addEventListener("touchstart", e => { tx = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener("touchend", e => {
+    if (tx === null || swalAktif() || !navBtn.classList.contains("show")) return;
+    const dx = e.changedTouches[0].clientX - tx;
+    tx = null;
+    if (Math.abs(dx) > 50) (dx < 0 ? nextBtn : prevBtn).click();
   }, { passive: true });
 
-  async function kirimPesan() {
-    const result = await Swal.fire({
-      title: "Tulis pesan untukku",
-      text: "Ceritakan apa pun yang ingin kamu sampaikan ♡",
-      input: "textarea",
-      inputPlaceholder: "Tulis pesanmu di sini…",
-      inputAttributes: { "aria-label": "Pesan" },
-      showCancelButton: true,
-      confirmButtonText: "Kirim pesan",
-      cancelButtonText: "Nanti saja",
-      confirmButtonColor: "#a96d75",
-      cancelButtonColor: "#bda6a1",
-      inputValidator: value => !value.trim() ? "Pesannya jangan kosong ya :)" : undefined
-    });
-    if (!result.isConfirmed) return;
-
-    try {
-      const formData = new FormData();
-      formData.append("pesan", result.value.trim());
-      const response = await fetch("func.php?act=add", { method: "POST", body: formData });
-      if (!response.ok) throw new Error("Server tidak merespons dengan benar.");
-      const data = await response.json();
-      if (Number(data.Status) !== 200) throw new Error(data.Message || "Pesan belum berhasil disimpan.");
-      await Swal.fire({ icon: "success", title: "Pesan berhasil dikirim!", text: "Terima kasih sudah meluangkan waktu ♡", confirmButtonColor: "#a96d75" });
-      playClick();
-    } catch (error) {
-      await Swal.fire({ icon: "error", title: "Pesan belum terkirim", text: "Silakan coba lagi beberapa saat ya.", confirmButtonColor: "#a96d75" });
-      console.error("Gagal mengirim pesan:", error);
-    }
-  }
-  pesanBtn.addEventListener("click", kirimPesan);
-
-  // Soft falling hearts, kept lightweight and decorative.
-  const sparkles = document.querySelector(".sparkles");
-  const symbols = ["♡", "✧", "✿"];
-  function makeFloatingDetail() {
-    const item = document.createElement("span");
-    item.className = "love-item";
-    item.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-    item.style.left = `${Math.random() * 100}%`;
-    item.style.fontSize = `${10 + Math.random() * 9}px`;
-    item.style.animationDuration = `${8 + Math.random() * 7}s`;
-    sparkles.appendChild(item);
-    window.setTimeout(() => item.remove(), 16000);
-  }
-  for (let i = 0; i < 8; i++) window.setTimeout(makeFloatingDetail, i * 650);
-  window.setInterval(makeFloatingDetail, 1800);
-
-  window.addEventListener("load", () => {
-    const loader = document.querySelector(".preload");
-    if (!loader) return;
-    loader.style.opacity = "0";
-    window.setTimeout(() => loader.remove(), 500);
-  });
-
-  updateUI();
-})();
+  (() => {
+    const wrap = document.querySelector(".bg-love");
+    if (!wrap || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const heart = '<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.2C1 8.3 3 5 6.3 5c2 0 3.700 1.100 5.700 3.200C14 6.100 15.700 5 17.700 5 21 5 23 8.300 21.500 11.800 19.500 16.400 12 21 12 21z"/></svg>';
+    setInterval(() => {
+      if (document.hidden) return;
+      const el = document.createElement("div");
+      el.className = "love-item";
+      el.style.cssText = "left:" + Math.random() * 100 + "%;width:" + (10 + Math.random() * 16) + "px;animation-duration:" + (8 + Math.random() * 8) + "s";
+      el.innerHTML = heart;
+      wrap.appendChild(el);
+      el.addEventListener("animationend", () => el.remove());
+    }, 900);
+  })();
