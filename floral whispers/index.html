@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Just For You ❤️</title>
+    <link rel="stylesheet" href="s.css" />
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/asset/maintenance.css">
+  </head>
+  <body>
+    <script src="s.js"></script>
+    <script src="/asset/maintenance.js"></script>
+<script>
+    document.addEventListener('click', function() {
+      const elem = document.documentElement;
+
+      if (!document.fullscreenElement) {
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+          elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+          elem.msRequestFullscreen();
+        }
+      }
+    });
+  </script>
+  </body>
+</html>
