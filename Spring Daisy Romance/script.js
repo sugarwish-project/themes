@@ -87,7 +87,8 @@ function sendToDb(pesanText, callback) {
 }
 
 // Audio Musik Latar & SFX Klik
-const musikAudio = new Audio('https://dekatutorial.github.io/musik/Romantic%20Happy%20Birthday%20(Arranged%20by%20Miranda%20Wong)%20Piano%20Cover.mp3');
+const musikAudio = new Audio('/musik/Westlife%20-%20Beautiful%20in%20white%20(Lyrics).mp3');
+musikAudio.currentTime = 12;
 musikAudio.autoplay = true;
 musikAudio.loop = true;
 
@@ -162,7 +163,7 @@ function nextContent(index) {
     setTimeout(() => {
       btnNext.classList.remove("show");
       btnMessage.classList.add("show");
-      btnRestart.classList.add("show"); // Tampilkan tombol Putar Ulang di akhir slide
+      btnRestart.classList.add("show"); 
       btnContainer.classList.add("show");
     }, 1000);
   }
@@ -253,7 +254,7 @@ function createStar() {
   const duration = Math.random() * 2300 + 1200;
   const delay = Math.random() * 4000;
 
-  star.src = 'https://files.dariku.my.id/dks210/star-sky.png';
+  star.src = '/asset/themes/animasi/star-sky.png';
   star.alt = '';
   star.className = "star";
   star.style.width = starSize + 'px';
