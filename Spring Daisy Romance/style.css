@@ -1,5 +1,5 @@
 /* =========================================
-   1. IMPORT & ROOT (Menggunakan Font Estetik & Santai)
+   1. IMPORT & ROOT (Font Estetik & Santai)
    ========================================= */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Sacramento&display=swap');
 
@@ -14,7 +14,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif; /* Font isi yang bersih, rapi, dan santai */
+  font-family: "Poppins", sans-serif;
   letter-spacing: 0.5px;
 }
 
@@ -133,7 +133,6 @@ body {
   gap: 5px;
   width: 100%;
   padding: 20px;
-  /* Latar belakang semi-transparan lembut agar teks kontras dengan langit cerah */
   background: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -149,12 +148,11 @@ body {
   opacity: 0;
 }
 
-/* Judul Utama menggunakan Font Script Estetik (Sacramento / Dancing Script) */
 .open h1 {
   font-size: 3.5rem;
   font-family: "Sacramento", cursive;
   font-weight: 400;
-  color: #2b3a4a; /* Warna gelap kontras dengan background langit */
+  color: #2b3a4a;
   animation: 1.5s forwards anm-show;
   text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
   line-height: 1.1;
@@ -164,7 +162,6 @@ body {
   font-family: "Sacramento", cursive;
 }
 
-/* Sub-judul menggunakan Font Handwritten Rapi & Santai */
 .open h2 {
   font-size: 1.6rem;
   font-family: "Poppins", sans-serif;
@@ -183,7 +180,7 @@ body {
 }
 
 /* =========================================
-   6. MAIN CONTENT & GLOSSY CARD EFEK (Slide Pesan & Foto)
+   6. MAIN CONTENT & GLOSSY CARD EFEK
    ========================================= */
 .main-content {
   padding: 20px;
@@ -199,9 +196,8 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
 
-/* Kotak Teks Pesan dengan Background Glossy / Kaca Agar Tulisan Sangat Terbaca */
 .main-content .text {
-  color: #2b3a4a; /* Warna teks gelap kontras agar mudah dibaca di atas background terang */
+  color: #2b3a4a;
   max-height: 42%;
   padding: 20px 24px;
   overflow-y: auto;
@@ -210,8 +206,6 @@ body {
   font-size: 0.95rem;
   line-height: 1.7;
   font-family: "Poppins", sans-serif;
-  
-  /* Styling Glassmorphism yang Lebih Pekat Agar Kontras dengan Background Terang */
   background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -264,7 +258,7 @@ body {
 .btn,
 .btn-container button {
   padding: 8px 18px;
-  background: linear-gradient(135deg, #4a7c59, #355840); /* Nuansa tombol elegan */
+  background: linear-gradient(135deg, #4a7c59, #355840);
   border: 1px solid rgba(255, 255, 255, 0.5);
   font-size: 0.9rem;
   font-weight: 500;
@@ -468,4 +462,60 @@ body {
     opacity: 0;
     transform: translate3d(calc(var(--start-x) + var(--move-x)), calc(var(--start-y) + var(--move-y)), 0) rotate(var(--angle)) scale(1);
   }
+}
+
+/* =========================================
+   12. EFEK TAMBAHAN (KELOPAK BUNGA & GLOW)
+   ========================================= */
+.petal {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50% 0 50% 50%;
+  pointer-events: none;
+  animation-name: fall-petal;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+  z-index: 1;
+}
+
+@keyframes fall-petal {
+  0% {
+    transform: translateY(0) rotate(0deg) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(105vh) rotate(360deg) translateX(50px);
+    opacity: 0;
+  }
+}
+
+.main-content .text,
+.sprite-foto {
+  animation: box-glow 4s ease-in-out infinite alternate;
+}
+
+@keyframes box-glow {
+  0% {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  }
+  100% {
+    box-shadow: 0 10px 35px rgba(255, 255, 255, 0.4), inset 0 1px 5px rgba(255, 255, 255, 1);
+  }
+}
+
+.main-content:not(.show) .sprite-foto {
+  transform: scale(0.9);
+  transition: transform 1s ease;
+}
+
+.main-content.show .sprite-foto {
+  transform: scale(1);
+  transition: transform 1s ease;
 }

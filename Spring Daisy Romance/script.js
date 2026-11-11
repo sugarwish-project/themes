@@ -1,5 +1,5 @@
 // Data Konten Ucapan (Menggunakan 1 Gambar Sprite Berisi 6 Foto dengan Layout 3 Kolom x 2 Baris)
-const spriteImageUrl = 'http://sugarwish.my.id/asset/themes/img/Starlit%20Garden/romantisfoto.webp'; // Ganti dengan link gambar 6 foto Anda jika berbeda
+const spriteImageUrl = 'http://sugarwish.my.id/asset/themes/img/Starlit%20Garden/romantisfoto.webp';
 
 const kontenList = [
   {
@@ -36,6 +36,7 @@ const swalConfig = Swal.mixin({
 
 // Fungsi Mengirim Pesan
 async function kirimPesan() {
+  playClickSound();
   const { value: pesanInput } = await swalConfig.fire({
     title: "Tulis pesan",
     input: "textarea",
@@ -50,12 +51,12 @@ async function kirimPesan() {
       }
     });
 
-    setTimeout(async () => {
+    sendToDb(pesanInput, async () => {
       await swalConfig.fire({
         icon: "success",
         title: "Pesan berhasil dikirim!"
       });
-    }, 1000);
+    });
   } else {
     await swalConfig.fire({
       title: "Jangan dikosongin ya :)"
@@ -78,13 +79,23 @@ function sendToDb(pesanText, callback) {
     if (data.Status === 200) {
       callback();
     }
+  })
+  .catch(() => {
+    // Fallback jika API func.php tidak ditemukan/offline
+    callback();
   });
 }
 
-// Audio Musik Latar
+// Audio Musik Latar & SFX Klik
 const musikAudio = new Audio('https://dekatutorial.github.io/musik/Romantic%20Happy%20Birthday%20(Arranged%20by%20Miranda%20Wong)%20Piano%20Cover.mp3');
 musikAudio.autoplay = true;
 musikAudio.loop = true;
+
+const clickSound = new Audio('/musik/sfx/klik.mp3');
+function playClickSound() {
+  clickSound.currentTime = 0;
+  clickSound.play().catch(e => console.log("SFX autoplay restriction:", e));
+}
 
 // Selektor Elemen DOM
 const preloadContainer = document.querySelector('.preload');
@@ -172,7 +183,8 @@ function nextContent(index) {
 
 // Memulai Halaman Utama
 function startContent() {
-  musikAudio.play();
+  playClickSound();
+  musikAudio.play().catch(e => console.log(e));
   openContainer.classList.add("hide");
   nextContent(0);
   btnContainer.classList.remove("show");
@@ -190,6 +202,7 @@ let isClick = 1;
 btnNext.addEventListener('click', () => {
   if (isClick) {
     isClick = 0;
+    playClickSound();
     nextContent(nextIndex);
     nextIndex++;
     setTimeout(() => {
@@ -202,6 +215,7 @@ btnMessage.addEventListener("click", kirimPesan);
 
 // Fungsi untuk Memutar Ulang dari Awal
 function restartContent() {
+  playClickSound();
   btnContainer.classList.remove("show");
   
   setTimeout(() => {
@@ -315,6 +329,34 @@ function startStarEffect() {
 }
 
 startStarEffect();
+
+// EFEK TAMBAHAN: KELOPAK BUNGA BERJATUHAN
+function createFallingPetal() {
+  const petal = document.createElement("div");
+  petal.className = "petal";
+  
+  const size = Math.random() * 8 + 8;
+  const startX = Math.random() * window.innerWidth;
+  const duration = Math.random() * 4000 + 4000;
+  const delay = Math.random() * 5000;
+
+  petal.style.width = size + 'px';
+  petal.style.height = size * 0.7 + 'px';
+  petal.style.left = startX + 'px';
+  petal.style.top = '-20px';
+  petal.style.animationDuration = duration + 'ms';
+  petal.style.animationDelay = '-' + delay + 'ms';
+
+  starsContainer.appendChild(petal);
+}
+
+function initFallingPetals() {
+  for (let i = 0; i < 20; i++) {
+    createFallingPetal();
+  }
+}
+
+initFallingPetals();
 
 // Inisialisasi Saat Halaman Dimuat
 window.onload = () => {
