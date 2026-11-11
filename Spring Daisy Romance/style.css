@@ -1,1 +1,486 @@
-@importurl('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Sacramento&display=swap');:root{color-scheme:light}*{margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif;letter-spacing:0.5px}body{min-height:100vh;background:black;overflow:hidden}.preload{position:absolute;top:0;bottom:0;left:0;right:0;display:flex;justify-content:center;align-items:center;background:#82aeb9;z-index:99;gap:10px}.preload.hide{transition:1s;opacity:0}.preload p{color:white;font-size:1rem;letter-spacing:2px;animation:2s ease-in-out infinite anm-preload2}.preload div{height:16px;width:16px;background:white;border-radius:50%;transform:translateY(-5px);animation:1s ease-in-out infinite anm-preload}.preload div:nth-child(2){animation-delay:.2s}.preload div:nth-child(3){animation-delay:.4s}.main{background:bottom/cover #161d31;position:fixed;height:100%;top:0;left:0;right:0}.container{height:100%;width:100%;position:relative;overflow:hidden}.bg{position:absolute;inset:0;background-size:cover;background-position:bottom;background-image:url("/asset/themes/img/Spring%20Daisy%20Romance/BG-Spring%20Daisy%20Romance.webp")}.content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px;z-index:2}.content:not(.show){display:none}.content.hide>*{transition:1.5s;filter:blur(10px);opacity:0}.open{justify-content:start;padding:15% 20px 20px}.open-text{display:flex;flex-direction:column;align-items:center;gap:5px;width:100%;padding:20px;background:rgba(255,255,255,0.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:20px;border:1px solid rgba(255,255,255,0.6);box-shadow:0 8px 32px rgba(0,0,0,0.1)}.open h1,.open h2,.open p{text-align:center;opacity:0}.open h1{font-size:3.5rem;font-family:"Sacramento",cursive;font-weight:400;color:#2b3a4a;animation:1.5s forwards anm-show;text-shadow:0 2px 4px rgba(255,255,255,0.8);line-height:1.1}.open h1 span{font-family:"Sacramento",cursive}.open h2{font-size:1.6rem;font-family:"Poppins",sans-serif;font-weight:600;color:#3b4c5e;animation:1.5s .3s forwards anm-show;letter-spacing:1.5px}.open p{font-weight:400;font-size:0.9rem;color:#4f5d6d;margin-top:5px;animation:1.5s .6s forwards anm-show}.main-content{padding:20px;max-height:85%;animation:1.5s forwards anm-show}.main-content img{max-height:26vh;max-width:70%;border:3px solid rgba(255,255,255,0.9);border-radius:16px;box-shadow:0 10px 25px rgba(0,0,0,0.25)}.main-content .text{color:#2b3a4a;max-height:42%;padding:20px 24px;overflow-y:auto;text-align:center;font-weight:400;font-size:0.95rem;line-height:1.7;font-family:"Poppins",sans-serif;background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:18px;border:1px solid rgba(255,255,255,0.9);box-shadow:0 10px 30px rgba(0,0,0,0.15),inset 0 1px 2px rgba(255,255,255,0.8)}.main-content.text-only .text{max-height:100%}.btn-container{position:absolute;bottom:25px;left:0;right:0;z-index:2;display:flex;flex-direction:column;align-items:center}.btn-container:not(.show) .btn-blur{transform:translateY(50px);opacity:0}.btn-container button:not(.show){display:none}.btn-container .btn-blur{transition:1s;background:rgba(255,255,255,0.4);width:fit-content;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;border:1px solid rgba(255,255,255,0.7);box-shadow:0 8px 25px rgba(0,0,0,0.15);padding:5px;display:flex;gap:6px}.btn,.btn-container button{padding:8px 18px;background:linear-gradient(135deg,#4a7c59,#355840);border:1px solid rgba(255,255,255,0.5);font-size:0.9rem;font-weight:500;font-family:"Poppins",sans-serif;color:white;border-radius:12px;cursor:pointer;transition:all 0.2s ease;box-shadow:0 4px 12px rgba(53,88,64,0.3)}.btn-container button:hover{opacity:0.9}.btn-container button:active{transform:scale(.95)}.sprite-foto{width:70%;max-width:260px;height:26vh;max-height:260px;background-size:300% 200%;background-repeat:no-repeat;border:3px solid rgba(255,255,255,0.9);border-radius:16px;box-shadow:0 10px 25px rgba(0,0,0,0.25)}.fireworks{position:absolute;width:100%;height:100%;top:0;left:0}.fireworks>*{position:absolute;top:0;width:100%}.stars-container{position:absolute;width:100%;height:70%;left:0;top:0;overflow:hidden;pointer-events:none;z-index:1}.star{position:absolute;display:block;object-fit:contain;pointer-events:none;animation-name:twinkle;animation-timing-function:ease-in-out;animation-iteration-count:infinite;will-change:opacity,transform}.shooting-star{position:absolute;top:0;left:0;width:var(--star-size);height:var(--star-size);border-radius:50%;background:#fffbd5;box-shadow:0 0 4px white,0 0 8px #fff3a0,0 0 14px rgba(255,220,80,.9);opacity:0;transform:translate3d(var(--start-x),var(--start-y),0) rotate(var(--angle));animation:shooting-star var(--duration) linear forwards;will-change:transform,opacity}.shooting-star::before{content:"";position:absolute;width:var(--tail-length);height:var(--tail-width);top:50%;right:50%;border-radius:100%;background:linear-gradient(to left,#fffac8 0,rgba(255,224,100,.75) 25%,rgba(255,205,70,.3) 65%,transparent 100%);transform:translateY(-50%);filter:blur(.5px);box-shadow:0 0 6px rgba(255,225,100,.5)}.swal2-popup{background:rgba(255,255,255,0.95)!important;backdrop-filter:blur(12px);border-radius:24px!important;padding-top:15px;padding-bottom:25px;border:1px solid rgba(255,255,255,0.8);box-shadow:0 20px 40px rgba(0,0,0,0.2)!important}.swal2-title{font-size:1.3rem;color:#2b3a4a;font-family:"Poppins",sans-serif;font-weight:600}.swal2-popup textarea{resize:none;background:rgba(245,247,250,0.9)!important;border:1px solid rgba(0,0,0,0.1)!important;border-radius:14px!important;padding:12px!important;font-family:"Poppins",sans-serif!important;color:#2b3a4a!important}.swal2-actions button{font-family:"Poppins",sans-serif;font-size:0.95rem!important;font-weight:500;color:white;background:#4a7c59!important;border-radius:12px!important;padding:8px 22px;border:none;box-shadow:0 4px 15px rgba(74,124,89,0.4)}.swal2-actions button:active{transform:scale(.95)}@keyframes anm-preload{0,100%{transform:translateY(-5px)}50%{transform:translateY(5px)}}@keyframes anm-preload2{0,100%{opacity:1}50%{opacity:0}}@keyframes anm-show{from{filter:blur(10px);opacity:0}to{filter:blur(0);opacity:1}}@keyframes twinkle{0,100%{opacity:.15;transform:scale(.65) rotate(0)}35%{opacity:.55;transform:scale(.9) rotate(8deg)}50%{opacity:1;transform:scale(1.25) rotate(15deg)}70%{opacity:.4;transform:scale(.8) rotate(5deg)}}@keyframes shooting-star{0{opacity:0;transform:translate3d(var(--start-x),var(--start-y),0) rotate(var(--angle)) scale(.6)}75%,8%{opacity:1}100%{opacity:0;transform:translate3d(calc(var(--start-x)+var(--move-x)),calc(var(--start-y)+var(--move-y)),0) rotate(var(--angle)) scale(1)}}.petal{position:absolute;background:rgba(255,255,255,0.85);border-radius:50% 0 50% 50%;pointer-events:none;animation-name:fall-petal;animation-timing-function:linear;animation-iteration-count:infinite;box-shadow:0 0 6px rgba(255,255,255,0.6);z-index:1}@keyframes fall-petal{0{transform:translateY(0) rotate(0) translateX(0);opacity:0}10%{opacity:0.8}90%{opacity:0.8}100%{transform:translateY(105vh) rotate(360deg) translateX(50px);opacity:0}}.main-content .text,.sprite-foto{animation:box-glow 4s ease-in-out infinite alternate}@keyframes box-glow{0{box-shadow:0 10px 30px rgba(0,0,0,0.15),inset 0 1px 2px rgba(255,255,255,0.8)}100%{box-shadow:0 10px 35px rgba(255,255,255,0.4),inset 0 1px 5px rgba(255,255,255,1)}}.main-content:not(.show) .sprite-foto{transform:scale(0.9);transition:transform 1s ease}.main-content.show .sprite-foto{transform:scale(1);transition:transform 1s ease}
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Sacramento&display=swap');
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.5px;
+}
+
+body {
+  min-height: 100vh;
+  background: #000;
+  overflow: hidden;
+}
+
+.preload {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #82AEB9;
+  z-index: 99;
+  gap: 10px;
+}
+
+.preload.hide {
+  transition: 1s;
+  opacity: 0;
+}
+
+.preload p {
+  color: #fff;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  animation: 2s ease-in-out infinite anm-preload2;
+}
+
+.preload div {
+  height: 16px;
+  width: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transform: translateY(-5px);
+  animation: 1s ease-in-out infinite anm-preload;
+}
+
+.preload div:nth-child(2) {
+  animation-delay: .2s;
+}
+
+.preload div:nth-child(3) {
+  animation-delay: .4s;
+}
+
+.main {
+  background: bottom / cover #161d31;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: bottom;
+  background-image: url("/asset/themes/img/Spring%20Daisy%20Romance/BG-Spring%20Daisy%20Romance.webp");
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  z-index: 2;
+}
+
+.content:not(.show) {
+  display: none;
+}
+
+.content.hide > * {
+  transition: 1.5s;
+  filter: blur(10px);
+  opacity: 0;
+}
+
+.open {
+  justify-content: start;
+  padding: 15% 20px 20px;
+}
+
+.open-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.open h1,
+.open h2,
+.open p {
+  text-align: center;
+  opacity: 0;
+}
+
+.open h1 {
+  font-size: 3.5rem;
+  font-family: "Sacramento", cursive;
+  font-weight: 400;
+  color: #2b3a4a;
+  animation: 1.5s forwards anm-show;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+  line-height: 1.1;
+}
+
+.open h1 span {
+  font-family: "Sacramento", cursive;
+}
+
+.open h2 {
+  font-size: 1.6rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  color: #3b4c5e;
+  animation: 1.5s .3s forwards anm-show;
+  letter-spacing: 1.5px;
+}
+
+.open p {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: #4f5d6d;
+  margin-top: 5px;
+  animation: 1.5s .6s forwards anm-show;
+}
+
+
+.main-content {
+  padding: 20px;
+  max-height: 85%;
+  animation: 1.5s forwards anm-show;
+}
+
+.main-content img {
+  max-height: 26vh;
+  max-width: 70%;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.main-content .text {
+  color: #2b3a4a;
+  max-height: 42%;
+  padding: 20px 24px;
+  overflow-y: auto;
+  text-align: center;
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  font-family: "Poppins", sans-serif;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.main-content.text-only .text {
+  max-height: 100%;
+}
+
+.btn-container {
+  position: absolute;
+  bottom: 25px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-container:not(.show) .btn-blur {
+  transform: translateY(50px);
+  opacity: 0;
+}
+
+.btn-container button:not(.show) {
+  display: none;
+}
+
+.btn-container .btn-blur {
+  transition: 1s;
+  background: rgba(255, 255, 255, 0.4);
+  width: fit-content;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  padding: 5px;
+  display: flex;
+  gap: 6px;
+}
+
+.btn,
+.btn-container button {
+  padding: 8px 18px;
+  background: linear-gradient(135deg, #4a7c59, #355840);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(53, 88, 64, 0.3);
+}
+
+.btn-container button:hover {
+  opacity: 0.9;
+}
+
+.btn-container button:active {
+  transform: scale(.95);
+}
+
+.sprite-foto {
+  width: 70%;
+  max-width: 260px;
+  height: 26vh;
+  max-height: 260px;
+  background-size: 300% 200%;
+  background-repeat: no-repeat;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.fireworks {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.fireworks > * {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.stars-container {
+  position: absolute;
+  width: 100%;
+  height: 70%;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star {
+  position: absolute;
+  display: block;
+  object-fit: contain;
+  pointer-events: none;
+  animation-name: twinkle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: opacity, transform;
+}
+
+.shooting-star {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--star-size);
+  height: var(--star-size);
+  border-radius: 50%;
+  background: #fffbd5;
+  box-shadow: 0 0 4px #fff, 0 0 8px #fff3a0, 0 0 14px rgba(255,220,80,.9);
+  opacity: 0;
+  transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle));
+  animation: shooting-star var(--duration) linear forwards;
+  will-change: transform, opacity;
+}
+
+.shooting-star::before {
+  content: "";
+  position: absolute;
+  width: var(--tail-length);
+  height: var(--tail-width);
+  top: 50%;
+  right: 50%;
+  border-radius: 100%;
+  background: linear-gradient(to left, #fffac8 0, rgba(255,224,100,.75) 25%, rgba(255,205,70,.3) 65%, transparent 100%);
+  transform: translateY(-50%);
+  filter: blur(.5px);
+  box-shadow: 0 0 6px rgba(255,225,100,.5);
+}
+
+.swal2-popup {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(12px);
+  border-radius: 24px !important;
+  padding-top: 15px;
+  padding-bottom: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
+}
+
+.swal2-title {
+  font-size: 1.3rem;
+  color: #2b3a4a;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+}
+
+.swal2-popup textarea {
+  resize: none;
+  background: rgba(245, 247, 250, 0.9) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 14px !important;
+  padding: 12px !important;
+  font-family: "Poppins", sans-serif !important;
+  color: #2b3a4a !important;
+}
+
+.swal2-actions button {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem !important;
+  font-weight: 500;
+  color: #fff;
+  background: #4a7c59 !important;
+  border-radius: 12px !important;
+  padding: 8px 22px;
+  border: none;
+  box-shadow: 0 4px 15px rgba(74, 124, 89, 0.4);
+}
+
+.swal2-actions button:active {
+  transform: scale(.95);
+}
+
+@keyframes anm-preload {
+  0%, 100% { transform: translateY(-5px); }
+  50% { transform: translateY(5px); }
+}
+
+@keyframes anm-preload2 {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes anm-show {
+  from {
+    filter: blur(10px);
+    opacity: 0;
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: .15;
+    transform: scale(.65) rotate(0);
+  }
+  35% {
+    opacity: .55;
+    transform: scale(.9) rotate(8deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25) rotate(15deg);
+  }
+  70% {
+    opacity: .4;
+    transform: scale(.8) rotate(5deg);
+  }
+}
+
+@keyframes shooting-star {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle)) scale(.6);
+  }
+  75%, 8% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(calc(var(--start-x) + var(--move-x)), calc(var(--start-y) + var(--move-y)), 0) rotate(var(--angle)) scale(1);
+  }
+}
+
+.petal {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50% 0 50% 50%;
+  pointer-events: none;
+  animation-name: fall-petal;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+  z-index: 1;
+}
+
+@keyframes fall-petal {
+  0% {
+    transform: translateY(0) rotate(0deg) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(105vh) rotate(360deg) translateX(50px);
+    opacity: 0;
+  }
+}
+
+.main-content .text,
+.sprite-foto {
+  animation: box-glow 4s ease-in-out infinite alternate;
+}
+
+@keyframes box-glow {
+  0% {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  }
+  100% {
+    box-shadow: 0 10px 35px rgba(255, 255, 255, 0.4), inset 0 1px 5px rgba(255, 255, 255, 1);
+  }
+}
+
+.main-content:not(.show) .sprite-foto {
+  transform: scale(0.9);
+  transition: transform 1s ease;
+}
+
+.main-content.show .sprite-foto {
+  transform: scale(1);
+  transition: transform 1s ease;
+}
