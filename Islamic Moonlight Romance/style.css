@@ -1,0 +1,421 @@
+/* =========================================
+   1. IMPORT & ROOT
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  color-scheme: light;
+}
+
+/* =========================================
+   2. RESET & GLOBAL STYLES
+   ========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Serif", serif;
+  letter-spacing: 1px;
+}
+
+body {
+  min-height: 100vh;
+  background: #000;
+  overflow: hidden;
+}
+
+/* =========================================
+   3. PRELOADER
+   ========================================= */
+.preload {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2a61cd;
+  z-index: 99;
+  gap: 10px;
+}
+
+.preload.hide {
+  transition: 1s;
+  opacity: 0;
+}
+
+.preload p {
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  animation: 2s ease-in-out infinite anm-preload2;
+}
+
+.preload div {
+  height: 16px;
+  width: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transform: translateY(-5px);
+  animation: 1s ease-in-out infinite anm-preload;
+}
+
+.preload div:nth-child(2) {
+  animation-delay: .2s;
+}
+
+.preload div:nth-child(3) {
+  animation-delay: .4s;
+}
+
+/* =========================================
+   4. LAYOUT UTAMA & BACKGROUND
+   ========================================= */
+.main {
+  background: bottom / cover #161d31;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: bottom;
+  background-image: url("/asset/themes/img/Starlit Garden/Jannah Twilight BG.webp");
+}
+
+/* =========================================
+   5. KONTEN & ANIMASI TEKS
+   ========================================= */
+.content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  z-index: 2;
+}
+
+.content:not(.show) {
+  display: none;
+}
+
+.content.hide > * {
+  transition: 1.5s;
+  filter: blur(10px);
+  opacity: 0;
+}
+
+.open {
+  justify-content: start;
+  padding: 20% 20px 20px;
+}
+
+.open-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.open h1,
+.open h2,
+.open p {
+  text-align: center;
+  color: #f3f4f6;
+  opacity: 0;
+  text-shadow: 0 0 10px #f3f4f6;
+}
+
+.open h1 {
+  font-size: 3.7rem;
+  font-family: "Great Vibes", cursive;
+  font-weight: 500;
+  animation: 1.5s forwards anm-show;
+}
+
+.open h1 span {
+  font-family: "Great Vibes", cursive;
+}
+
+.open .year {
+  display: flex;
+  gap: 2px;
+}
+
+.open h2 {
+  font-size: 1.8rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  animation: 1.5s .3s forwards anm-show;
+}
+
+.open p {
+  font-weight: 600;
+  margin-top: 10px;
+  animation: 1.5s .6s forwards anm-show;
+}
+
+/* =========================================
+   6. MAIN CONTENT & GAMBAR
+   ========================================= */
+.main-content {
+  padding: 20px;
+  max-height: 80%;
+  animation: 1.5s forwards anm-show;
+}
+
+.main-content img {
+  max-height: 28vh;
+  max-width: 70%;
+  border: 2px solid #f3f4f6;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #f3f4f6;
+}
+
+.main-content .text {
+  color: #f3f4f6;
+  max-height: 50%;
+  padding: 10px;
+  overflow-y: auto;
+  text-align: center;
+  font-weight: 600;
+  text-shadow: 0 0 15px #000, 0 0 5px #000, 0 0 5px #f3f4f6;
+}
+
+.main-content.text-only .text {
+  max-height: 100%;
+}
+
+/* =========================================
+   7. TOMBOL & CONTAINER TOMBOL
+   ========================================= */
+.btn-container {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-container:not(.show) .btn-blur {
+  transform: translateY(50px);
+  opacity: 0;
+}
+
+.btn-container button:not(.show) {
+  display: none;
+}
+
+.btn-container .btn-blur {
+  transition: 1s;
+  background: #4472be;
+  width: fit-content;
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.btn,
+.btn-container button {
+  padding: 6px 12px;
+  background: transparent;
+  border: 2px solid #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.btn-container button {
+  box-shadow: 0 0 10px rgba(255,255,255,.5), inset 0 0 5px rgba(255,255,255,.5);
+}
+
+.btn-container button:active {
+  transform: scale(.95);
+}
+
+/* =========================================
+   8. EFEK VISUAL (FIREWORKS, STARS, SHOOTING STAR)
+   ========================================= */
+.fireworks {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.fireworks > * {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.stars-container {
+  position: absolute;
+  width: 100%;
+  height: 70%;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star {
+  position: absolute;
+  display: block;
+  object-fit: contain;
+  pointer-events: none;
+  animation-name: twinkle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: opacity, transform;
+}
+
+.shooting-star {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--star-size);
+  height: var(--star-size);
+  border-radius: 50%;
+  background: #fffbd5;
+  box-shadow: 0 0 4px #fff, 0 0 8px #fff3a0, 0 0 14px rgba(255,220,80,.9);
+  opacity: 0;
+  transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle));
+  animation: shooting-star var(--duration) linear forwards;
+  will-change: transform, opacity;
+}
+
+.shooting-star::before {
+  content: "";
+  position: absolute;
+  width: var(--tail-length);
+  height: var(--tail-width);
+  top: 50%;
+  right: 50%;
+  border-radius: 100%;
+  background: linear-gradient(to left, #fffac8 0, rgba(255,224,100,.75) 25%, rgba(255,205,70,.3) 65%, transparent 100%);
+  transform: translateY(-50%);
+  filter: blur(.5px);
+  box-shadow: 0 0 6px rgba(255,225,100,.5);
+}
+
+/* =========================================
+   9. SWEETALERT MODIFICATION
+   ========================================= */
+.swal2-popup {
+  background: #fff;
+  border-radius: 20px;
+  padding-top: 10px;
+  padding-bottom: 25px;
+}
+
+.swal2-title {
+  font-size: 1.4rem;
+  color: #3b3b3b;
+}
+
+.swal2-popup textarea {
+  resize: none;
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,.2), 1px 1px 2px #fff !important;
+  border-radius: 10px;
+}
+
+.swal2-actions button {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.1rem !important;
+  font-weight: 600;
+  color: #fff;
+  background: #4472be !important;
+  border-radius: 10px !important;
+  padding: 6px 16px;
+  border: none;
+  box-shadow: 0 0 10px #fff;
+}
+
+.swal2-actions button:active {
+  transform: scale(.95) translateY(2px);
+}
+
+/* =========================================
+   10. KEYFRAME ANIMATIONS
+   ========================================= */
+@keyframes anm-preload {
+  0%, 100% { transform: translateY(-5px); }
+  50% { transform: translateY(5px); }
+}
+
+@keyframes anm-preload2 {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes anm-show {
+  from {
+    filter: blur(10px);
+    opacity: 0;
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: .15;
+    transform: scale(.65) rotate(0);
+  }
+  35% {
+    opacity: .55;
+    transform: scale(.9) rotate(8deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25) rotate(15deg);
+  }
+  70% {
+    opacity: .4;
+    transform: scale(.8) rotate(5deg);
+  }
+}
+
+@keyframes shooting-star {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle)) scale(.6);
+  }
+  75%, 8% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(calc(var(--start-x) + var(--move-x)), calc(var(--start-y) + var(--move-y)), 0) rotate(var(--angle)) scale(1);
+  }
+}
