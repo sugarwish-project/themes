@@ -28,6 +28,18 @@ const kontenList = [
   }
 ];
 
+// Audio Musik Latar & SFX Klik
+const musikAudio = new Audio('https://dekatutorial.github.io/musik/Romantic%20Happy%20Birthday%20(Arranged%20by%20Miranda%20Wong)%20Piano%20Cover.mp3');
+musikAudio.loop = true;
+
+const klikSfx = new Audio('musik/sfx/klik.mp3');
+klikSfx.preload = 'auto';
+
+function playClickSound() {
+  klikSfx.currentTime = 0;
+  klikSfx.play().catch(() => {});
+}
+
 // Konfigurasi SweetAlert
 const swalConfig = Swal.mixin({
   allowOutsideClick: false,
@@ -36,6 +48,7 @@ const swalConfig = Swal.mixin({
 
 // Fungsi Mengirim Pesan
 async function kirimPesan() {
+  playClickSound();
   const { value: pesanInput } = await swalConfig.fire({
     title: "Tulis Pesan & Doa",
     input: "textarea",
@@ -46,6 +59,7 @@ async function kirimPesan() {
   });
 
   if (pesanInput !== undefined) {
+    playClickSound();
     if (pesanInput.trim() !== "") {
       swalConfig.fire({
         title: "Mengirim pesan...",
@@ -68,12 +82,10 @@ async function kirimPesan() {
       });
       kirimPesan();
     }
+  } else {
+    playClickSound();
   }
 }
-
-// Audio Musik Latar
-const musikAudio = new Audio('https://dekatutorial.github.io/musik/Romantic%20Happy%20Birthday%20(Arranged%20by%20Miranda%20Wong)%20Piano%20Cover.mp3');
-musikAudio.loop = true;
 
 // Selektor Elemen DOM
 const preloadContainer = document.querySelector('.preload');
@@ -108,7 +120,6 @@ window.addEventListener('resize', updateScreenSize);
 // Pembuatan Konten Dinamis dengan Wadah Glossy
 let mainContents = [];
 function createMainContent() {
-  // Hapus slide lama jika sedang melakukan "Baca Ulang"
   document.querySelectorAll(".main-content").forEach(el => el.remove());
 
   kontenList.forEach(item => {
@@ -171,6 +182,7 @@ let isClick = 1;
 
 // Memulai Halaman Utama
 function startContent() {
+  playClickSound();
   musikAudio.play().catch(() => {});
   openContainer.classList.add("hide");
   setTimeout(() => {
@@ -192,9 +204,9 @@ function startContent() {
 // Fungsi Baca Ulang dari Awal
 function replayContent() {
   if (!isClick) return;
+  playClickSound();
   isClick = 0;
 
-  // Sembunyikan slide terakhir
   const lastContent = mainContents[kontenList.length - 1];
   if (lastContent) {
     lastContent.classList.add("hide");
@@ -203,11 +215,9 @@ function replayContent() {
   btnContainer.classList.remove("show");
 
   setTimeout(() => {
-    // Susun ulang DOM slide agar bersih
     createMainContent();
     nextIndex = 1;
 
-    // Kembalikan ke layar pembuka
     openContainer.classList.add("show");
 
     endButtons.classList.remove("show");
@@ -222,6 +232,7 @@ btnStart.addEventListener("click", startContent);
 
 btnNext.addEventListener('click', () => {
   if (isClick && nextIndex < kontenList.length) {
+    playClickSound();
     isClick = 0;
     nextContent(nextIndex);
     nextIndex++;
@@ -271,7 +282,7 @@ function createFireflies() {
   for (let i = 0; i < 22; i++) {
     const firefly = document.createElement("span");
     const size = Math.random() * 4 + 3;
-    const duration = Math.random() * 7 + 8; // 8 - 15 detik
+    const duration = Math.random() * 7 + 8;
     const delay = Math.random() * 10;
     const driftX = (Math.random() - 0.5) * 80;
 
