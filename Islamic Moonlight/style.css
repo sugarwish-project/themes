@@ -419,3 +419,18 @@ body {
     transform: translate3d(calc(var(--start-x) + var(--move-x)), calc(var(--start-y) + var(--move-y)), 0) rotate(var(--angle)) scale(1);
   }
 }
+
+/* =========================================
+   11. STYLE TAMBAHAN SPRITE FOTO (3x2 Grid)
+   ========================================= */
+.sprite-foto {
+  width: 70%;
+  max-width: 280px;
+  height: 28vh;
+  max-height: 280px;
+  background-size: 300% 200%; /* Karena 3 kolom dan 2 baris */
+  background-repeat: no-repeat;
+  border: 2px solid #f3f4f6;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #f3f4f6;
+}

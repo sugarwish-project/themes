@@ -1,24 +1,30 @@
-// Data Konten Ucapan dan Foto
+// Data Konten Ucapan (Menggunakan 1 Gambar Sprite Berisi 6 Foto dengan Layout 3 Kolom x 2 Baris)
+const spriteImageUrl = 'http://sugarwish.my.id/asset/themes/img/Starlit%20Garden/romantis%20bg.webp'; // Ganti dengan link gambar 6 foto Anda jika berbeda
+
 const kontenList = [
   {
-    foto: '../../asset/210/1.webp',
+    indexFoto: 0, // Kolom 0, Baris 0 (Kiri Atas)
     ucapan: "Selamat ulang tahun, sayangku. Hari ini tentang kamu, tentang bertambahnya satu tahun perjalanan hidup kamu, dan tentang semua hal yang sudah berhasil kamu lewati sampai sejauh ini."
   },
   {
-    foto: '../../asset/210/2.webp',
+    indexFoto: 1, // Kolom 1, Baris 0 (Tengah Atas)
     ucapan: "Semoga di usia yang baru ini, hidup kamu dipenuhi lebih banyak hal baik. Semoga apa yang kamu perjuangkan perlahan menemukan jalannya, dan semoga kamu selalu punya alasan untuk tersenyum meskipun nggak setiap hari berjalan sesuai yang kamu mau."
   },
   {
-    foto: "../../asset/210/3.webp",
+    indexFoto: 2, // Kolom 2, Baris 0 (Kanan Atas)
     ucapan: "Kalau suatu saat semuanya terasa berat, jangan lupa kalau kamu nggak sendirian. Ada aku yang selalu berharap kamu baik-baik saja, selalu mendukung langkah kamu, dan selalu mau melihat kamu tumbuh menjadi versi terbaik dari diri kamu sendiri."
   },
   {
-    foto: "../../asset/210/4.webp",
+    indexFoto: 3, // Kolom 0, Baris 1 (Kiri Bawah)
     ucapan: "Terima kasih sudah hadir di hidup aku, sayang. Terima kasih untuk setiap cerita, tawa, dan momen kecil yang mungkin sederhana, tapi berarti banget buat aku. Kehadiran kamu punya tempat sendiri yang nggak bisa digantikan begitu saja."
   },
   {
-    foto: "../../asset/210/5.webp",
+    indexFoto: 4, // Kolom 1, Baris 1 (Tengah Bawah)
     ucapan: "Sekali lagi, selamat ulang tahun, sayang. Semoga perjalanan kamu setelah ini jauh lebih indah, penuh bahagia, dan dipertemukan dengan banyak hal yang kamu doakan. Dan kalau boleh, aku mau tetap ada di samping kamu, menemani sebanyak mungkin cerita yang masih akan kita lewati bersama."
+  },
+  {
+    indexFoto: 5, // Kolom 2, Baris 1 (Kanan Bawah - Opsional untuk foto ke-6)
+    ucapan: "Terima kasih sudah menjadi bagian terindah dalam hidupku. Semoga kebahagiaan selalu menyertai kita."
   }
 ];
 
@@ -58,23 +64,6 @@ async function kirimPesan() {
   }
 }
 
-// Fungsi Simpan ke Database
-function sendToDb(pesanText, callback) {
-  const formData = new FormData();
-  formData.append("pesan", pesanText);
-
-  fetch('func.php?act=add', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => response.json())
-  .then(async data => {
-    if (data.Status === 200) {
-      callback();
-    }
-  });
-}
-
 // Audio Musik Latar
 const musikAudio = new Audio('https://dekatutorial.github.io/musik/Romantic%20Happy%20Birthday%20(Arranged%20by%20Miranda%20Wong)%20Piano%20Cover.mp3');
 musikAudio.autoplay = true;
@@ -110,21 +99,23 @@ function updateScreenSize() {
 updateScreenSize();
 window.onresize = updateScreenSize;
 
-// Pembuatan Konten Dinamis
+// Pembuatan Konten Dinamis dengan Sistem Sprite CSS
 let mainContents = [];
 function createMainContent() {
   kontenList.forEach(item => {
     const contentDiv = document.createElement("div");
     contentDiv.classList.add("content", "main-content");
 
-    if (!item.foto) {
-      contentDiv.classList.add('text-only');
-    }
+    // Hitung posisi background berdasarkan indeks grid (3 kolom x 2 baris)
+    const col = item.indexFoto % 3; // Kolom 0, 1, atau 2
+    const row = Math.floor(item.indexFoto / 3); // Baris 0 atau 1
+    
+    const posX = col * 50; // dalam persentase (100 / (3-1) = 50%)
+    const posY = row * 100; // dalam persentase (100 / (2-1) = 100%)
 
     let innerHTMLContent = '';
-    if (item.foto) {
-      innerHTMLContent += `<img src="${item.foto}" />`;
-    }
+    innerHTMLContent += `<div class="sprite-foto" style="background-image: url('${spriteImageUrl}'); background-position: ${posX}% ${posY}%;"></div>`;
+    
     if (item.ucapan) {
       innerHTMLContent += `<p class="text">${item.ucapan}</p>`;
     }
@@ -279,7 +270,7 @@ startStarEffect();
 
 // Inisialisasi Saat Halaman Dimuat
 window.onload = () => {
-  preloadContainer.classList.add("hide");
+  preloadContainer.preloadContainer?.classList?.add("hide");
   setTimeout(() => {
     preloadContainer.remove();
     openContainer.classList.add("show");
