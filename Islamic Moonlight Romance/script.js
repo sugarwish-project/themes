@@ -1,8 +1,3 @@
-// Validasi Domain
-if (location.hostname !== "sugarwish.my.id/") {
-  location.assign("https://sugarwish.my.id/");
-}
-
 // Data Konten Ucapan dan Foto
 const kontenList = [
   {
