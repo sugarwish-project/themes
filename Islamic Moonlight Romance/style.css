@@ -1,10 +1,14 @@
 /* =========================================
    1. IMPORT & ROOT
    ========================================= */
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700&display=swap');
 
 :root {
   color-scheme: light;
+  --gold-light: #fef08a;
+  --gold-accent: #f59e0b;
+  --glass-bg: rgba(11, 20, 42, 0.62);
+  --glass-border: rgba(254, 243, 199, 0.35);
 }
 
 /* =========================================
@@ -14,14 +18,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Noto Serif", serif;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 body {
   min-height: 100vh;
-  background: #000;
+  background: #060b19;
   overflow: hidden;
+  font-family: "Montserrat", sans-serif;
 }
 
 /* =========================================
@@ -29,53 +33,33 @@ body {
    ========================================= */
 .preload {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  inset: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #2a61cd;
+  background: radial-gradient(circle at center, #1e3a8a, #090d16);
   z-index: 99;
-  gap: 10px;
 }
 
 .preload.hide {
   transition: 1s;
   opacity: 0;
+  pointer-events: none;
 }
 
 .preload p {
-  color: #fff;
+  color: #fef3c7;
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   animation: 2s ease-in-out infinite anm-preload2;
-}
-
-.preload div {
-  height: 16px;
-  width: 16px;
-  background: #fff;
-  border-radius: 50%;
-  transform: translateY(-5px);
-  animation: 1s ease-in-out infinite anm-preload;
-}
-
-.preload div:nth-child(2) {
-  animation-delay: .2s;
-}
-
-.preload div:nth-child(3) {
-  animation-delay: .4s;
 }
 
 /* =========================================
    4. LAYOUT UTAMA & BACKGROUND
    ========================================= */
 .main {
-  background: bottom / cover #161d31;
+  background: bottom / cover #0f172a;
   position: fixed;
   height: 100%;
   top: 0;
@@ -98,8 +82,17 @@ body {
   background-image: url("/asset/themes/img/Starlit Garden/BG-Islamic Moonlight Romance.webp");
 }
 
+/* Pendaran Cahaya Bulan Lembut di Atas */
+.moonlight-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 25%, rgba(254, 240, 138, 0.14) 0%, rgba(15, 23, 42, 0.35) 75%);
+  pointer-events: none;
+  z-index: 1;
+}
+
 /* =========================================
-   5. KONTEN & ANIMASI TEKS
+   5. KONTEN & GLOSSY CARD (GLASSMORPHISM)
    ========================================= */
 .content {
   position: absolute;
@@ -108,8 +101,9 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 18px;
   z-index: 2;
+  padding: 20px;
 }
 
 .content:not(.show) {
@@ -117,36 +111,87 @@ body {
 }
 
 .content.hide > * {
-  transition: 1.5s;
+  transition: 1s ease;
   filter: blur(10px);
   opacity: 0;
+  transform: scale(0.96);
 }
 
 .open {
-  justify-content: start;
-  padding: 20% 20px 20px;
+  justify-content: flex-start;
+  padding-top: 16%;
+}
+
+/* Efek Glossy Mewah untuk Kotak Teks */
+.glossy-card {
+  position: relative;
+  background: linear-gradient(
+    145deg,
+    rgba(19, 34, 68, 0.72) 0%,
+    rgba(10, 18, 38, 0.58) 50%,
+    rgba(28, 48, 92, 0.68) 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.45),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    0 0 20px rgba(253, 224, 71, 0.15);
+  overflow: hidden;
+}
+
+/* Kilauan Glossy Diagonal */
+.glossy-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
+  transform: skewX(-25deg);
+  animation: glossy-sweep 6s infinite ease-in-out;
+  pointer-events: none;
 }
 
 .open-text {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
+  padding: 22px 26px;
+  max-width: 92%;
+  animation: 1.4s forwards anm-show;
+}
+
+.ornament {
+  color: #fde68a;
+  font-size: 0.9rem;
+  letter-spacing: 6px;
+  margin-bottom: 4px;
+  text-shadow: 0 0 8px rgba(253, 224, 71, 0.7);
 }
 
 .open h1,
 .open h2,
 .open p {
   text-align: center;
-  color: #f3f4f6;
   opacity: 0;
-  text-shadow: 0 0 10px #f3f4f6;
 }
 
 .open h1 {
-  font-size: 3.7rem;
+  font-size: 3.5rem;
+  line-height: 1.05;
+  color: #fffbeb;
   font-family: "Great Vibes", cursive;
   font-weight: 500;
+  text-shadow: 0 2px 12px rgba(253, 224, 71, 0.55), 0 2px 4px rgba(0, 0, 0, 0.8);
   animation: 1.5s forwards anm-show;
 }
 
@@ -154,53 +199,78 @@ body {
   font-family: "Great Vibes", cursive;
 }
 
-.open .year {
-  display: flex;
-  gap: 2px;
-}
-
 .open h2 {
-  font-size: 1.8rem;
+  font-size: 1.35rem;
+  color: #fde68a;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
+  margin-top: 8px;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
   animation: 1.5s .3s forwards anm-show;
 }
 
 .open p {
-  font-weight: 600;
-  margin-top: 10px;
+  font-size: 0.88rem;
+  color: #e2e8f0;
+  font-weight: 500;
+  margin-top: 8px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
   animation: 1.5s .6s forwards anm-show;
 }
 
 /* =========================================
-   6. MAIN CONTENT & GAMBAR
+   6. MAIN CONTENT, FOTO & TEKS LATIN GLOSSY
    ========================================= */
 .main-content {
-  padding: 20px;
-  max-height: 80%;
-  animation: 1.5s forwards anm-show;
+  padding-bottom: 85px; /* Memberi ruang untuk tombol di bawah */
+  animation: 1.4s forwards anm-show;
 }
 
-.main-content img {
-  max-height: 28vh;
-  max-width: 70%;
-  border: 2px solid #f3f4f6;
-  border-radius: 10px;
-  box-shadow: 0 0 20px #f3f4f6;
+.sprite-foto {
+  width: 68%;
+  max-width: 260px;
+  height: 26vh;
+  max-height: 260px;
+  background-size: 300% 200%;
+  background-repeat: no-repeat;
+  border: 2px solid rgba(254, 243, 199, 0.85);
+  border-radius: 16px;
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.5),
+    0 0 18px rgba(253, 224, 71, 0.35);
+  flex-shrink: 0;
 }
 
-.main-content .text {
-  color: #f3f4f6;
-  max-height: 50%;
-  padding: 10px;
+/* Wadah Bacaan Glossy */
+.text-wrapper {
+  width: 92%;
+  max-width: 380px;
+  max-height: 44vh;
+  padding: 18px 20px;
   overflow-y: auto;
-  text-align: center;
-  font-weight: 600;
-  text-shadow: 0 0 15px #000, 0 0 5px #000, 0 0 5px #f3f4f6;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(253, 224, 71, 0.5) transparent;
 }
 
-.main-content.text-only .text {
-  max-height: 100%;
+.text-wrapper::-webkit-scrollbar {
+  width: 4px;
+}
+
+.text-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(253, 224, 71, 0.5);
+  border-radius: 10px;
+}
+
+/* Tulisan Latin Romantis yang Jelas & Kontras */
+.main-content .text {
+  font-family: "Dancing Script", cursive;
+  font-size: 1.42rem;
+  line-height: 1.55;
+  font-weight: 600;
+  color: #fffbeb; /* Putih gading hangat agar sangat kontras di atas kaca biru gelap */
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
 }
 
 /* =========================================
@@ -208,93 +278,95 @@ body {
    ========================================= */
 .btn-container {
   position: absolute;
-  bottom: 30px;
+  bottom: 28px;
   left: 0;
   right: 0;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .btn-container:not(.show) .btn-blur {
-  transform: translateY(50px);
+  transform: translateY(40px);
   opacity: 0;
+  pointer-events: none;
 }
 
-.btn-container button:not(.show) {
+.btn-container button:not(.show),
+.end-buttons:not(.show) {
   display: none;
 }
 
+.end-buttons.show {
+  display: flex;
+  gap: 10px;
+}
+
 .btn-container .btn-blur {
-  transition: 1s;
-  background: #4472be;
+  transition: 0.8s ease;
   width: fit-content;
-  backdrop-filter: blur(5px);
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
+  border-radius: 14px;
 }
 
 .btn,
 .btn-container button {
-  padding: 6px 12px;
-  background: transparent;
-  border: 2px solid #fff;
-  font-size: 1rem;
-  font-weight: 500;
+  padding: 9px 18px;
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.85), rgba(15, 23, 42, 0.9));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(254, 240, 138, 0.75);
+  font-size: 0.92rem;
+  font-weight: 600;
   font-family: "Montserrat", sans-serif;
-  color: #fff;
-  border-radius: 10px;
+  color: #fef3c7;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  transition: all 0.25s ease;
 }
 
-.btn-container button {
-  box-shadow: 0 0 10px rgba(255,255,255,.5), inset 0 0 5px rgba(255,255,255,.5);
+.btn-container button:hover {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(30, 58, 138, 0.95));
+  box-shadow: 0 0 15px rgba(253, 224, 71, 0.45);
 }
 
 .btn-container button:active {
-  transform: scale(.95);
+  transform: scale(0.94);
+}
+
+/* Tombol Baca Ulang Punya Nuansa Sedikit Lebih Lembut */
+.btn-replay {
+  background: rgba(15, 23, 42, 0.75) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  color: #e2e8f0 !important;
 }
 
 /* =========================================
-   8. EFEK VISUAL (FIREWORKS, STARS, SHOOTING STAR)
+   8. EFEK VISUAL (STARS, SHOOTING STAR, FIREFLIES)
    ========================================= */
-.fireworks {
+.stars-container,
+.fireflies-container {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
-
-.fireworks > * {
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
-
-.stars-container {
-  position: absolute;
-  width: 100%;
-  height: 70%;
-  left: 0;
-  top: 0;
+  inset: 0;
   overflow: hidden;
   pointer-events: none;
   z-index: 1;
+}
+
+.stars-container {
+  height: 65%;
 }
 
 .star {
   position: absolute;
   display: block;
   object-fit: contain;
-  pointer-events: none;
   animation-name: twinkle;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
-  will-change: opacity, transform;
 }
 
 .shooting-star {
@@ -309,7 +381,6 @@ body {
   opacity: 0;
   transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle));
   animation: shooting-star var(--duration) linear forwards;
-  will-change: transform, opacity;
 }
 
 .shooting-star::before {
@@ -323,87 +394,83 @@ body {
   background: linear-gradient(to left, #fffac8 0, rgba(255,224,100,.75) 25%, rgba(255,205,70,.3) 65%, transparent 100%);
   transform: translateY(-50%);
   filter: blur(.5px);
-  box-shadow: 0 0 6px rgba(255,225,100,.5);
+}
+
+/* Partikel Cahaya Emas (Kunang-kunang Romantis) */
+.firefly {
+  position: absolute;
+  bottom: -10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fef08a 10%, rgba(245, 158, 11, 0.6) 60%, transparent 100%);
+  box-shadow: 0 0 8px #fde047, 0 0 14px rgba(245, 158, 11, 0.8);
+  opacity: 0;
+  animation: float-firefly var(--duration) ease-in-out infinite;
+  animation-delay: var(--delay);
 }
 
 /* =========================================
    9. SWEETALERT MODIFICATION
    ========================================= */
 .swal2-popup {
-  background: #fff;
+  background: linear-gradient(145deg, #1e293b, #0f172a) !important;
+  border: 1px solid rgba(254, 240, 138, 0.4);
   border-radius: 20px;
-  padding-top: 10px;
-  padding-bottom: 25px;
+  color: #fffbeb !important;
 }
 
 .swal2-title {
-  font-size: 1.4rem;
-  color: #3b3b3b;
+  font-size: 1.35rem;
+  color: #fde68a !important;
 }
 
 .swal2-popup textarea {
+  background: rgba(15, 23, 42, 0.8) !important;
+  color: #fff !important;
+  border: 1px solid rgba(254, 240, 138, 0.4) !important;
+  border-radius: 12px;
   resize: none;
-  box-shadow: inset 2px 2px 5px rgba(0,0,0,.2), 1px 1px 2px #fff !important;
-  border-radius: 10px;
 }
 
 .swal2-actions button {
   font-family: "Montserrat", sans-serif;
-  font-size: 1.1rem !important;
+  font-size: 0.95rem !important;
   font-weight: 600;
-  color: #fff;
-  background: #4472be !important;
+  color: #0f172a !important;
+  background: linear-gradient(135deg, #fef08a, #f59e0b) !important;
   border-radius: 10px !important;
-  padding: 6px 16px;
+  padding: 8px 20px;
   border: none;
-  box-shadow: 0 0 10px #fff;
-}
-
-.swal2-actions button:active {
-  transform: scale(.95) translateY(2px);
 }
 
 /* =========================================
    10. KEYFRAME ANIMATIONS
    ========================================= */
-@keyframes anm-preload {
-  0%, 100% { transform: translateY(-5px); }
-  50% { transform: translateY(5px); }
-}
-
 @keyframes anm-preload2 {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  50% { opacity: 0.3; }
 }
 
 @keyframes anm-show {
   from {
-    filter: blur(10px);
+    filter: blur(8px);
     opacity: 0;
+    transform: translateY(10px);
   }
   to {
     filter: blur(0);
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
+@keyframes glossy-sweep {
+  0%, 75% { left: -100%; }
+  100% { left: 200%; }
+}
+
 @keyframes twinkle {
-  0%, 100% {
-    opacity: .15;
-    transform: scale(.65) rotate(0);
-  }
-  35% {
-    opacity: .55;
-    transform: scale(.9) rotate(8deg);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.25) rotate(15deg);
-  }
-  70% {
-    opacity: .4;
-    transform: scale(.8) rotate(5deg);
-  }
+  0%, 100% { opacity: .2; transform: scale(.7); }
+  50% { opacity: 1; transform: scale(1.2); }
 }
 
 @keyframes shooting-star {
@@ -411,7 +478,7 @@ body {
     opacity: 0;
     transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle)) scale(.6);
   }
-  75%, 8% {
+  15%, 75% {
     opacity: 1;
   }
   100% {
@@ -420,17 +487,23 @@ body {
   }
 }
 
-/* =========================================
-   11. STYLE TAMBAHAN SPRITE FOTO (3x2 Grid)
-   ========================================= */
-.sprite-foto {
-  width: 70%;
-  max-width: 280px;
-  height: 28vh;
-  max-height: 280px;
-  background-size: 300% 200%; /* Karena 3 kolom dan 2 baris */
-  background-repeat: no-repeat;
-  border: 2px solid #f3f4f6;
-  border-radius: 10px;
-  box-shadow: 0 0 20px #f3f4f6;
+@keyframes float-firefly {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(-45vh) translateX(var(--drift-x)) scale(1.1);
+    opacity: 0.75;
+  }
+  80% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-90vh) translateX(calc(var(--drift-x) * -0.5)) scale(0.4);
+    opacity: 0;
+  }
 }

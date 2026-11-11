@@ -1,30 +1,30 @@
 // Data Konten Ucapan (Menggunakan 1 Gambar Sprite Berisi 6 Foto dengan Layout 3 Kolom x 2 Baris)
-const spriteImageUrl = '/asset/themes/img/Starlit Garden/Islamic Moonlight Romance.webp'; // Ganti dengan link gambar 6 foto Anda jika berbeda
+const spriteImageUrl = '/asset/themes/img/Starlit Garden/Islamic Moonlight Romance.webp';
 
 const kontenList = [
   {
-    indexFoto: 0, // Kolom 0, Baris 0 (Kiri Atas)
+    indexFoto: 0,
     ucapan: "Selamat ulang tahun, sayangku. Hari ini tentang kamu, tentang bertambahnya satu tahun perjalanan hidup kamu, dan tentang semua hal yang sudah berhasil kamu lewati sampai sejauh ini."
   },
   {
-    indexFoto: 1, // Kolom 1, Baris 0 (Tengah Atas)
+    indexFoto: 1,
     ucapan: "Semoga di usia yang baru ini, hidup kamu dipenuhi lebih banyak hal baik. Semoga apa yang kamu perjuangkan perlahan menemukan jalannya, dan semoga kamu selalu punya alasan untuk tersenyum meskipun nggak setiap hari berjalan sesuai yang kamu mau."
   },
   {
-    indexFoto: 2, // Kolom 2, Baris 0 (Kanan Atas)
+    indexFoto: 2,
     ucapan: "Kalau suatu saat semuanya terasa berat, jangan lupa kalau kamu nggak sendirian. Ada aku yang selalu berharap kamu baik-baik saja, selalu mendukung langkah kamu, dan selalu mau melihat kamu tumbuh menjadi versi terbaik dari diri kamu sendiri."
   },
   {
-    indexFoto: 3, // Kolom 0, Baris 1 (Kiri Bawah)
+    indexFoto: 3,
     ucapan: "Terima kasih sudah hadir di hidup aku, sayang. Terima kasih untuk setiap cerita, tawa, dan momen kecil yang mungkin sederhana, tapi berarti banget buat aku. Kehadiran kamu punya tempat sendiri yang nggak bisa digantikan begitu saja."
   },
   {
-    indexFoto: 4, // Kolom 1, Baris 1 (Tengah Bawah)
+    indexFoto: 4,
     ucapan: "Sekali lagi, selamat ulang tahun, sayang. Semoga perjalanan kamu setelah ini jauh lebih indah, penuh bahagia, dan dipertemukan dengan banyak hal yang kamu doakan. Dan kalau boleh, aku mau tetap ada di samping kamu, menemani sebanyak mungkin cerita yang masih akan kita lewati bersama."
   },
   {
-    indexFoto: 5, // Kolom 2, Baris 1 (Kanan Bawah - Opsional untuk foto ke-6)
-    ucapan: "Terima kasih sudah menjadi bagian terindah dalam hidupku. Semoga kebahagiaan selalu menyertai kita."
+    indexFoto: 5,
+    ucapan: "Terima kasih sudah menjadi bagian terindah dalam hidupku. Semoga kebahagiaan dan keberkahan selalu menyertai langkah kita."
   }
 ];
 
@@ -37,36 +37,42 @@ const swalConfig = Swal.mixin({
 // Fungsi Mengirim Pesan
 async function kirimPesan() {
   const { value: pesanInput } = await swalConfig.fire({
-    title: "Tulis pesan",
+    title: "Tulis Pesan & Doa",
     input: "textarea",
-    confirmButtonText: "Kirim"
+    inputPlaceholder: "Ketik balasan atau harapanmu di sini...",
+    confirmButtonText: "Kirim",
+    showCancelButton: true,
+    cancelButtonText: "Batal"
   });
 
-  if (pesanInput) {
-    swalConfig.fire({
-      title: "Mengirim pesan",
-      didOpen: () => {
-        swalConfig.showLoading();
-      }
-    });
-
-    setTimeout(async () => {
-      await swalConfig.fire({
-        icon: "success",
-        title: "Pesan berhasil dikirim!"
+  if (pesanInput !== undefined) {
+    if (pesanInput.trim() !== "") {
+      swalConfig.fire({
+        title: "Mengirim pesan...",
+        didOpen: () => {
+          swalConfig.showLoading();
+        }
       });
-    }, 1000);
-  } else {
-    await swalConfig.fire({
-      title: "Jangan dikosongin ya :)"
-    });
-    kirimPesan();
+
+      setTimeout(async () => {
+        await swalConfig.fire({
+          icon: "success",
+          title: "Pesan terkirim!",
+          text: "Terima kasih sudah menuliskan pesanmu."
+        });
+      }, 900);
+    } else {
+      await swalConfig.fire({
+        icon: "warning",
+        title: "Jangan dikosongin ya :)"
+      });
+      kirimPesan();
+    }
   }
 }
 
 // Audio Musik Latar
 const musikAudio = new Audio('https://dekatutorial.github.io/musik/Romantic%20Happy%20Birthday%20(Arranged%20by%20Miranda%20Wong)%20Piano%20Cover.mp3');
-musikAudio.autoplay = true;
 musikAudio.loop = true;
 
 // Selektor Elemen DOM
@@ -76,6 +82,8 @@ const container = document.querySelector(".container");
 const btnContainer = document.querySelector(".btn-container");
 const btnStart = document.querySelector(".btn-start");
 const btnNext = document.querySelector(".btn-next");
+const endButtons = document.querySelector(".end-buttons");
+const btnReplay = document.querySelector(".btn-replay");
 const btnMessage = document.querySelector(".btn-message");
 const mainContainer = document.querySelector('.main');
 
@@ -88,41 +96,46 @@ function updateScreenSize() {
     const marginSize = (screenWidth - (screenHeight / 16) * 9) / 2;
     mainContainer.style.left = marginSize + 'px';
     mainContainer.style.right = marginSize + 'px';
-    document.body.style.setProperty("--mi", marginSize + 'px');
   } else {
-    document.body.style = '';
     mainContainer.style.left = '0';
     mainContainer.style.right = '0';
   }
 }
 
 updateScreenSize();
-window.onresize = updateScreenSize;
+window.addEventListener('resize', updateScreenSize);
 
-// Pembuatan Konten Dinamis dengan Sistem Sprite CSS
+// Pembuatan Konten Dinamis dengan Wadah Glossy
 let mainContents = [];
 function createMainContent() {
+  // Hapus slide lama jika sedang melakukan "Baca Ulang"
+  document.querySelectorAll(".main-content").forEach(el => el.remove());
+
   kontenList.forEach(item => {
     const contentDiv = document.createElement("div");
     contentDiv.classList.add("content", "main-content");
 
-    // Hitung posisi background berdasarkan indeks grid (3 kolom x 2 baris)
-    const col = item.indexFoto % 3; // Kolom 0, 1, atau 2
-    const row = Math.floor(item.indexFoto / 3); // Baris 0 atau 1
-    
-    const posX = col * 50; // dalam persentase (100 / (3-1) = 50%)
-    const posY = row * 100; // dalam persentase (100 / (2-1) = 100%)
+    const col = item.indexFoto % 3;
+    const row = Math.floor(item.indexFoto / 3);
+    const posX = col * 50;
+    const posY = row * 100;
 
-    let innerHTMLContent = '';
-    innerHTMLContent += `<div class="sprite-foto" style="background-image: url('${spriteImageUrl}'); background-position: ${posX}% ${posY}%;"></div>`;
+    let innerHTMLContent = `
+      <div class="sprite-foto" style="background-image: url('${spriteImageUrl}'); background-position: ${posX}% ${posY}%;"></div>
+    `;
     
     if (item.ucapan) {
-      innerHTMLContent += `<p class="text">${item.ucapan}</p>`;
+      innerHTMLContent += `
+        <div class="text-wrapper glossy-card">
+          <p class="text">${item.ucapan}</p>
+        </div>
+      `;
     }
 
     contentDiv.innerHTML = innerHTMLContent;
     container.appendChild(contentDiv);
   });
+
   mainContents = document.querySelectorAll(".main-content");
 }
 
@@ -132,9 +145,9 @@ function nextContent(index) {
     btnContainer.classList.remove("show");
     setTimeout(() => {
       btnNext.classList.remove("show");
-      btnMessage.classList.add("show");
+      endButtons.classList.add("show");
       btnContainer.classList.add("show");
-    }, 1000);
+    }, 800);
   }
 
   if (index < kontenList.length) {
@@ -142,52 +155,94 @@ function nextContent(index) {
       mainContents[index - 1].classList.add("hide");
       const prevIndex = index - 1;
       setTimeout(() => {
-        mainContents[prevIndex].remove();
-      }, 1000);
+        if (mainContents[prevIndex]) {
+          mainContents[prevIndex].classList.remove("show", "hide");
+        }
+      }, 800);
     }
     setTimeout(() => {
       mainContents[index].classList.add("show");
-    }, 200);
+    }, 250);
   }
 }
 
+let nextIndex = 1;
+let isClick = 1;
+
 // Memulai Halaman Utama
 function startContent() {
-  musikAudio.play();
+  musikAudio.play().catch(() => {});
   openContainer.classList.add("hide");
+  setTimeout(() => {
+    openContainer.classList.remove("show", "hide");
+  }, 800);
+
+  nextIndex = 1;
   nextContent(0);
+
   btnContainer.classList.remove("show");
   setTimeout(() => {
     btnStart.classList.remove("show");
+    endButtons.classList.remove("show");
     btnNext.classList.add("show");
     btnContainer.classList.add("show");
-  }, 1000);
+  }, 800);
+}
+
+// Fungsi Baca Ulang dari Awal
+function replayContent() {
+  if (!isClick) return;
+  isClick = 0;
+
+  // Sembunyikan slide terakhir
+  const lastContent = mainContents[kontenList.length - 1];
+  if (lastContent) {
+    lastContent.classList.add("hide");
+  }
+
+  btnContainer.classList.remove("show");
+
+  setTimeout(() => {
+    // Susun ulang DOM slide agar bersih
+    createMainContent();
+    nextIndex = 1;
+
+    // Kembalikan ke layar pembuka
+    openContainer.classList.add("show");
+
+    endButtons.classList.remove("show");
+    btnNext.classList.remove("show");
+    btnStart.classList.add("show");
+    btnContainer.classList.add("show");
+    isClick = 1;
+  }, 900);
 }
 
 btnStart.addEventListener("click", startContent);
 
-let nextIndex = 1;
-let isClick = 1;
 btnNext.addEventListener('click', () => {
-  if (isClick) {
+  if (isClick && nextIndex < kontenList.length) {
     isClick = 0;
     nextContent(nextIndex);
     nextIndex++;
     setTimeout(() => {
       isClick = 1;
-    }, 1000);
+    }, 900);
   }
 });
 
+btnReplay.addEventListener("click", replayContent);
 btnMessage.addEventListener("click", kirimPesan);
 
-// Konfigurasi Efek Bintang & Bintang Jatuh
+// =========================================
+// EFEK BINTANG, BINTANG JATUH & KUNANG-KUNANG
+// =========================================
 const starsContainer = document.querySelector(".stars-container");
-let shootingStarTimer = null;
+const firefliesContainer = document.querySelector(".fireflies-container");
 
 function createStar() {
   const star = document.createElement("img");
-  const starSize = Math.random() * 10 + 5;
+  const starSize = Math.random() * 9 + 4;
   const duration = Math.random() * 2300 + 1200;
   const delay = Math.random() * 4000;
 
@@ -206,8 +261,29 @@ function createStar() {
 
 function generateStars() {
   starsContainer.innerHTML = '';
-  for (let i = 0; i < 60; i++) {
+  for (let i = 0; i < 55; i++) {
     createStar();
+  }
+}
+
+function createFireflies() {
+  firefliesContainer.innerHTML = '';
+  for (let i = 0; i < 22; i++) {
+    const firefly = document.createElement("span");
+    const size = Math.random() * 4 + 3;
+    const duration = Math.random() * 7 + 8; // 8 - 15 detik
+    const delay = Math.random() * 10;
+    const driftX = (Math.random() - 0.5) * 80;
+
+    firefly.className = "firefly";
+    firefly.style.width = size + 'px';
+    firefly.style.height = size + 'px';
+    firefly.style.left = Math.random() * 94 + 3 + '%';
+    firefly.style.setProperty('--duration', duration + 's');
+    firefly.style.setProperty('--delay', '-' + delay + 's');
+    firefly.style.setProperty('--drift-x', driftX + 'px');
+
+    firefliesContainer.appendChild(firefly);
   }
 }
 
@@ -245,39 +321,29 @@ function createShootingStar() {
   }, { once: true });
 }
 
-function createShootingStarGroup() {
-  const count = Math.floor(Math.random() * 3 + 1);
-  for (let i = 0; i < count; i++) {
-    const delay = i === 0 ? 0 : Math.random() * 500 + 100;
-    setTimeout(createShootingStar, delay);
-  }
-}
-
 function scheduleShootingStars() {
   const interval = Math.random() * 3500 + 2500;
-  shootingStarTimer = setTimeout(() => {
-    createShootingStarGroup();
+  setTimeout(() => {
+    createShootingStar();
     scheduleShootingStars();
   }, interval);
 }
 
-function startStarEffect() {
-  generateStars();
-  scheduleShootingStars();
-}
-
-startStarEffect();
+// Jalankan Semua Efek Visual
+generateStars();
+createFireflies();
+scheduleShootingStars();
 
 // Inisialisasi Saat Halaman Dimuat
 window.onload = () => {
-  preloadContainer.preloadContainer?.classList?.add("hide");
+  preloadContainer.classList.add("hide");
   setTimeout(() => {
     preloadContainer.remove();
     openContainer.classList.add("show");
-  }, 1000);
+  }, 800);
   setTimeout(() => {
     btnContainer.classList.add("show");
-  }, 3000);
+  }, 1800);
 };
 
 createMainContent();
