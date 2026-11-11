@@ -1,5 +1,5 @@
 // Data Konten Ucapan (Menggunakan 1 Gambar Sprite Berisi 6 Foto dengan Layout 3 Kolom x 2 Baris)
-const spriteImageUrl = 'http://sugarwish.my.id/asset/themes/img/Starlit%20Garden/romantisfoto.webp'; // Ganti dengan link gambar 6 foto Anda jika berbeda
+const spriteImageUrl = '/asset/themes/img/Starlit Garden/Islamic Moonlight Romance.webp'; // Ganti dengan link gambar 6 foto Anda jika berbeda
 
 const kontenList = [
   {
@@ -191,7 +191,7 @@ function createStar() {
   const duration = Math.random() * 2300 + 1200;
   const delay = Math.random() * 4000;
 
-  star.src = 'https://files.dariku.my.id/dks210/star-sky.png';
+  star.src = '/asset/themes/animasi/star-sky.png';
   star.alt = '';
   star.className = "star";
   star.style.width = starSize + 'px';
