@@ -1,7 +1,7 @@
 /* =========================================
-   1. IMPORT & ROOT
+   1. IMPORT & ROOT (Menggunakan Font Estetik & Santai)
    ========================================= */
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Sacramento&display=swap');
 
 :root {
   color-scheme: light;
@@ -14,8 +14,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif; /* Mengganti font global menjadi lebih modern & rapi */
-  letter-spacing: 1px;
+  font-family: "Poppins", sans-serif; /* Font isi yang bersih, rapi, dan santai */
+  letter-spacing: 0.5px;
 }
 
 body {
@@ -48,7 +48,6 @@ body {
 
 .preload p {
   color: #fff;
-  font-family: "Montserrat", sans-serif;
   font-size: 1rem;
   letter-spacing: 2px;
   animation: 2s ease-in-out infinite anm-preload2;
@@ -99,7 +98,7 @@ body {
 }
 
 /* =========================================
-   5. KONTEN & ANIMASI TEKS
+   5. KONTEN & ANIMASI TEKS (Halaman Depan)
    ========================================= */
 .content {
   position: absolute;
@@ -124,53 +123,67 @@ body {
 
 .open {
   justify-content: start;
-  padding: 20% 20px 20px;
+  padding: 15% 20px 20px;
 }
 
 .open-text {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
+  gap: 5px;
+  width: 100%;
+  padding: 20px;
+  /* Latar belakang semi-transparan lembut agar teks kontras dengan langit cerah */
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .open h1,
 .open h2,
 .open p {
   text-align: center;
-  color: #f3f4f6;
   opacity: 0;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
+/* Judul Utama menggunakan Font Script Estetik (Sacramento / Dancing Script) */
 .open h1 {
-  font-size: 3.9rem;
-  font-family: "Great Vibes", cursive;
-  font-weight: 500;
+  font-size: 3.5rem;
+  font-family: "Sacramento", cursive;
+  font-weight: 400;
+  color: #2b3a4a; /* Warna gelap kontras dengan background langit */
   animation: 1.5s forwards anm-show;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+  line-height: 1.1;
 }
 
 .open h1 span {
-  font-family: "Great Vibes", cursive;
+  font-family: "Sacramento", cursive;
 }
 
+/* Sub-judul menggunakan Font Handwritten Rapi & Santai */
 .open h2 {
-  font-size: 1.7rem;
-  font-family: "Montserrat", sans-serif;
+  font-size: 1.6rem;
+  font-family: "Poppins", sans-serif;
   font-weight: 600;
+  color: #3b4c5e;
   animation: 1.5s .3s forwards anm-show;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
 }
 
 .open p {
   font-weight: 400;
-  font-size: 0.95rem;
-  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #4f5d6d;
+  margin-top: 5px;
   animation: 1.5s .6s forwards anm-show;
 }
 
 /* =========================================
-   6. MAIN CONTENT & GLOSSY CARD EFEK
+   6. MAIN CONTENT & GLOSSY CARD EFEK (Slide Pesan & Foto)
    ========================================= */
 .main-content {
   padding: 20px;
@@ -179,33 +192,32 @@ body {
 }
 
 .main-content img {
-  max-height: 28vh;
+  max-height: 26vh;
   max-width: 70%;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  border-radius: 14px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
 
-/* Efek Kotak Teks dengan Gaya Glossy (Kaca Kilau Transparan) */
+/* Kotak Teks Pesan dengan Background Glossy / Kaca Agar Tulisan Sangat Terbaca */
 .main-content .text {
-  color: #fff;
-  max-height: 45%;
-  padding: 18px 22px;
+  color: #2b3a4a; /* Warna teks gelap kontras agar mudah dibaca di atas background terang */
+  max-height: 42%;
+  padding: 20px 24px;
   overflow-y: auto;
   text-align: center;
   font-weight: 400;
-  font-size: 0.98rem;
-  line-height: 1.6;
-  font-family: "Montserrat", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  font-family: "Poppins", sans-serif;
   
-  /* Styling Glossy Glassmorphism */
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05));
+  /* Styling Glassmorphism yang Lebih Pekat Agar Kontras dengan Background Terang */
+  background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .main-content.text-only .text {
@@ -217,7 +229,7 @@ body {
    ========================================= */
 .btn-container {
   position: absolute;
-  bottom: 30px;
+  bottom: 25px;
   left: 0;
   right: 0;
   z-index: 2;
@@ -235,17 +247,16 @@ body {
   display: none;
 }
 
-/* Pembungkus Tombol Efek Glossy / Kaca */
 .btn-container .btn-blur {
   transition: 1s;
-  background: linear-gradient(135deg, rgba(68, 114, 190, 0.65), rgba(42, 97, 205, 0.4));
+  background: rgba(255, 255, 255, 0.4);
   width: fit-content;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 1px 2px rgba(255, 255, 255, 0.6);
-  padding: 4px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  padding: 5px;
   display: flex;
   gap: 6px;
 }
@@ -253,25 +264,24 @@ body {
 .btn,
 .btn-container button {
   padding: 8px 18px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  font-size: 0.95rem;
-  font-weight: 600;
-  font-family: "Montserrat", sans-serif;
+  background: linear-gradient(135deg, #4a7c59, #355840); /* Nuansa tombol elegan */
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
   color: #fff;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(53, 88, 64, 0.3);
 }
 
 .btn-container button:hover {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+  opacity: 0.9;
 }
 
 .btn-container button:active {
   transform: scale(.95);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* =========================================
@@ -279,14 +289,14 @@ body {
    ========================================= */
 .sprite-foto {
   width: 70%;
-  max-width: 280px;
-  height: 28vh;
-  max-height: 280px;
+  max-width: 260px;
+  height: 26vh;
+  max-height: 260px;
   background-size: 300% 200%;
   background-repeat: no-repeat;
-  border: 2px solid rgba(255, 255, 255, 0.85);
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
 
 /* =========================================
@@ -361,46 +371,46 @@ body {
    10. SWEETALERT MODIFICATION
    ========================================= */
 .swal2-popup {
-  background: rgba(255, 255, 255, 0.92) !important;
-  backdrop-filter: blur(10px);
-  border-radius: 20px !important;
-  padding-top: 10px;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(12px);
+  border-radius: 24px !important;
+  padding-top: 15px;
   padding-bottom: 25px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
 }
 
 .swal2-title {
   font-size: 1.3rem;
-  color: #2c3e50;
-  font-family: "Montserrat", sans-serif;
+  color: #2b3a4a;
+  font-family: "Poppins", sans-serif;
   font-weight: 600;
 }
 
 .swal2-popup textarea {
   resize: none;
-  background: rgba(245, 247, 250, 0.8) !important;
+  background: rgba(245, 247, 250, 0.9) !important;
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
-  box-shadow: inset 2px 2px 5px rgba(0,0,0,.08) !important;
-  border-radius: 12px !important;
+  border-radius: 14px !important;
   padding: 12px !important;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
+  color: #2b3a4a !important;
 }
 
 .swal2-actions button {
-  font-family: "Montserrat", sans-serif;
-  font-size: 1rem !important;
-  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem !important;
+  font-weight: 500;
   color: #fff;
-  background: linear-gradient(135deg, #4472be, #2a61cd) !important;
-  border-radius: 10px !important;
-  padding: 8px 20px;
+  background: #4a7c59 !important;
+  border-radius: 12px !important;
+  padding: 8px 22px;
   border: none;
-  box-shadow: 0 4px 15px rgba(42, 97, 205, 0.4);
+  box-shadow: 0 4px 15px rgba(74, 124, 89, 0.4);
 }
 
 .swal2-actions button:active {
-  transform: scale(.95) translateY(2px);
+  transform: scale(.95);
 }
 
 /* =========================================
