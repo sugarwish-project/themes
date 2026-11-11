@@ -1,5 +1,5 @@
 // Data Konten Ucapan (Menggunakan 1 Gambar Sprite Berisi 6 Foto dengan Layout 3 Kolom x 2 Baris)
-const spriteImageUrl = 'http://sugarwish.my.id/asset/themes/img/Starlit%20Garden/romantis%20bg.webp'; // Ganti dengan link gambar 6 foto Anda jika berbeda
+const spriteImageUrl = 'http://sugarwish.my.id/asset/themes/img/Starlit%20Garden/romantisfoto.webp'; // Ganti dengan link gambar 6 foto Anda jika berbeda
 
 const kontenList = [
   {
