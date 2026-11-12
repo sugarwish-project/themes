@@ -353,9 +353,12 @@ body {
   45% { transform: scale(1.08); }
 }
 
+/* --- MENGUBAH FONT JUDUL MENJADI YOUNG SERIF --- */
 .intro-title {
-  font-family: "Playfair Display", serif;
-  font-size: 1.65rem;
+  font-family: "Young Serif", serif !important;
+  font-size: 1.7rem !important;
+  font-weight: 400;
+  letter-spacing: 0.5px;
   color: var(--text-main);
   margin-bottom: 8px;
 }
@@ -477,10 +480,9 @@ body {
   padding: 8px;
 }
 
-/* --- MENGUBAH FONT UCAPAN MENJADI HANDWRITING --- */
 .polaroid-text {
-  font-family: "Caveat", cursive !important; /* Font tulisan tangan estetik */
-  font-size: 1.65rem !important;            /* Dibuat lebih besar agar jelas & indah */
+  font-family: "Caveat", cursive !important;
+  font-size: 1.65rem !important;
   font-weight: 700;
   line-height: 1.3;
   text-align: center;
@@ -596,7 +598,7 @@ body {
 }
 
 .swal2-title {
-  font-family: "Playfair Display", serif !important;
+  font-family: "Young Serif", serif !important;
   color: var(--text-main) !important;
   font-size: 1.45rem !important;
 }

@@ -1,5 +1,5 @@
 // ==========================================
-// KONFIGURASI KONTEN, MUSIK & WHATSAPP
+// KONFIGURASI KONTEN, MUSIK, SFX & WHATSAPP
 // ==========================================
 const konten = [
   {
@@ -27,6 +27,9 @@ const konten = [
 const musikUrl =
   "https://dekatutorial.github.io/musik/Virgoun%20-%20Surat%20Cinta%20Untuk%20Starla%20-%20Official%20Lyric%20Video.mp3";
 
+// URL Efek Suara (SFX) saat tombol lanjut diklik
+const sfxUrl = "/musik/sfx/typ.mp3";
+
 // Isi dengan nomor WhatsApp tujuan (format 628xxx) atau kosongkan "" jika memakai backend PHP
 const nomorWhatsapp = "6281234567890";
 
@@ -50,11 +53,16 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentIndex = 0;
   let isAnimating = false;
   let audio = null;
+  let sfxAudio = null;
 
-  // 1. Inisialisasi Audio
+  // 1. Inisialisasi Audio & SFX
   if (musikUrl && musikUrl.trim() !== "") {
     audio = new Audio(musikUrl);
     audio.loop = true;
+  }
+
+  if (sfxUrl && sfxUrl.trim() !== "") {
+    sfxAudio = new Audio(sfxUrl);
   }
 
   // 2. Render Spiral Binder Rings secara dinamis
@@ -92,12 +100,10 @@ document.addEventListener("DOMContentLoaded", () => {
     progressDots.innerHTML = "";
 
     konten.forEach((item, index) => {
-      // Buat dot indikator
       const dot = document.createElement("span");
       dot.className = "dot" + (index === 0 ? " active" : "");
       progressDots.appendChild(dot);
 
-      // Buat elemen kartu
       const card = document.createElement("article");
       card.className = "polaroid-card";
       card.dataset.index = index;
@@ -125,7 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateStackVisuals();
   }
 
-  // Update posisi 3D tumpukan kartu & dots
   function updateStackVisuals() {
     const cards = cardStack.querySelectorAll(".polaroid-card");
     const dots = progressDots.querySelectorAll(".dot");
@@ -149,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
       else if (idx < currentIndex) dot.classList.add("done");
     });
 
-    // Jika sudah di kartu terakhir, ubah tombol Lanjut -> Kirim Balasan
     if (currentIndex >= konten.length - 1) {
       btnNext.classList.add("hidden");
       btnSend.classList.remove("hidden");
@@ -165,7 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
           musicToggle.classList.remove("hidden");
         })
         .catch(() => {
-          // Autoplay fallback jika diblokir browser
           musicToggle.classList.remove("hidden");
           musicToggle.classList.add("paused");
           musicLabel.textContent = "Play";
@@ -193,10 +196,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 7. Navigasi Kartu Berikutnya
+  // 7. Navigasi Kartu Berikutnya + Putar SFX
   function goToNextCard() {
     if (isAnimating || currentIndex >= konten.length - 1) return;
     isAnimating = true;
+
+    // Putar SFX klik / ketik
+    if (sfxAudio) {
+      sfxAudio.currentTime = 0;
+      sfxAudio.play().catch(() => {});
+    }
 
     const cards = cardStack.querySelectorAll(".polaroid-card");
     const activeCard = cards[currentIndex];
@@ -228,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cancelButtonText: "Batal",
     });
 
-    if (pesan === undefined) return; // Jika user menekan Batal
+    if (pesan === undefined) return;
 
     if (pesan.trim() !== "") {
       const cleanWa = nomorWhatsapp.replace(/\D/g, "");
@@ -246,7 +255,6 @@ document.addEventListener("DOMContentLoaded", () => {
           : `https://wa.me/?text=${encodedText}`;
         window.location.assign(waUrl);
       } else {
-        // Fallback ke backend PHP jika nomor WA tidak diisi
         customSwal.fire({
           title: "Mengirim pesan...",
           didOpen: () => Swal.showLoading(),
@@ -291,7 +299,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   btnSend.addEventListener("click", openMessageModal);
 
-  // Inisialisasi Kartu & Hilangkan Preloader
   initCards();
 
   window.addEventListener("load", () => {
