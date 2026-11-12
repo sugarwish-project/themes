@@ -302,12 +302,12 @@ function initFireworks() {
 
     fireworks = new FireworkClass(fireworksContainer, {
       ...baseFireworksConfig,
-      rocketsPoint: { min: 5, max: 35 } // Titik asal luncuran sisi kiri
+      rocketsPoint: { min: 45, max: 55 } // Titik asal luncuran sisi kiri
     });
 
     fireworks2 = new FireworkClass(fireworksContainer, {
       ...baseFireworksConfig,
-      rocketsPoint: { min: 65, max: 95 } // Titik asal luncuran sisi kanan
+      rocketsPoint: { min: 48, max: 52 } // Titik asal luncuran sisi kanan
     });
   } catch (err) {
     console.error("Gagal menginisialisasi kembang api:", err);
