@@ -28,11 +28,49 @@ const kontenList = [
   }
 ];
 
-// Audio Musik Latar & SFX Klik
+// 1. Inisialisasi Audio
 const musikAudio = new Audio('/musik/Guli%20Mata%20(Lyrical)%20-%20Saad%20Lamjarred%20Shreya%20Ghoshal%20Jennifer%20Winget%20Anshul%20Garg.mp3');
-musikAudio.currentTime = 28;
 musikAudio.autoplay = false;
+musikAudio.preload = 'none';
 musikAudio.loop = true;
+
+// Atur lagu mulai di detik ke-28 saat metadata siap
+musikAudio.addEventListener('loadedmetadata', () => {
+  musikAudio.currentTime = 28;
+});
+
+// 2. Fungsi memutar lagu dengan efek Fade-In (pelan ke keras)
+function putarDenganFadeIn(durasiMs = 3000, targetVolume = 1.0) {
+  musikAudio.volume = 0; // Mulai dari hening
+  musikAudio.play().catch((error) => {
+    console.log("Pemutaran dicegah browser:", error);
+  });
+
+  const langkah = 20;
+  const kenaikan = targetVolume / (durasiMs / langkah);
+
+  const interval = setInterval(() => {
+    if (musikAudio.volume + kenaikan < targetVolume) {
+      musikAudio.volume += kenaikan;
+    } else {
+      musikAudio.volume = targetVolume;
+      clearInterval(interval);
+    }
+  }, langkah);
+}
+
+// 3. Hubungkan ke tombol "Klik Disini" (.btn-start)
+const tombolStart = document.querySelector('.btn-start');
+
+if (tombolStart) {
+  tombolStart.addEventListener('click', () => {
+    // Pastikan musik hanya diputar jika sedang berhenti
+    if (musikAudio.paused) {
+      // Fade-in selama 3 detik (3000 ms) menuju volume penuh (1.0)
+      putarDenganFadeIn(3000, 1.0); 
+    }
+  });
+}
 
 const klikSfx = new Audio('/musik/sfx/klik.mp3');
 klikSfx.preload = 'auto';
