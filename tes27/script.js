@@ -28,17 +28,25 @@ const kontenList = [
   }
 ];
 
-// Konfigurasi SweetAlert
-const swalConfig = Swal.mixin({
-  allowOutsideClick: false,
-  reverseButtons: true
-});
+// Konfigurasi SweetAlert (dengan pengaman jika CDN SweetAlert belum siap)
+const swalConfig = typeof Swal !== 'undefined'
+  ? Swal.mixin({
+      allowOutsideClick: false,
+      reverseButtons: true
+    })
+  : null;
 
 // Fungsi Mengirim Pesan ke WhatsApp
 async function kirimPesan() {
   playClickSound();
 
   const defaultPesan = "Selamat Tahun Baru 2027 sayang! Terima kasih sudah bertahan sejauh ini bersamaku. Aku mencintaimu selamanya.";
+
+  if (!swalConfig) {
+    const nomorWa = "6285147381714";
+    window.open(`https://wa.me/${nomorWa}?text=${encodeURIComponent(defaultPesan)}`, '_blank');
+    return;
+  }
 
   const { value: pesanInput } = await swalConfig.fire({
     title: "Kirim Balasan Cinta",
@@ -74,7 +82,7 @@ async function kirimPesan() {
 }
 
 // Inisialisasi Audio
-const musikAudio = new Audio('https://dekatutorial.github.io/musik/Nadhif%20Basalamah%20-%20bergema%20sampai%20selamanya%20-%20Official%20Lyric%20Video.mp3');
+const musikAudio = new Audio('/musik/Westlife%20-%20Beautiful%20in%20white%20(Lyrics).mp3');
 musikAudio.autoplay = false;
 musikAudio.preload = 'none';
 musikAudio.loop = true;
@@ -254,44 +262,68 @@ btnRestart.addEventListener("click", restartContent);
    KONFIGURASI KEMBANG API (FIREWORKS-JS)
    ========================================= */
 const fireworksContainer = document.querySelector('.fireworks');
+let fireworks = null;
+let fireworks2 = null;
 
-const baseFireworksConfig = {
-  hue: { min: 35, max: 52 },
-  delay: { min: 35, max: 65 },
-  speed: 2,
-  acceleration: 1.03,
-  friction: 0.96,
-  gravity: 1.4,
-  particles: 65,
-  traceLength: 3,
-  traceSpeed: 8,
-  explosion: 5,
-  intensity: 18,
-  flickering: 45,
-  lineStyle: 'round',
-  lineWidth: {
-    explosion: { min: 1, max: 2.5 },
-    trace: { min: 1, max: 1.5 }
-  },
-  brightness: { min: 55, max: 85 },
-  decay: { min: 0.015, max: 0.03 }
-};
+function initFireworks() {
+  try {
+    // Mendukung berbagai format export global UMD dari fireworks-js
+    const FireworkClass =
+      (window.Fireworks && window.Fireworks.default) ||
+      (window.Fireworks && window.Fireworks.Fireworks) ||
+      window.Fireworks;
 
-const fireworks = new Fireworks["default"](fireworksContainer, {
-  ...baseFireworksConfig,
-  rocketsPoint: { min: 5, max: 35 } // Titik asal luncuran sisi kiri
-});
+    if (typeof FireworkClass !== 'function' || !fireworksContainer) {
+      console.warn("Library Fireworks belum termuat sempurna.");
+      return;
+    }
 
-const fireworks2 = new Fireworks["default"](fireworksContainer, {
-  ...baseFireworksConfig,
-  rocketsPoint: { min: 65, max: 95 } // Titik asal luncuran sisi kanan
-});
+    const baseFireworksConfig = {
+      hue: { min: 35, max: 52 },
+      delay: { min: 35, max: 65 },
+      speed: 2,
+      acceleration: 1.03,
+      friction: 0.96,
+      gravity: 1.4,
+      particles: 65,
+      traceLength: 3,
+      traceSpeed: 8,
+      explosion: 5,
+      intensity: 18,
+      flickering: 45,
+      lineStyle: 'round',
+      lineWidth: {
+        explosion: { min: 1, max: 2.5 },
+        trace: { min: 1, max: 1.5 }
+      },
+      brightness: { min: 55, max: 85 },
+      decay: { min: 0.015, max: 0.03 }
+    };
+
+    fireworks = new FireworkClass(fireworksContainer, {
+      ...baseFireworksConfig,
+      rocketsPoint: { min: 5, max: 35 } // Titik asal luncuran sisi kiri
+    });
+
+    fireworks2 = new FireworkClass(fireworksContainer, {
+      ...baseFireworksConfig,
+      rocketsPoint: { min: 65, max: 95 } // Titik asal luncuran sisi kanan
+    });
+  } catch (err) {
+    console.error("Gagal menginisialisasi kembang api:", err);
+  }
+}
 
 function showFireworks() {
-  setTimeout(() => {
-    fireworks.start();
-  }, 500);
-  fireworks2.start();
+  if (!fireworks || !fireworks2) {
+    initFireworks();
+  }
+  if (fireworks && fireworks2) {
+    setTimeout(() => {
+      fireworks.start();
+    }, 500);
+    fireworks2.start();
+  }
 }
 
 /* =========================================
@@ -300,9 +332,10 @@ function showFireworks() {
 const starsContainer = document.querySelector(".stars-container");
 
 function createShootingStar() {
+  if (!starsContainer) return;
   const shootingStar = document.createElement("span");
-  const starWidth = starsContainer.clientWidth;
-  const starHeight = starsContainer.clientHeight;
+  const starWidth = starsContainer.clientWidth || window.innerWidth;
+  const starHeight = starsContainer.clientHeight || window.innerHeight * 0.7;
   const size = Math.random() * 2.5 + 1.5;
   const tailLength = Math.random() * 65 + 45;
   const tailWidth = Math.random() * 1.8 + 1;
@@ -342,6 +375,7 @@ function scheduleShootingStars() {
 }
 
 function initFallingPetals() {
+  if (!starsContainer) return;
   for (let i = 0; i < 16; i++) {
     const petal = document.createElement("div");
     petal.className = "petal";
@@ -356,21 +390,38 @@ function initFallingPetals() {
   }
 }
 
-// Inisialisasi Saat Halaman Dimuat
-window.onload = () => {
+// Fungsi Membuka Preloader dengan Aman
+let isInitialized = false;
+function initPage() {
+  if (isInitialized) return;
+  isInitialized = true;
+
   updateScreenSize();
   showFireworks();
   scheduleShootingStars();
   initFallingPetals();
 
-  preloadContainer.classList.add("hide");
-  setTimeout(() => {
-    preloadContainer.remove();
+  if (preloadContainer) {
+    preloadContainer.classList.add("hide");
+    setTimeout(() => {
+      if (preloadContainer.parentNode) {
+        preloadContainer.remove();
+      }
+      openContainer.classList.add("show");
+    }, 800);
+  } else {
     openContainer.classList.add("show");
-  }, 1000);
+  }
+
   setTimeout(() => {
     btnContainer.classList.add("show");
-  }, 2400);
-};
+  }, 2000);
+}
+
+// Jalankan saat DOM siap maupun saat window selesai load (anti-stuck)
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(initPage, 600);
+});
+window.addEventListener("load", initPage);
 
 createMainContent();
