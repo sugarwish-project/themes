@@ -29,7 +29,9 @@ const kontenList = [
 ];
 
 // Audio Musik Latar & SFX Klik
-const musikAudio = new Audio('https://dekatutorial.github.io/musik/Romantic%20Happy%20Birthday%20(Arranged%20by%20Miranda%20Wong)%20Piano%20Cover.mp3');
+const musikAudio = new Audio('/musik/Guli%20Mata%20(Lyrical)%20-%20Saad%20Lamjarred%20Shreya%20Ghoshal%20Jennifer%20Winget%20Anshul%20Garg.mp3');
+musikAudio.currentTime = 30;
+musikAudio.autoplay = true;
 musikAudio.loop = true;
 
 const klikSfx = new Audio('/musik/sfx/klik.mp3');
