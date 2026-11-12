@@ -113,6 +113,7 @@
 .lv {
   text-align: center;
   transition: 0.5s linear;
+  z-index: 2;
 }
 .lv img {
   animation: anm-lv 2s ease-in-out infinite;
@@ -142,6 +143,7 @@
 }
 .ctn {
   display: none;
+  z-index: 2;
 }
 .crd-ctnr {
   position: absolute;
@@ -162,10 +164,11 @@
   flex-direction: column;
   gap: 10px;
   background: white;
-  border-radius: 3px;
+  border-radius: 12px;
   box-sizing: border-box;
-  box-shadow: 8px 7px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 8px 7px 0px rgba(97, 39, 39, 0.3);
   animation: anm-in linear 0.75s;
+  border: 2px dashed rgb(164, 98, 98);
 }
 .crd-ctnr:last-child {
   display: flex;
@@ -198,14 +201,15 @@
 }
 .crd img {
   background: rgb(238, 189, 189);
-  border-radius: 3px;
+  border-radius: 8px;
   width: 100%;
-  filter: sepia(30%) contrast(120%) brightness(90%) saturate(120%);
+  filter: sepia(20%) contrast(110%) brightness(95%) saturate(120%);
 }
 .crd p {
   text-align: center;
-  font-size: 1.3em;
+  font-size: 1.2em;
   font-weight: 600;
+  color: #5a2e2e;
 }
 
 /* Wadah tombol flexbox agar tetap di bawah dan sejajar */
@@ -227,11 +231,12 @@
   width: fit-content;
   text-align: center;
   border: 2px solid rgb(97, 39, 39);
-  padding: 8px 16px;
-  border-radius: 20px;
-  background: rgb(249, 235, 210);
+  padding: 10px 20px;
+  border-radius: 25px;
+  background: linear-gradient(135deg, rgb(249, 235, 210), rgb(240, 205, 170));
   cursor: pointer;
   white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 button.btn {
   outline: none;
@@ -239,7 +244,11 @@ button.btn {
   font-weight: 600;
   letter-spacing: 1px;
   animation: anm-btn 0.5s ease;
-  transition: 0.1s ease all;
+  transition: 0.2s ease all;
+}
+button.btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgb(255, 245, 230), rgb(245, 215, 185));
 }
 button.btn:active {
   transform: scale(0.95);
@@ -259,18 +268,57 @@ button.btn:active {
 }
 .swal2-popup textarea {
   resize: none;
-  background: wheat;
+  background: #fff8f0;
   border-radius: 10px !important;
+  border: 1px solid rgb(164, 98, 98) !important;
 }
 .swal2-title {
   font-size: 1.4em;
-  color: #3c3c3c;
+  color: #5a2e2e;
   margin-top: 5px;
 }
 .swal2-popup {
   background: rgb(249, 235, 210);
-  border-radius: 15px !important;
+  border-radius: 20px !important;
+  border: 3px solid rgb(97, 39, 39);
 }
 .swal2-confirm {
   background: rgb(164, 98, 98) !important;
+  border-radius: 20px !important;
+}
+
+/* =========================================
+   TAMBAHAN DEKORASI & HIASAN LUCU ✨
+   ========================================= */
+.lucu-decor-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.floating-icon {
+  position: absolute;
+  font-size: 1.5rem;
+  opacity: 0.6;
+  animation: floatAround 8s infinite ease-in-out;
+}
+
+.floating-icon:nth-child(1) { top: 10%; left: 10%; animation-duration: 7s; }
+.floating-icon:nth-child(2) { top: 15%; right: 15%; animation-duration: 9s; animation-delay: 1s; }
+.floating-icon:nth-child(3) { bottom: 20%; left: 12%; animation-duration: 6s; animation-delay: 2s; }
+.floating-icon:nth-child(4) { bottom: 15%; right: 10%; animation-duration: 8s; animation-delay: 1.5s; }
+.floating-icon:nth-child(5) { top: 50%; left: 5%; animation-duration: 10s; animation-delay: 3s; }
+
+@keyframes floatAround {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateY(-15px) rotate(15deg) scale(1.1);
+  }
 }

@@ -6,23 +6,23 @@
 const konten = [
   {
     gambar: "/asset/themes/animasi/pentol/Stiker%2049.gif",
-    ucapan: "Hallo sayang"
+    ucapan: "Hallo sayang ✨"
   },
   {
     gambar: "/asset/themes/animasi/pentol/Stiker%2048.gif",
-    ucapan: "Selamat ulang tahun yaaa!"
+    ucapan: "Selamat ulang tahun yaaa! 🎂🎉"
   },
   {
     gambar: "/asset/themes/animasi/pentol/Stiker%2016.gif",
-    ucapan: "Yuk tunggu apalagi??"
+    ucapan: "Yuk tunggu apalagi?? 🥺"
   },
   {
     gambar: "/asset/themes/animasi/pentol/Stiker%2036.gif",
-    ucapan: "Buruan order di SugarWish.my.id"
+    ucapan: "Buruan order di SugarWish.my.id 🛍️"
   },
   {
     gambar: "/asset/themes/animasi/pentol/Stiker%202.gif",
-    ucapan: "Bisa custom ucapan dan musik sesuai keinginan!!"
+    ucapan: "Bisa custom ucapan dan musik sesuai keinginan!! 💖"
   }
 ];
 
@@ -228,11 +228,11 @@ function jalankanPesanInteraktif(dataKonten, urlMusik, noWa) {
 
   async function kirimPesanWhatsApp() {
     const { value: pesanUser, isConfirmed } = await swalCustom.fire({
-      title: "Tulis pesan disini ^_^",
+      title: "Tulis pesan disini ^_^ ✨",
       input: "textarea",
       showCancelButton: true,
-      cancelButtonText: "Batal",
-      confirmButtonText: "Kirim"
+      cancelButtonText: "Batal ❌",
+      confirmButtonText: "Kirim 💌"
     });
 
     if (!isConfirmed) {
@@ -250,7 +250,7 @@ function jalankanPesanInteraktif(dataKonten, urlMusik, noWa) {
       if (apakahNomorValid) {
         await swalCustom.fire({
           icon: "success",
-          title: "Berhasil!",
+          title: "Berhasil! 🎉",
           text: "Mengarahkan ke WhatsApp..."
         });
         window.open("https://wa.me/" + nomorBersih + "?text=" + encodeURIComponent(pesanUser), "_blank");
@@ -259,14 +259,14 @@ function jalankanPesanInteraktif(dataKonten, urlMusik, noWa) {
         // Notifikasi gagal karena nomor belum ditentukan/valid
         await swalCustom.fire({
           icon: "error",
-          title: "Pesan Gagal Dikirim!",
+          title: "Pesan Gagal Dikirim! ⚠️",
           text: "Nomor WhatsApp tujuan belum ditentukan!"
         });
         return false;
       }
     } else {
       await swalCustom.fire({
-        confirmButtonText: "Iya deh",
+        confirmButtonText: "Iya deh 🤭",
         title: "Jangan dikosongin dong :)"
       });
       return await kirimPesanWhatsApp();
