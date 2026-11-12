@@ -1,34 +1,26 @@
-// URL Sprite Sheet Kolase Foto (Total 6 Foto dalam Grid 3 Kolom x 2 Baris)
-const spriteImageUrl = '/asset/themes/img/Spring%20Daisy%20Romance/romantisfoto.webp';
-
 const konten = [
   {
-    indexFoto: 0, // Kolom 0, Baris 1 (Kiri Atas)
+    foto: "https://giftycreative.com/asset/209/1.webp",
     ucapan: "Hallo sayang, gimana kabarnya hari ini? Semoga kamu selalu sehat dan hatimu baik-baik saja ya. Di momen pergantian tahun ini, aku ingin menyapamu pelan-pelan dan mengirimkan doa terbaikku, semoga semua hal baik selalu mendekat kepadamu."
   },
   {
-    indexFoto: 1, // Kolom 1, Baris 1 (Tengah Atas)
-    ucapan: "Satu tahun terakhir penuh dengan cerita, tentang tawa, rindu, lelah, dan banyak hal yang kita lalui bersama. Tidak semuanya mudah, tapi kehadiranmu membuat semuanya terasa lebih ringan dan bermakna. Terima kasih sudah bertahan dan tetap ada."
+    foto: "https://giftycreative.com/asset/209/2.webp",
+    ucapan: "Satu tahun terakhir penuh dengan cerita, tentang tawa, rindu, lelah, dan banyak hal yang kita lalui bersama. Tidak semuanya mudah, tapi kehadiranmu membuat semuanya terasa lebih ringan dan bermakna. Terima kasih sudah bertahan dan tetap ada, bahkan di hari-hari yang tidak sempurna."
   },
   {
-    indexFoto: 2, // Kolom 2, Baris 1 (Kanan Atas)
-    ucapan: "Kamu adalah tempatku bercerita tanpa takut dihakimi, tempatku pulang saat dunia terasa terlalu ramai. Bersamamu, aku belajar tentang sabar, tentang mengerti, dan tentang menerima hal-hal kecil yang paling aku syukuri."
+    foto: "https://giftycreative.com/asset/209/3.webp",
+    ucapan: "Kamu adalah tempatku bercerita tanpa takut dihakimi, tempatku pulang saat dunia terasa terlalu ramai. Bersamamu, aku belajar tentang sabar, tentang mengerti, dan tentang menerima. Hal-hal kecil bersamamu justru jadi bagian yang paling aku syukuri."
   },
   {
-    indexFoto: 3, // Kolom 0, Baris 2 (Kiri Bawah)
-    ucapan: "Di langkah menuju tahun yang baru, aku berharap kita tetap saling menggenggam dan saling percaya. Semoga setiap impianmu dimudahkan jalannya, setiap lelahmu digantikan dengan kebahagiaan yang melimpah."
+    foto: "https://giftycreative.com/asset/209/4.webp",
+    ucapan: "Di langkah menuju tahun yang baru, aku berharap kita tetap saling menggenggam dan saling percaya. Semoga setiap impianmu dimudahkan jalannya, setiap lelahmu digantikan dengan kebahagiaan, dan setiap doamu menemukan jalannya untuk terkabul."
   },
   {
-    indexFoto: 4, // Kolom 1, Baris 2 (Tengah Bawah)
-    ucapan: "Terima kasih sudah menjadi bagian terindah di perjalanan hidupku. Apa pun yang menanti di depan nanti, semoga kita masih berjalan berdampingan, pelan-pelan, saling menguatkan, dan tetap bersama."
-  },
-  {
-    indexFoto: 5, // Kolom 2, Baris 2 (Kanan Bawah)
-    ucapan: "Selamat Tahun Baru, sayangku! Mari kita sambut lembaran baru ini dengan cinta yang lebih hangat dan senyuman yang lebih banyak. Aku mencintaimu hari ini, esok, dan selamanya."
+    foto: "https://giftycreative.com/asset/209/5.webp",
+    ucapan: "Selamat Tahun Baru, sayang. Terima kasih sudah menjadi bagian terindah di perjalanan hidupku. Apa pun yang menanti di depan nanti, semoga kita masih berjalan berdampingan, pelan-pelan, saling menguatkan, dan tetap bersama"
   }
 ];
 
-// Elemen Utama HTML
 const mainElement = document.createElement("div");
 mainElement.classList.add("main");
 mainElement.innerHTML = `
@@ -59,71 +51,63 @@ mainElement.innerHTML = `
     </div>
   </div>
 `;
+
 document.body.appendChild(mainElement);
 
-// Setup Musik
 const musikAudio = new Audio("https://dekatutorial.github.io/musik/Nadhif%20Basalamah%20-%20bergema%20sampai%20selamanya%20-%20Official%20Lyric%20Video.mp3");
 musikAudio.autoplay = true;
 musikAudio.loop = true;
 
-// Selektor Elemen
 const preloadContainer = document.querySelector(".preload");
 const openContainer = document.querySelector(".open");
 const container = document.querySelector(".container");
-const btnContainer = document.querySelector(".btn-container");
+const btnContainer = document.querySelector('.btn-container');
 const btnStart = document.querySelector(".btn-start");
 const btnNext = document.querySelector(".btn-next");
 const btnMessage = document.querySelector(".btn-message");
 const mainContainer = document.querySelector(".main");
 
-// Fungsi Penyesuaian Ukuran Layar
 function updateScreenSize() {
-  const clientWidth = document.body.clientWidth;
-  const clientHeight = document.body.clientHeight;
-
-  if (clientWidth > (clientHeight / 16) * 9 && clientWidth > 450) {
-    const offset = (clientWidth - (clientHeight / 16) * 9) / 2;
-    mainContainer.style.left = offset + "px";
-    mainContainer.style.right = offset + "px";
-    document.body.style.setProperty("--mi", offset + "px");
+  const screenWidth = document.body.clientWidth;
+  const screenHeight = document.body.clientHeight;
+  
+  if (screenWidth > (screenHeight / 16) * 9 && screenWidth > 450) {
+    const marginSize = (screenWidth - (screenHeight / 16) * 9) / 2;
+    mainContainer.style.left = marginSize + 'px';
+    mainContainer.style.right = marginSize + 'px';
+    document.body.style = "--mi: " + marginSize + 'px';
   } else {
-    document.body.style.removeProperty("--mi");
-    mainContainer.style.left = "0";
-    mainContainer.style.right = "0";
+    document.body.style = '';
+    mainContainer.style.left = '0';
+    mainContainer.style.right = '0';
   }
 }
 
 updateScreenSize();
 window.onresize = updateScreenSize;
 
-// Pembuatan Konten Dinamis dengan Kolase Sprite (6 Foto: 3 Kolom, 2 Baris)
 let mainContents = [];
 
 function createMainContent() {
-  konten.forEach(item => {
-    const contentDiv = document.createElement("div");
-    contentDiv.classList.add("content", "main-content");
-
-    // Logika Kolase Sprite (3 Kolom x 2 Baris)
-    const col = item.indexFoto % 3; 
-    const row = Math.floor(item.indexFoto / 3); 
-
-    const posX = col * 50;  // 0%, 50%, 100%
-    const posY = row * 100; // 0%, 100%
-
-    let innerHTMLContent = "";
+  for (let i = 0; i < konten.length; i++) {
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add("content", 'main-content');
     
-    if (item.indexFoto !== undefined && item.indexFoto !== null) {
-      innerHTMLContent += `<div class="sprite-foto" style="background-image: url('${spriteImageUrl}'); background-position: ${posX}% ${posY}%;"></div>`;
+    if (!konten[i].foto) {
+      contentDiv.classList.add("text-only");
     }
-
-    if (item.ucapan) {
-      innerHTMLContent += `<p class="text">${item.ucapan}</p>`;
+    
+    let innerHTMLContent = '';
+    if (konten[i].foto) {
+      innerHTMLContent += `<img src="${konten[i].foto}" />`;
     }
-
+    if (konten[i].ucapan) {
+      innerHTMLContent += `<p class="text">${konten[i].ucapan}</p>`;
+    }
+    
     contentDiv.innerHTML = innerHTMLContent;
     container.appendChild(contentDiv);
-  });
+  }
   mainContents = document.querySelectorAll(".main-content");
 }
 
@@ -131,45 +115,45 @@ function nextContent(index) {
   if (index === konten.length - 1) {
     btnContainer.classList.remove("show");
     setTimeout(() => {
-      btnNext.classList.remove("show");
+      btnNext.classList.remove('show');
       btnMessage.classList.add("show");
       btnContainer.classList.add("show");
     }, 1000);
   }
-
+  
   if (index < konten.length) {
     if (index > 0) {
-      mainContents[index - 1].classList.add("hide");
-      const prevIndex = index - 1;
+      mainContents[index - 1].classList.add('hide');
+      let prevIndex = index - 1;
       setTimeout(() => {
         mainContents[prevIndex].remove();
       }, 1000);
     }
     setTimeout(() => {
-      mainContents[index].classList.add("show");
+      mainContents[index].classList.add('show');
     }, 200);
   }
 }
 
 function startContent() {
-  musikAudio.play().catch(() => {});
+  musikAudio.play();
   openContainer.classList.add("hide");
   nextContent(0);
   btnContainer.classList.remove("show");
   setTimeout(() => {
-    btnStart.classList.remove("show");
+    btnStart.classList.remove('show');
     btnNext.classList.add("show");
-    btnContainer.classList.add("show");
+    btnContainer.classList.add('show');
   }, 1000);
 }
 
-btnStart.addEventListener("click", startContent);
+btnStart.addEventListener('click', startContent);
 
 let nextIndex = 1;
 let isClick = 1;
 
 btnNext.addEventListener("click", () => {
-  if (isClick && nextIndex < konten.length) {
+  if (isClick) {
     isClick = 0;
     nextContent(nextIndex);
     nextIndex++;
@@ -179,22 +163,21 @@ btnNext.addEventListener("click", () => {
   }
 });
 
-btnMessage.addEventListener("click", kirimPesan);
+btnMessage.addEventListener('click', kirimPesan);
 
-// Konfigurasi SweetAlert
 const swalo = Swal.mixin({
   allowOutsideClick: false,
   reverseButtons: true
 });
 
 async function kirimPesan() {
-  const { value: pesanText } = await swalo.fire({
+  const { value: pesan } = await swalo.fire({
     title: "Tulis pesan",
-    input: "textarea",
+    input: 'textarea',
     confirmButtonText: "Kirim"
   });
-
-  if (pesanText) {
+  
+  if (pesan) {
     swalo.fire({
       title: "Mengirim pesan",
       didOpen: () => {
@@ -215,7 +198,22 @@ async function kirimPesan() {
   }
 }
 
-// Inisialisasi Window Load
+function sendToDb(pesan, callback) {
+  const formData = new FormData();
+  formData.append("pesan", pesan);
+  
+  fetch("func.php?act=add", {
+    method: "POST",
+    body: formData
+  })
+  .then(response => response.json())
+  .then(async data => {
+    if (data.Status === 200) {
+      callback();
+    }
+  });
+}
+
 window.onload = () => {
   preloadContainer.classList.add("hide");
   setTimeout(() => {
@@ -231,9 +229,8 @@ window.onload = () => {
 
 createMainContent();
 
-// Inisialisasi Kembang Api (Fireworks)
-const fireworksContainer = document.querySelector(".fireworks");
-const fireworksConfig = {
+const fireworksContainer = document.querySelector('.fireworks');
+const fireworks = new Fireworks["default"](fireworksContainer, {
   autoresize: true,
   opacity: 0.5,
   acceleration: 1,
@@ -256,15 +253,32 @@ const fireworksConfig = {
   brightness: { min: 50, max: 80 },
   decay: { min: 0.015, max: 0.03 },
   mouse: { click: false, move: false, max: 1 }
-};
+});
 
-const fireworks = new Fireworks["default"](fireworksContainer, fireworksConfig);
-
-const fireworks2Config = {
-  ...fireworksConfig,
-  rocketsPoint: { min: 65, max: 95 }
-};
-const fireworks2 = new Fireworks["default"](fireworksContainer, fireworks2Config);
+const fireworks2 = new Fireworks["default"](fireworksContainer, {
+  autoresize: true,
+  opacity: 0.5,
+  acceleration: 1,
+  friction: 0.88,
+  gravity: 1,
+  particles: 60,
+  traceLength: 3,
+  traceSpeed: 6,
+  explosion: 5,
+  intensity: 15,
+  flickering: 50,
+  lineStyle: 'round',
+  hue: { min: 30, max: 60 },
+  delay: { min: 100, max: 100 },
+  rocketsPoint: { min: 65, max: 95 },
+  lineWidth: {
+    explosion: { min: 1, max: 2 },
+    trace: { min: 0.1, max: 1 }
+  },
+  brightness: { min: 50, max: 80 },
+  decay: { min: 0.015, max: 0.03 },
+  mouse: { click: false, move: false, max: 1 }
+});
 
 function showFireworks() {
   setTimeout(() => {

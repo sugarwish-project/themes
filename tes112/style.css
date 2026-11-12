@@ -380,13 +380,3 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
   margin-bottom: 12px;
 }
-
-.btn-container button {
-  cursor: pointer;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-}
-
-.btn-container button:not(.show) {
-  display: none;
-}
