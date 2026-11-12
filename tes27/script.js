@@ -262,68 +262,46 @@ btnRestart.addEventListener("click", restartContent);
    KONFIGURASI KEMBANG API (FIREWORKS-JS)
    ========================================= */
 const fireworksContainer = document.querySelector('.fireworks');
-let fireworks = null;
-let fireworks2 = null;
 
-function initFireworks() {
-  try {
-    // Mendukung berbagai format export global UMD dari fireworks-js
-    const FireworkClass =
-      (window.Fireworks && window.Fireworks.default) ||
-      (window.Fireworks && window.Fireworks.Fireworks) ||
-      window.Fireworks;
+const baseFireworksConfig = {
+  hue: { min: 35, max: 52 }, // Nuansa emas hangat
+  delay: { min: 40, max: 80 }, // Jeda antar tembakan diperlama agar lebih santai
+  speed: 1.2,                  // Kecepatan roket diperlambat (tidak terlalu cepat)
+  acceleration: 1.01,          // Akselerasi halus
+  friction: 0.97,
+  gravity: 0.8,                // Gravitasi diperingan agar partikel melayang anggun di udara
+  particles: 40,               // Jumlah partikel dikurangi agar ledakan terlihat lebih kecil & rapi
+  traceLength: 2,
+  traceSpeed: 5,
+  explosion: 3,                // Ukuran radius ledakan dikecilkan (dari 5 menjadi 3)
+  intensity: 12,               // Intensitas sedang agar terlihat elegan dari kejauhan
+  flickering: 30,
+  lineStyle: 'round',
+  lineWidth: {
+    explosion: { min: 0.8, max: 1.8 }, // Ketebalan garis partikel diperkecil
+    trace: { min: 0.8, max: 1.2 }
+  },
+  brightness: { min: 50, max: 80 },
+  decay: { min: 0.01, max: 0.02 }  // Partikel memudar perlahan layaknya di kejauhan
+};
 
-    if (typeof FireworkClass !== 'function' || !fireworksContainer) {
-      console.warn("Library Fireworks belum termuat sempurna.");
-      return;
-    }
+// 1. Kembang api pertama: Dari area kiri bawah, melesat ke atas
+const fireworks = new Fireworks["default"](fireworksContainer, {
+  ...baseFireworksConfig,
+  rocketsPoint: { min: 20, max: 35 }
+});
 
-    const baseFireworksConfig = {
-      hue: { min: 35, max: 52 },
-      delay: { min: 35, max: 65 },
-      speed: 2,
-      acceleration: 1.03,
-      friction: 0.96,
-      gravity: 1.4,
-      particles: 65,
-      traceLength: 3,
-      traceSpeed: 8,
-      explosion: 5,
-      intensity: 18,
-      flickering: 45,
-      lineStyle: 'round',
-      lineWidth: {
-        explosion: { min: 1, max: 2.5 },
-        trace: { min: 1, max: 1.5 }
-      },
-      brightness: { min: 55, max: 85 },
-      decay: { min: 0.015, max: 0.03 }
-    };
-
-    fireworks = new FireworkClass(fireworksContainer, {
-      ...baseFireworksConfig,
-      rocketsPoint: { min: 45, max: 55 } // Titik asal luncuran sisi kiri
-    });
-
-    fireworks2 = new FireworkClass(fireworksContainer, {
-      ...baseFireworksConfig,
-      rocketsPoint: { min: 48, max: 52 } // Titik asal luncuran sisi kanan
-    });
-  } catch (err) {
-    console.error("Gagal menginisialisasi kembang api:", err);
-  }
-}
+// 2. Kembang api kedua: Dari area tengah-bawah (dekat masjid), melesat ke atas
+const fireworks2 = new Fireworks["default"](fireworksContainer, {
+  ...baseFireworksConfig,
+  rocketsPoint: { min: 60, max: 75 }
+});
 
 function showFireworks() {
-  if (!fireworks || !fireworks2) {
-    initFireworks();
-  }
-  if (fireworks && fireworks2) {
-    setTimeout(() => {
-      fireworks.start();
-    }, 500);
-    fireworks2.start();
-  }
+  setTimeout(() => {
+    fireworks.start();
+  }, 400);
+  fireworks2.start();
 }
 
 /* =========================================
