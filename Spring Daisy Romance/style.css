@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Sacramento&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Sacramento&display=swap');
 
 :root {
   color-scheme: light;
@@ -483,4 +483,18 @@ body {
 .main-content.show .sprite-foto {
   transform: scale(1);
   transition: transform 1s ease;
+}
+
+/* Styling khusus untuk nama */
+.open-text .nama-spesial {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: 1.85rem;
+  font-weight: 600;
+  color: #22303f;
+  letter-spacing: 0.8px;
+  margin: 4px 0;
+  opacity: 0;
+  animation: 1.5s .3s forwards anm-show;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.75);
 }
