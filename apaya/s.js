@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const progressDots = document.getElementById("progress-dots");
   const btnNext = document.getElementById("btn-next");
   const btnSend = document.getElementById("btn-send");
+  const btnRestart = document.getElementById("btn-restart");
   const musicToggle = document.getElementById("music-toggle");
   const musicLabel = musicToggle.querySelector(".music-label");
 
@@ -136,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const dots = progressDots.querySelectorAll(".dot");
 
     cards.forEach((card, idx) => {
-      card.classList.remove("is-active", "is-next", "is-third", "is-hidden-stack");
+      card.classList.remove("is-active", "is-next", "is-third", "is-hidden-stack", "fly-out");
       if (idx === currentIndex) {
         card.classList.add("is-active");
       } else if (idx === currentIndex + 1) {
@@ -145,6 +146,8 @@ document.addEventListener("DOMContentLoaded", () => {
         card.classList.add("is-third");
       } else if (idx > currentIndex + 2) {
         card.classList.add("is-hidden-stack");
+      } else if (idx < currentIndex) {
+        card.classList.add("fly-out");
       }
     });
 
@@ -157,6 +160,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentIndex >= konten.length - 1) {
       btnNext.classList.add("hidden");
       btnSend.classList.remove("hidden");
+      btnRestart.classList.remove("hidden");
+    } else {
+      btnNext.classList.remove("hidden");
+      btnSend.classList.add("hidden");
+      btnRestart.classList.add("hidden");
     }
   }
 
@@ -215,14 +223,22 @@ document.addEventListener("DOMContentLoaded", () => {
     updateStackVisuals();
 
     setTimeout(() => {
-      activeCard.classList.add("hidden");
       isAnimating = false;
     }, 450);
   }
 
   btnNext.addEventListener("click", goToNextCard);
 
-  // 8. Fitur Kirim Balasan (SweetAlert2 + WhatsApp / PHP Backend)
+  // 8. Fungsi Tombol Ulangi (Restart)
+  function restartExperience() {
+    if (isAnimating) return;
+    currentIndex = 0;
+    initCards();
+  }
+
+  btnRestart.addEventListener("click", restartExperience);
+
+  // 9. Fitur Kirim Balasan (SweetAlert2 + WhatsApp / PHP Backend)
   const customSwal = Swal.mixin({
     allowOutsideClick: false,
     confirmButtonText: "Kirim",
