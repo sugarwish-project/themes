@@ -36,7 +36,7 @@ musikAudio.loop = true;
 
 // Atur lagu mulai di detik ke-28 saat metadata siap
 musikAudio.addEventListener('loadedmetadata', () => {
-  musikAudio.currentTime = 28;
+  musikAudio.currentTime = 29;
 });
 
 // 2. Fungsi memutar lagu dengan efek Fade-In (pelan ke keras)
