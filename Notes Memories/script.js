@@ -9,8 +9,8 @@ const konten = [
     ucapan: "Hallo sayang"
   },
   {
-    gambar: "/asset/themes/animasi/pentol/stkr/Stiker%2048.gif",
-    ucapan: "Selamat ulang tahun ya"
+    gambar: "/asset/themes/animasi/pentol/Stiker%2048.gif",
+    ucapan: "Selamat ulang tahun yaaa!"
   },
   {
     gambar: "/asset/themes/animasi/pentol/Stiker%2016.gif",
@@ -18,11 +18,11 @@ const konten = [
   },
   {
     gambar: "/asset/themes/animasi/pentol/Stiker%2036.gif",
-    ucapan: "Buruan order di Deka Tutorial"
+    ucapan: "Buruan order di SugarWish.my.id"
   },
   {
     gambar: "/asset/themes/animasi/pentol/Stiker%202.gif",
-    ucapan: "Bisa custom ucapan dan musik sesuai keinginan"
+    ucapan: "Bisa custom ucapan dan musik sesuai keinginan!!"
   }
 ];
 
