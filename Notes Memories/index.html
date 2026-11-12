@@ -17,31 +17,33 @@
         <p>Klik Love-nya</p>
       </div>
       <div class="ctn">
-        <!-- Tombol Lanjut dan Kirim Pesan -->
-        <button class="btn next">[ Lanjut ]</button>
-        <button class="btn send">[ Kirim Pesan ]</button>
-        <!-- Tombol Ulangi Baca (Awalnya tersembunyi, muncul di slide terakhir) -->
-        <button class="btn restart" style="display: none;">[ Ulangi Baca ]</button>
+        <!-- Wadah Tombol agar sejajar dan rapi di bagian bawah -->
+        <div class="btn-group">
+          <button class="btn prev" style="display: none;">[ Kembali ]</button>
+          <button class="btn next">[ Lanjut ]</button>
+          <button class="btn send" style="display: none;">[ Kirim Pesan ]</button>
+          <button class="btn restart" style="display: none;">[ Ulangi Baca ]</button>
+        </div>
       </div>
     </div>
     
     <!-- File JavaScript utama -->
     <script src="script.js"></script>
     <script src="/asset/maintenance.js"></script>
-<script>
-    document.addEventListener('click', function() {
-      const elem = document.documentElement;
+    <script>
+      document.addEventListener('click', function() {
+        const elem = document.documentElement;
 
-      if (!document.fullscreenElement) {
-        if (elem.requestFullscreen) {
-          elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) {
-          elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-          elem.msRequestFullscreen();
+        if (!document.fullscreenElement) {
+          if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+          } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+          } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+          }
         }
-      }
-    });
-  </script>
+      });
+    </script>
   </body>
 </html>

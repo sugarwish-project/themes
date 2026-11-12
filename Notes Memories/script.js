@@ -106,9 +106,11 @@ function jalankanPesanInteraktif(dataKonten, urlMusik, noWa) {
 
   const semuaCardContainer = document.querySelectorAll(".crd-ctnr");
   const semuaCard = document.querySelectorAll(".crd");
+  const btnPrev = document.querySelector(".prev");
   const btnNext = document.querySelector(".next");
   const btnSend = document.querySelector(".send");
   const btnRestart = document.querySelector(".restart");
+  const btnGroup = document.querySelector(".btn-group");
   
   let indexCard = semuaCard.length - 1;
   let bolehKlik = true;
@@ -125,45 +127,73 @@ function jalankanPesanInteraktif(dataKonten, urlMusik, noWa) {
     }, 700);
   });
 
-  btnNext.style = "bottom:" + posisiLove + "px";
-  btnSend.style.bottom = posisiLove + "px";
-  btnRestart.style.bottom = posisiLove + "px";
+  // Mengatur posisi container tombol agar tetap di bawah (tidak melayang)
+  btnGroup.style.bottom = "28px";
 
+  // Fungsi Lanjut ke Kartu Berikutnya
   btnNext.addEventListener("click", () => {
-    if (bolehKlik) {
+    if (bolehKlik && indexCard > 0) {
       bolehKlik = false;
+      semuaCard[indexCard].classList.remove("out");
+      void semuaCard[indexCard].offsetWidth; // trigger reflow animasi
       semuaCard[indexCard].classList.add("out");
+
       setTimeout(() => {
-        semuaCardContainer[indexCard].style = "display: none";
-        if (indexCard !== 0) {
-          semuaCardContainer[indexCard - 1].style = "display: flex";
-          indexCard--;
+        semuaCardContainer[indexCard].style.display = "none";
+        indexCard--;
+        semuaCard[indexCard].classList.remove("out");
+        semuaCardContainer[indexCard].style.display = "flex";
+
+        // Jika sudah sampai di kartu terakhir (index 0)
+        if (indexCard === 0) {
+          btnNext.style.display = "none";
+          btnPrev.style.display = "inline-block";
+          btnSend.style.display = "inline-block";
+          btnRestart.style.display = "none";
         }
       }, 700);
 
-      // Jika mencapai kartu terakhir (index 0)
-      if (indexCard === 1) {
-        btnNext.classList.add("btn-out");
-        setTimeout(() => {
-          btnNext.style = "display: none";
-          btnSend.style = "display: inline-block";
-        }, 500);
-      }
-
       setTimeout(() => {
         bolehKlik = true;
-      }, 1400);
+      }, 900);
     }
   });
 
+  // Fungsi Tombol Kembali (sejajar dengan Kirim Pesan)
+  btnPrev.addEventListener("click", () => {
+    if (bolehKlik && indexCard < semuaCard.length - 1) {
+      bolehKlik = false;
+      semuaCardContainer[indexCard].style.display = "none";
+      indexCard++;
+      semuaCard[indexCard].classList.remove("out");
+      semuaCardContainer[indexCard].style.display = "flex";
+
+      // Kembalikan tampilan tombol menjadi tombol Lanjut
+      btnPrev.style.display = "none";
+      btnSend.style.display = "none";
+      btnRestart.style.display = "none";
+      btnNext.classList.remove("btn-out");
+      btnNext.style.display = "inline-block";
+
+      setTimeout(() => {
+        bolehKlik = true;
+      }, 600);
+    }
+  });
+
+  // Fungsi Tombol Kirim Pesan
   btnSend.addEventListener("click", async () => {
-    await kirimPesanWhatsApp();
-    // Setelah pesan dikirim, sembunyikan tombol kirim pesan dan tampilkan tombol ulangi baca
-    btnSend.classList.add("btn-out");
-    setTimeout(() => {
-      btnSend.style = "display: none";
-      btnRestart.style = "display: inline-block";
-    }, 500);
+    const berhasilKirim = await kirimPesanWhatsApp();
+    // Hanya ubah tombol jika pesan berhasil dikirim
+    if (berhasilKirim) {
+      btnSend.classList.add("btn-out");
+      setTimeout(() => {
+        btnSend.classList.remove("btn-out");
+        btnSend.style.display = "none";
+        btnPrev.style.display = "inline-block";
+        btnRestart.style.display = "inline-block";
+      }, 400);
+    }
   });
 
   // Fungsi untuk mengulangi baca dari awal
@@ -193,34 +223,50 @@ function jalankanPesanInteraktif(dataKonten, urlMusik, noWa) {
   });
 
   async function kirimPesanWhatsApp() {
-    const { value: pesanUser } = await swalCustom.fire({
+    const { value: pesanUser, isConfirmed } = await swalCustom.fire({
       title: "Tulis pesan disini ^_^",
       input: "textarea",
+      showCancelButton: true,
+      cancelButtonText: "Batal",
       confirmButtonText: "Kirim"
     });
 
-    if (pesanUser) {
-      if (noWa.length > 8) {
-        await swalCustom.fire("Kirim pesan ke WhatsApp ya");
-        if (noWa.startsWith("62")) {
-          window.open("https://wa.me/" + noWa + "?text=" + encodeURIComponent(pesanUser), "_blank");
-        } else {
-          window.open("https://wa.me/?text=" + encodeURIComponent(pesanUser), "_blank");
-        }
-      } else {
-        swalCustom.fire({
-          title: "Mengirim pesan",
-          didOpen: () => {
-            swalCustom.showLoading();
-          }
+    // Jika user menekan tombol Batal
+    if (!isConfirmed) {
+      return false;
+    }
+
+    if (pesanUser && pesanUser.trim() !== "") {
+      // Validasi apakah nomor WhatsApp valid (bukan default "628xxxxx", tidak kosong, dan hanya angka)
+      const nomorBersih = noWa ? noWa.replace(/\D/g, "") : "";
+      const apakahNomorValid =
+        noWa &&
+        !noWa.toLowerCase().includes("x") &&
+        nomorBersih.length >= 10;
+
+      if (apakahNomorValid) {
+        await swalCustom.fire({
+          icon: "success",
+          title: "Berhasil!",
+          text: "Kirim pesan ke WhatsApp ya"
         });
+        window.open("https://wa.me/" + nomorBersih + "?text=" + encodeURIComponent(pesanUser), "_blank");
+        return true;
+      } else {
+        // Notifikasi gagal jika nomor belum ditentukan / tidak valid
+        await swalCustom.fire({
+          icon: "error",
+          title: "Pesan Gagal Dikirim!",
+          text: "Nomor WhatsApp tujuan belum ditentukan atau tidak valid."
+        });
+        return false;
       }
     } else {
       await swalCustom.fire({
         confirmButtonText: "Iya deh",
         title: "Jangan dikosongin dong :)"
       });
-      await kirimPesanWhatsApp();
+      return await kirimPesanWhatsApp();
     }
   }
 
