@@ -1,5 +1,5 @@
 // Data Konten Kisah Cinta Menyambut Tahun 2027
-const spriteImageUrl = '/asset/themes/img/Enchanted%20Islamic%20Garden/Enchanted%20Islamic%20Garden.webp';
+const spriteImageUrl = '/asset/themes/img/Enchanted%20Islamic%20Garden/Enchanted%20Islamic%20Garden2.webp';
 
 const kontenList = [
   {
@@ -82,13 +82,13 @@ async function kirimPesan() {
 }
 
 // Inisialisasi Audio
-const musikAudio = new Audio('/musik/Westlife%20-%20Beautiful%20in%20white%20(Lyrics).mp3');
+const musikAudio = new Audio('/musik/Maher%20Zain%20-%20For%20The%20Rest%20Of%20My%20Life%20Official%20Music%20Video.mp3');
 musikAudio.autoplay = false;
 musikAudio.preload = 'none';
 musikAudio.loop = true;
 
 musikAudio.addEventListener('loadedmetadata', () => {
-  musikAudio.currentTime = 10;
+  musikAudio.currentTime = 58;
 });
 
 function putarDenganFadeIn(durasiMs = 3000, targetVolume = 1.0) {
