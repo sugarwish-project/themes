@@ -3,35 +3,35 @@
 // ==========================================
 const konten = [
   {
-    gambar: "https://dekatutorial.github.io/v/stkr/Stiker%2049.gif",
+    gambar: "/asset/themes/animasi/pentol/Stiker%2049.gif",
     ucapan: "Hallo sayang ✨",
   },
   {
-    gambar: "https://dekatutorial.github.io/v/stkr/Stiker%2048.gif",
+    gambar: "/asset/themes/animasi/pentol/Stiker%2048.gif",
     ucapan: "Selamat ulang tahun ya! Semoga panjang umur & sehat selalu 🎂",
   },
   {
-    gambar: "https://dekatutorial.github.io/v/stkr/Stiker%2016.gif",
+    gambar: "/asset/themes/animasi/pentol/Stiker%2016.gif",
     ucapan: "Semoga semua harapan dan impianmu tahun ini tercapai ya...",
   },
   {
-    gambar: "https://dekatutorial.github.io/v/stkr/Stiker%2036.gif",
+    gambar: "/asset/themes/animasi/pentol/Stiker%2036.gif",
     ucapan: "Terima kasih sudah selalu hadir dan bikin hari-hari jadi lebih berwarna 🤍",
   },
   {
-    gambar: "https://dekatutorial.github.io/v/stkr/Stiker%202.gif",
+    gambar: "/asset/themes/animasi/pentol/Stiker%202.gif",
     ucapan: "Ada pesan atau harapan khusus? Tulis di bawah ya!",
   },
 ];
 
 const musikUrl =
-  "https://dekatutorial.github.io/musik/Virgoun%20-%20Surat%20Cinta%20Untuk%20Starla%20-%20Official%20Lyric%20Video.mp3";
+  "/musik/Virgoun_Surat_Cinta_Untuk-Starla.mp3";
 
 // URL Efek Suara (SFX) saat tombol lanjut diklik
 const sfxUrl = "/musik/sfx/typ.mp3";
 
-// Isi dengan nomor WhatsApp tujuan (format 628xxx) atau kosongkan "" jika memakai backend PHP
-const nomorWhatsapp = "6281234567890";
+// Isi dengan nomor WhatsApp tujuan
+const nomorWhatsapp = "/";
 
 // ==========================================
 // LOGIKA APLIKASI INTERAKTIF
