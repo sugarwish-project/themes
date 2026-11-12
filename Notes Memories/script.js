@@ -110,7 +110,6 @@ function jalankanPesanInteraktif(dataKonten, urlMusik, noWa) {
   const btnNext = document.querySelector(".next");
   const btnSend = document.querySelector(".send");
   const btnRestart = document.querySelector(".restart");
-  const btnGroup = document.querySelector(".btn-group");
   
   let indexCard = semuaCard.length - 1;
   let bolehKlik = true;
@@ -127,10 +126,36 @@ function jalankanPesanInteraktif(dataKonten, urlMusik, noWa) {
     }, 700);
   });
 
-  // Mengatur posisi container tombol agar tetap di bawah (tidak melayang)
-  btnGroup.style.bottom = "28px";
+  // Tombol Lanjut
+  btnNext.addEventListener("click", () => {
+    if (bolehKlik && indexCard > 0) {
+      bolehKlik = false;
+      semuaCard[indexCard].classList.remove("out");
+      void semuaCard[indexCard].offsetWidth;
+      semuaCard[indexCard].classList.add("out");
 
-  // Fungsi Lanjut ke Kartu Berikutnya
+      setTimeout(() => {
+        semuaCardContainer[indexCard].style.display = "none";
+        indexCard--;
+        semuaCard[indexCard].classList.remove("out");
+        semuaCardContainer[indexCard].style.display = "flex";
+
+        // Jika sudah mencapai kartu terakhir (index 0)
+        if (indexCard === 0) {
+          btnNext.style.display = "none";
+          btnPrev.style.display = "inline-block";
+          btnSend.style.display = "inline-block";
+          btnRestart.style.display = "none";
+        }
+      }, 700);
+
+      setTimeout(() => {
+        bolehKlik = true;
+      }, 900);
+    }
+  });
+
+  // Tombol Kembali (Langsung kembali ke kartu pertama / "Hallo sayang")
   btnPrev.addEventListener("click", () => {
     if (bolehKlik) {
       bolehKlik = false;
@@ -140,14 +165,14 @@ function jalankanPesanInteraktif(dataKonten, urlMusik, noWa) {
         container.style.display = "none";
       });
 
-      // Kembalikan index ke kartu pertama (elemen terakhir pada array data terbalik)
+      // Kembalikan index ke kartu pertama (kartu "Hallo sayang")
       indexCard = semuaCard.length - 1;
 
       // Tampilkan kembali kartu pertama
       semuaCard[indexCard].classList.remove("out");
       semuaCardContainer[indexCard].style.display = "flex";
 
-      // Kembalikan tampilan tombol ke mode awal (hanya tombol Lanjut yang muncul)
+      // Kembalikan tombol ke mode awal (hanya tombol Lanjut)
       btnPrev.style.display = "none";
       btnSend.style.display = "none";
       btnRestart.style.display = "none";
@@ -159,34 +184,12 @@ function jalankanPesanInteraktif(dataKonten, urlMusik, noWa) {
       }, 400);
     }
   });
-  
-  // Fungsi Tombol Kembali (sejajar dengan Kirim Pesan)
-  btnPrev.addEventListener("click", () => {
-    if (bolehKlik && indexCard < semuaCard.length - 1) {
-      bolehKlik = false;
-      semuaCardContainer[indexCard].style.display = "none";
-      indexCard++;
-      semuaCard[indexCard].classList.remove("out");
-      semuaCardContainer[indexCard].style.display = "flex";
 
-      // Kembalikan tampilan tombol menjadi tombol Lanjut
-      btnPrev.style.display = "none";
-      btnSend.style.display = "none";
-      btnRestart.style.display = "none";
-      btnNext.classList.remove("btn-out");
-      btnNext.style.display = "inline-block";
-
-      setTimeout(() => {
-        bolehKlik = true;
-      }, 600);
-    }
-  });
-
-  // Fungsi Tombol Kirim Pesan
+  // Tombol Kirim Pesan
   btnSend.addEventListener("click", async () => {
-    const berhasilKirim = await kirimPesanWhatsApp();
-    // Hanya ubah tombol jika pesan berhasil dikirim
-    if (berhasilKirim) {
+    const statusKirim = await kirimPesanWhatsApp();
+    // Jika nomor valid dan terkirim, sembunyikan tombol kirim & tampilkan tombol ulangi baca
+    if (statusKirim) {
       btnSend.classList.add("btn-out");
       setTimeout(() => {
         btnSend.classList.remove("btn-out");
@@ -197,7 +200,7 @@ function jalankanPesanInteraktif(dataKonten, urlMusik, noWa) {
     }
   });
 
-  // Fungsi untuk mengulangi baca dari awal
+  // Tombol Ulangi Baca
   btnRestart.addEventListener("click", () => {
     location.reload();
   });
@@ -232,13 +235,12 @@ function jalankanPesanInteraktif(dataKonten, urlMusik, noWa) {
       confirmButtonText: "Kirim"
     });
 
-    // Jika user menekan tombol Batal
     if (!isConfirmed) {
       return false;
     }
 
     if (pesanUser && pesanUser.trim() !== "") {
-      // Validasi apakah nomor WhatsApp valid (bukan default "628xxxxx", tidak kosong, dan hanya angka)
+      // Cek validitas nomor WhatsApp (tidak boleh default "628xxxxx", tidak kosong, minimal 10 digit angka)
       const nomorBersih = noWa ? noWa.replace(/\D/g, "") : "";
       const apakahNomorValid =
         noWa &&
@@ -249,16 +251,16 @@ function jalankanPesanInteraktif(dataKonten, urlMusik, noWa) {
         await swalCustom.fire({
           icon: "success",
           title: "Berhasil!",
-          text: "Kirim pesan ke WhatsApp ya"
+          text: "Mengarahkan ke WhatsApp..."
         });
         window.open("https://wa.me/" + nomorBersih + "?text=" + encodeURIComponent(pesanUser), "_blank");
         return true;
       } else {
-        // Notifikasi gagal jika nomor belum ditentukan / tidak valid
+        // Notifikasi gagal karena nomor belum ditentukan/valid
         await swalCustom.fire({
           icon: "error",
           title: "Pesan Gagal Dikirim!",
-          text: "Nomor WhatsApp tujuan belum ditentukan atau tidak valid."
+          text: "Nomor WhatsApp tujuan belum ditentukan!"
         });
         return false;
       }

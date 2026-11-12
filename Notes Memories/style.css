@@ -208,18 +208,18 @@
   font-weight: 600;
 }
 
-/* Wadah tombol agar tidak melayang dan bisa bersejajar */
+/* Wadah tombol flexbox agar tetap di bawah dan sejajar */
 .btn-group {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 30px;
+  bottom: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   z-index: 10;
-  padding: 0 15px;
+  padding: 0 10px;
 }
 
 .btn {
@@ -243,11 +243,6 @@ button.btn {
 }
 button.btn:active {
   transform: scale(0.95);
-}
-button.btn.send,
-button.btn.restart,
-button.btn.prev {
-  display: none;
 }
 .btn-out {
   opacity: 0;
