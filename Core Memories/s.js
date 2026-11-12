@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
           await customSwal.fire({
             icon: "error",
             title: "Pesan gagal terkirim!",
-            text: "Silakan coba ulangi lagi.",
+            text: "Nomor tujuan belum di tentukan!.",
           });
           openMessageModal();
         }
