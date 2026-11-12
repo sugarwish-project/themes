@@ -74,7 +74,7 @@ async function kirimPesan() {
 }
 
 // Inisialisasi Audio
-const musikAudio = new Audio('/musik/Westlife%20-%20Beautiful%20in%20white%20(Lyrics).mp3');
+const musikAudio = new Audio('https://dekatutorial.github.io/musik/Nadhif%20Basalamah%20-%20bergema%20sampai%20selamanya%20-%20Official%20Lyric%20Video.mp3');
 musikAudio.autoplay = false;
 musikAudio.preload = 'none';
 musikAudio.loop = true;

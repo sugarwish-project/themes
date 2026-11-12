@@ -87,7 +87,7 @@ body {
   background-size: cover;
   background-position: center bottom;
   /* Ganti URL di bawah sesuai lokasi gambar latar belakang Anda */
-  background-image: url("image_8a0da8.jpg");
+  background-image: url("/asset/themes/img/Enchanted%20Islamic%20Garden/BG%20Enchanted%20Islamic%20Garden.webp");
 }
 
 .bg-overlay {
