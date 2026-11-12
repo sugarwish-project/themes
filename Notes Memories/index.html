@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/asset/maintenance.css">
+    <title>Just For You</title>
+    <!-- SweetAlert2 untuk Popup -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.4/dist/sweetalert2.all.min.js"></script>
+  </head>
+  <body>
+    <div class="ctnr">
+      <div class="lv">
+        <img src="/asset/themes/animasi/love-coklat.svg" alt="Love" />
+        <p>Klik Love-nya</p>
+      </div>
+      <div class="ctn">
+        <!-- Tombol Lanjut dan Kirim Pesan -->
+        <button class="btn next">[ Lanjut ]</button>
+        <button class="btn send">[ Kirim Pesan ]</button>
+        <!-- Tombol Ulangi Baca (Awalnya tersembunyi, muncul di slide terakhir) -->
+        <button class="btn restart" style="display: none;">[ Ulangi Baca ]</button>
+      </div>
+    </div>
+    
+    <!-- File JavaScript utama -->
+    <script src="script.js"></script>
+    <script src="/asset/maintenance.js"></script>
+<script>
+    document.addEventListener('click', function() {
+      const elem = document.documentElement;
+
+      if (!document.fullscreenElement) {
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+          elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+          elem.msRequestFullscreen();
+        }
+      }
+    });
+  </script>
+  </body>
+</html>
