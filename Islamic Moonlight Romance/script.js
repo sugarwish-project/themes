@@ -32,7 +32,7 @@ const kontenList = [
 const musikAudio = new Audio('https://dekatutorial.github.io/musik/Romantic%20Happy%20Birthday%20(Arranged%20by%20Miranda%20Wong)%20Piano%20Cover.mp3');
 musikAudio.loop = true;
 
-const klikSfx = new Audio('musik/sfx/klik.mp3');
+const klikSfx = new Audio('/musik/sfx/klik.mp3');
 klikSfx.preload = 'auto';
 
 function playClickSound() {
