@@ -266,7 +266,6 @@ body {
   overflow: hidden;
 }
 
-/* Left Margin Red Line (Classic Notebook Style) */
 .paper-body::before {
   content: "";
   position: absolute;
@@ -446,7 +445,6 @@ body {
   user-select: none;
 }
 
-/* Washi Tape Decoration on Top of Card */
 .polaroid-card::before {
   content: "";
   position: absolute;
@@ -479,13 +477,15 @@ body {
   padding: 8px;
 }
 
+/* --- MENGUBAH FONT UCAPAN MENJADI HANDWRITING --- */
 .polaroid-text {
-  font-size: 1.08rem;
-  font-weight: 600;
-  line-height: 1.45;
+  font-family: "Caveat", cursive !important; /* Font tulisan tangan estetik */
+  font-size: 1.65rem !important;            /* Dibuat lebih besar agar jelas & indah */
+  font-weight: 700;
+  line-height: 1.3;
   text-align: center;
   color: var(--text-main);
-  padding: 0 6px;
+  padding: 0 4px;
 }
 
 /* Stack Depth States */
@@ -605,7 +605,8 @@ body {
   background: #fff !important;
   border: 1.5px solid #d8c7c1 !important;
   border-radius: 12px !important;
-  font-size: 0.95rem !important;
+  font-size: 1.1rem !important;
+  font-family: "Caveat", cursive !important;
   padding: 12px !important;
   color: var(--text-main) !important;
   box-shadow: none !important;
