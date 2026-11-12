@@ -77,7 +77,7 @@ async function kirimPesan() {
   }
 }
 
-FUNGSI AGAR MUSIK TIDAK MUTAR DULUAN HARUS DI KLIK
+//FUNGSI AGAR MUSIK TIDAK MUTAR DULUAN HARUS DI KLIK
 // 1. Inisialisasi Audio
 const musikAudio = new Audio('/musik/Westlife%20-%20Beautiful%20in%20white%20(Lyrics).mp3');
 musikAudio.autoplay = false;
