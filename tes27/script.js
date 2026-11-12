@@ -128,7 +128,7 @@ const btnMessage = document.querySelector(".btn-message");
 const btnRestart = document.querySelector(".btn-restart");
 const mainContainer = document.querySelector('.main');
 
-// Mengatur Ukuran Layar Responsif (Rasio Potret 9:16 di Desktop)
+// Mengatur Ukuran Layar Responsif
 function updateScreenSize() {
   const screenWidth = document.body.clientWidth;
   const screenHeight = document.body.clientHeight;
@@ -143,9 +143,9 @@ function updateScreenSize() {
     mainContainer.style.left = '0';
     mainContainer.style.right = '0';
   }
-  resizeFireworksCanvas();
 }
 
+updateScreenSize();
 window.onresize = updateScreenSize;
 
 // Pembuatan Konten Dinamis
@@ -201,10 +201,6 @@ function nextContent(index) {
 function startContent() {
   playClickSound();
   openContainer.classList.add("hide");
-  // Luncurkan beberapa kembang api ekstra saat mulai
-  for (let i = 0; i < 4; i++) {
-    setTimeout(launchFirework, i * 300);
-  }
   nextContent(0);
   btnContainer.classList.remove("show");
   setTimeout(() => {
@@ -222,7 +218,6 @@ btnNext.addEventListener('click', () => {
   if (isClick) {
     isClick = 0;
     playClickSound();
-    launchFirework();
     nextContent(nextIndex);
     nextIndex++;
     setTimeout(() => {
@@ -256,137 +251,48 @@ function restartContent() {
 btnRestart.addEventListener("click", restartContent);
 
 /* =========================================
-   EFEK KEMBANG API REALISTIS (CANVAS)
+   KONFIGURASI KEMBANG API (FIREWORKS-JS)
    ========================================= */
-const fwCanvas = document.getElementById('fireworksCanvas');
-const fwCtx = fwCanvas.getContext('2d');
-let fireworks = [];
-let particles = [];
+const fireworksContainer = document.querySelector('.fireworks');
 
-function resizeFireworksCanvas() {
-  if (!fwCanvas || !container) return;
-  fwCanvas.width = container.clientWidth;
-  fwCanvas.height = container.clientHeight;
+const baseFireworksConfig = {
+  hue: { min: 35, max: 52 },
+  delay: { min: 35, max: 65 },
+  speed: 2,
+  acceleration: 1.03,
+  friction: 0.96,
+  gravity: 1.4,
+  particles: 65,
+  traceLength: 3,
+  traceSpeed: 8,
+  explosion: 5,
+  intensity: 18,
+  flickering: 45,
+  lineStyle: 'round',
+  lineWidth: {
+    explosion: { min: 1, max: 2.5 },
+    trace: { min: 1, max: 1.5 }
+  },
+  brightness: { min: 55, max: 85 },
+  decay: { min: 0.015, max: 0.03 }
+};
+
+const fireworks = new Fireworks["default"](fireworksContainer, {
+  ...baseFireworksConfig,
+  rocketsPoint: { min: 5, max: 35 } // Titik asal luncuran sisi kiri
+});
+
+const fireworks2 = new Fireworks["default"](fireworksContainer, {
+  ...baseFireworksConfig,
+  rocketsPoint: { min: 65, max: 95 } // Titik asal luncuran sisi kanan
+});
+
+function showFireworks() {
+  setTimeout(() => {
+    fireworks.start();
+  }, 500);
+  fireworks2.start();
 }
-
-class Firework {
-  constructor(startX, startY, targetX, targetY) {
-    this.x = startX;
-    this.y = startY;
-    this.targetX = targetX;
-    this.targetY = targetY;
-    this.speed = 3.5;
-    this.angle = Math.atan2(targetY - startY, targetX - startX);
-    this.vx = Math.cos(this.angle) * this.speed;
-    this.vy = Math.sin(this.angle) * this.speed;
-    this.alpha = 1;
-    // Palet warna kembang api emas hangat, champagne, dan putih mutiara
-    const hues = [42, 48, 36, 52, 210];
-    this.hue = hues[Math.floor(Math.random() * hues.length)];
-  }
-
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    this.vy += 0.02; // sedikit gravitasi
-
-    const dist = Math.hypot(this.targetX - this.x, this.targetY - this.y);
-    if (dist < 12 || this.vy >= 0) {
-      createExplosion(this.x, this.y, this.hue);
-      return false;
-    }
-    return true;
-  }
-
-  draw() {
-    fwCtx.save();
-    fwCtx.beginPath();
-    fwCtx.arc(this.x, this.y, 2, 0, Math.PI * 2);
-    fwCtx.fillStyle = `hsl(${this.hue}, 100%, 75%)`;
-    fwCtx.shadowBlur = 10;
-    fwCtx.shadowColor = `hsl(${this.hue}, 100%, 60%)`;
-    fwCtx.fill();
-    fwCtx.restore();
-  }
-}
-
-class Particle {
-  constructor(x, y, hue) {
-    this.x = x;
-    this.y = y;
-    this.hue = hue + (Math.random() * 16 - 8);
-    const angle = Math.random() * Math.PI * 2;
-    const speed = Math.random() * 4.2 + 0.8;
-    this.vx = Math.cos(angle) * speed;
-    this.vy = Math.sin(angle) * speed;
-    this.friction = 0.96;
-    this.gravity = 0.045;
-    this.alpha = 1;
-    this.decay = Math.random() * 0.015 + 0.01;
-    this.size = Math.random() * 2.2 + 1;
-  }
-
-  update() {
-    this.vx *= this.friction;
-    this.vy *= this.friction;
-    this.vy += this.gravity;
-    this.x += this.vx;
-    this.y += this.vy;
-    this.alpha -= this.decay;
-    return this.alpha > 0;
-  }
-
-  draw() {
-    fwCtx.save();
-    fwCtx.globalAlpha = this.alpha;
-    fwCtx.beginPath();
-    fwCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    fwCtx.fillStyle = `hsl(${this.hue}, 100%, 72%)`;
-    fwCtx.shadowBlur = 8;
-    fwCtx.shadowColor = `hsl(${this.hue}, 100%, 55%)`;
-    fwCtx.fill();
-    fwCtx.restore();
-  }
-}
-
-function createExplosion(x, y, hue) {
-  const particleCount = 55;
-  for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle(x, y, hue));
-  }
-}
-
-function launchFirework() {
-  if (!fwCanvas.width) return;
-  const startX = fwCanvas.width * (0.2 + Math.random() * 0.6);
-  const startY = fwCanvas.height * 0.65;
-  const targetX = fwCanvas.width * (0.15 + Math.random() * 0.7);
-  const targetY = fwCanvas.height * (0.12 + Math.random() * 0.32);
-  fireworks.push(new Firework(startX, startY, targetX, targetY));
-}
-
-function animateFireworks() {
-  fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
-
-  fireworks = fireworks.filter(fw => {
-    fw.draw();
-    return fw.update();
-  });
-
-  particles = particles.filter(p => {
-    p.draw();
-    return p.update();
-  });
-
-  requestAnimationFrame(animateFireworks);
-}
-
-// Luncurkan kembang api secara berkala
-setInterval(() => {
-  if (document.visibilityState === 'visible') {
-    launchFirework();
-  }
-}, 2200);
 
 /* =========================================
    EFEK BINTANG JATUH & KELOPAK BUNGA EMAS
@@ -453,10 +359,9 @@ function initFallingPetals() {
 // Inisialisasi Saat Halaman Dimuat
 window.onload = () => {
   updateScreenSize();
-  animateFireworks();
+  showFireworks();
   scheduleShootingStars();
   initFallingPetals();
-  launchFirework();
 
   preloadContainer.classList.add("hide");
   setTimeout(() => {
