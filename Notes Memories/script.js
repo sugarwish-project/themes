@@ -5,29 +5,29 @@
 // 1. Daftar Konten Kartu (Gambar Stiker & Ucapan)
 const konten = [
   {
-    gambar: "https://dekatutorial.github.io/v/stkr/Stiker%2049.gif",
+    gambar: "/asset/themes/animasi/pentol/Stiker%2049.gif",
     ucapan: "Hallo sayang"
   },
   {
-    gambar: "https://dekatutorial.github.io/v/stkr/Stiker%2048.gif",
+    gambar: "/asset/themes/animasi/pentol/stkr/Stiker%2048.gif",
     ucapan: "Selamat ulang tahun ya"
   },
   {
-    gambar: "https://dekatutorial.github.io/v/stkr/Stiker%2016.gif",
+    gambar: "/asset/themes/animasi/pentol/Stiker%2016.gif",
     ucapan: "Yuk tunggu apalagi??"
   },
   {
-    gambar: "https://dekatutorial.github.io/v/stkr/Stiker%2036.gif",
+    gambar: "/asset/themes/animasi/pentol/Stiker%2036.gif",
     ucapan: "Buruan order di Deka Tutorial"
   },
   {
-    gambar: "https://dekatutorial.github.io/v/stkr/Stiker%202.gif",
+    gambar: "/asset/themes/animasi/pentol/Stiker%202.gif",
     ucapan: "Bisa custom ucapan dan musik sesuai keinginan"
   }
 ];
 
 // 2. Link Musik Latar (Format MP3)
-const musik = "https://dekatutorial.github.io/musik/Virgoun%20-%20Surat%20Cinta%20Untuk%20Starla%20-%20Official%20Lyric%20Video.mp3";
+const musik = "/musik/Bulan%20Sutena%20-%20Happy%20Birthday%20(Official%20Music%20Video).mp3";
 
 // 3. Nomor WhatsApp Tujuan (Awali dengan kode negara, contoh: 6281234567890)
 const nomorWhatsapp = "628xxxxx";
