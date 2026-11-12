@@ -2,32 +2,37 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff">
+    <title>Happy New Year</title>
+    
+    <!-- Library Eksternal -->
     <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.x/dist/index.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.4/dist/sweetalert2.all.min.js"></script>
+    
+    <!-- CSS Utama -->
     <link rel="stylesheet" href="style.css" />
-    <meta name="theme-color" content="#ffffff">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <link rel="stylesheet" href="/asset/maintenance.css">
-    <title>Happy New Year</title>
   </head>
   <body>
+    
+    <!-- Script Utama -->
     <script src="script.js"></script>
-    <script src="/asset/maintenance.js"></script>
-<script>
-    document.addEventListener('click', function() {
-      const elem = document.documentElement;
 
-      if (!document.fullscreenElement) {
-        if (elem.requestFullscreen) {
-          elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) {
-          elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-          elem.msRequestFullscreen();
+    <!-- Script Fullscreen Otomatis saat Layar Diklik -->
+    <script>
+      document.addEventListener('click', function() {
+        const elem = document.documentElement;
+
+        if (!document.fullscreenElement) {
+          if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+          } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+          } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+          }
         }
-      }
-    });
-  </script>
+      });
+    </script>
   </body>
 </html>
