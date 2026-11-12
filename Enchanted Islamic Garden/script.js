@@ -1,5 +1,5 @@
 // Data Konten Kisah Cinta Menyambut Tahun 2027
-const spriteImageUrl = '/asset/themes/img/Spring%20Daisy%20Romance/romantisfoto.webp';
+const spriteImageUrl = '/asset/themes/img/Enchanted%20Islamic%20Garden/Enchanted%20Islamic%20Garden.webp';
 
 const kontenList = [
   {
