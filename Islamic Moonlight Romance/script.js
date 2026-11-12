@@ -46,42 +46,44 @@ const swalConfig = Swal.mixin({
   reverseButtons: true
 });
 
-// Fungsi Mengirim Pesan
+// Fungsi Mengirim Pesan ke WhatsApp Admin SugarWish
 async function kirimPesan() {
   playClickSound();
+
+  // Teks otomatis yang ingin ditampilkan
+  const defaultPesan = "Halo Admin SugarWish, saya tertarik dan ingin bertanya mengenai pembayaran serta pemesanan costume website ucapan ini.";
+
   const { value: pesanInput } = await swalConfig.fire({
-    title: "Tulis Pesan & Doa",
+    title: "Hubungi Admin",
     input: "textarea",
-    inputPlaceholder: "Ketik balasan atau harapanmu di sini...",
-    confirmButtonText: "Kirim",
+    inputValue: defaultPesan,
+    inputAttributes: {
+      readonly: true, // Membuat textarea hanya bisa dibaca (tidak bisa diketik/diubah)
+      style: "cursor: default; background: rgba(15, 23, 42, 0.5) !important;"
+    },
+    confirmButtonText: "Kirim ke WhatsApp",
     showCancelButton: true,
     cancelButtonText: "Batal"
   });
-
+  
+  // Jika tombol "Kirim ke WhatsApp" ditekan
   if (pesanInput !== undefined) {
     playClickSound();
-    if (pesanInput.trim() !== "") {
-      swalConfig.fire({
-        title: "Mengirim pesan...",
-        didOpen: () => {
-          swalConfig.showLoading();
-        }
-      });
+    
+    const nomorWa = "6285147381714";
+    const urlWa = `https://wa.me/${nomorWa}?text=${encodeURIComponent(pesanInput)}`;
 
-      setTimeout(async () => {
-        await swalConfig.fire({
-          icon: "success",
-          title: "Pesan terkirim!",
-          text: "Terima kasih sudah menuliskan pesanmu."
-        });
-      }, 900);
-    } else {
-      await swalConfig.fire({
-        icon: "warning",
-        title: "Jangan dikosongin ya :)"
-      });
-      kirimPesan();
-    }
+    swalConfig.fire({
+      title: "Mengarahkan ke WhatsApp...",
+      text: "Mohon tunggu sebentar.",
+      timer: 1000,
+      showConfirmButton: false,
+      didOpen: () => {
+        swalConfig.showLoading();
+      }
+    }).then(() => {
+      window.open(urlWa, '_blank');
+    });
   } else {
     playClickSound();
   }
