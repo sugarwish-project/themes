@@ -131,34 +131,35 @@ function jalankanPesanInteraktif(dataKonten, urlMusik, noWa) {
   btnGroup.style.bottom = "28px";
 
   // Fungsi Lanjut ke Kartu Berikutnya
-  btnNext.addEventListener("click", () => {
-    if (bolehKlik && indexCard > 0) {
+  btnPrev.addEventListener("click", () => {
+    if (bolehKlik) {
       bolehKlik = false;
+
+      // Sembunyikan semua kartu terlebih dahulu
+      semuaCardContainer.forEach((container) => {
+        container.style.display = "none";
+      });
+
+      // Kembalikan index ke kartu pertama (elemen terakhir pada array data terbalik)
+      indexCard = semuaCard.length - 1;
+
+      // Tampilkan kembali kartu pertama
       semuaCard[indexCard].classList.remove("out");
-      void semuaCard[indexCard].offsetWidth; // trigger reflow animasi
-      semuaCard[indexCard].classList.add("out");
+      semuaCardContainer[indexCard].style.display = "flex";
 
-      setTimeout(() => {
-        semuaCardContainer[indexCard].style.display = "none";
-        indexCard--;
-        semuaCard[indexCard].classList.remove("out");
-        semuaCardContainer[indexCard].style.display = "flex";
-
-        // Jika sudah sampai di kartu terakhir (index 0)
-        if (indexCard === 0) {
-          btnNext.style.display = "none";
-          btnPrev.style.display = "inline-block";
-          btnSend.style.display = "inline-block";
-          btnRestart.style.display = "none";
-        }
-      }, 700);
+      // Kembalikan tampilan tombol ke mode awal (hanya tombol Lanjut yang muncul)
+      btnPrev.style.display = "none";
+      btnSend.style.display = "none";
+      btnRestart.style.display = "none";
+      btnNext.classList.remove("btn-out");
+      btnNext.style.display = "inline-block";
 
       setTimeout(() => {
         bolehKlik = true;
-      }, 900);
+      }, 400);
     }
   });
-
+  
   // Fungsi Tombol Kembali (sejajar dengan Kirim Pesan)
   btnPrev.addEventListener("click", () => {
     if (bolehKlik && indexCard < semuaCard.length - 1) {
