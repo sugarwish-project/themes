@@ -1,0 +1,548 @@
+/* =========================================
+   1. IMPORT FONT MEWAH & ROMANTIS
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap');
+
+:root {
+  color-scheme: dark;
+  --gold-light: #fff3c4;
+  --gold-mid: #f3c669;
+  --gold-deep: #c5892f;
+  --navy-dark: #070e1d;
+  --navy-card: rgba(11, 22, 44, 0.62);
+}
+
+/* =========================================
+   2. RESET & GLOBAL STYLES
+   ========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Cormorant Garamond", serif;
+  letter-spacing: 0.4px;
+}
+
+body {
+  min-height: 100vh;
+  background: #040812;
+  overflow: hidden;
+  color: #f8f1e5;
+}
+
+/* =========================================
+   3. PRELOADER
+   ========================================= */
+.preload {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, #132547 0%, #060c1a 100%);
+  z-index: 99;
+  gap: 14px;
+}
+
+.preload.hide {
+  transition: 1s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preload p {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  color: var(--gold-light);
+  font-size: 1.05rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 12px rgba(243, 198, 105, 0.6);
+  animation: 2s ease-in-out infinite anm-preload2;
+}
+
+/* =========================================
+   4. LAYOUT UTAMA & BACKGROUND
+   ========================================= */
+.main {
+  background: #070e1d;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center bottom;
+  /* Ganti URL di bawah sesuai lokasi gambar latar belakang Anda */
+  background-image: url("image_8a0da8.jpg");
+}
+
+.bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(6, 13, 28, 0.45) 0%,
+    rgba(9, 19, 38, 0.25) 45%,
+    rgba(6, 12, 24, 0.72) 100%
+  );
+  pointer-events: none;
+}
+
+/* =========================================
+   5. KONTEN & ANIMASI TEKS GOLD BERCAHAYA
+   ========================================= */
+.content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  z-index: 3;
+}
+
+.content:not(.show) {
+  display: none;
+}
+
+.content.hide > * {
+  transition: 1.2s ease;
+  filter: blur(10px);
+  opacity: 0;
+  transform: translateY(-15px);
+}
+
+.open {
+  justify-content: flex-start;
+  padding: 12% 22px 20px;
+}
+
+.open-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 26px 20px;
+  background: rgba(10, 20, 42, 0.48);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 24px;
+  border: 1px solid rgba(243, 198, 105, 0.35);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.45),
+    inset 0 0 20px rgba(243, 198, 105, 0.12);
+}
+
+.subtitle-top {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  letter-spacing: 2.5px;
+  color: #ebd5a7;
+  opacity: 0;
+  animation: 1.4s 0.2s forwards anm-show;
+}
+
+/* Judul Utama Happy New Year 2027 dengan Efek Emas Bercahaya */
+.gold-glow-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  opacity: 0;
+  animation: 1.6s 0.4s forwards anm-show, goldPulse 3.5s ease-in-out infinite alternate;
+}
+
+.gold-glow-title .line-1 {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 2.35rem;
+  line-height: 1.15;
+  background: linear-gradient(
+    120deg,
+    #b87c24 0%,
+    #fff4c2 25%,
+    #f5c45e 50%,
+    #fff8d6 75%,
+    #c5882b 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerGold 4s linear infinite;
+}
+
+.gold-glow-title .line-2 {
+  font-family: "Bodoni Moda", serif;
+  font-weight: 700;
+  font-size: 3.4rem;
+  letter-spacing: 6px;
+  line-height: 1.05;
+  margin-top: 2px;
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    #ffe79e 40%,
+    #e5a93c 80%,
+    #9e6814 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 12px rgba(255, 210, 105, 0.65));
+}
+
+.divider-gold {
+  width: 65%;
+  height: 1px;
+  margin: 6px 0;
+  background: linear-gradient(90deg, transparent, #f3c669, transparent);
+  opacity: 0;
+  animation: 1.5s 0.6s forwards anm-show;
+}
+
+.open h2 {
+  font-size: 1.35rem;
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+  color: #ffebc2;
+  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(243, 198, 105, 0.45);
+  opacity: 0;
+  animation: 1.5s 0.7s forwards anm-show;
+}
+
+.open p {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: 1.08rem;
+  line-height: 1.5;
+  color: #e2e8f0;
+  text-align: center;
+  margin-top: 4px;
+  opacity: 0;
+  animation: 1.5s 0.9s forwards anm-show;
+}
+
+/* =========================================
+   6. MAIN CONTENT & GLOSSY CARD KISAH CINTA
+   ========================================= */
+.main-content {
+  padding: 20px;
+  max-height: 85%;
+  animation: 1.4s forwards anm-show;
+}
+
+.sprite-foto {
+  width: 72%;
+  max-width: 250px;
+  height: 25vh;
+  max-height: 250px;
+  background-size: 300% 200%;
+  background-repeat: no-repeat;
+  border: 2px solid rgba(243, 198, 105, 0.75);
+  border-radius: 18px;
+  box-shadow: 
+    0 12px 30px rgba(0, 0, 0, 0.6),
+    0 0 18px rgba(243, 198, 105, 0.35);
+}
+
+.main-content .text {
+  color: #fff6e0;
+  max-height: 46%;
+  padding: 22px 24px;
+  overflow-y: auto;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.15rem;
+  line-height: 1.75;
+  font-family: "Cormorant Garamond", serif;
+  background: var(--navy-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 20px;
+  border: 1px solid rgba(243, 198, 105, 0.45);
+  text-shadow: 0 0 8px rgba(255, 223, 145, 0.25);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.55),
+    inset 0 0 18px rgba(243, 198, 105, 0.12);
+}
+
+.main-content .text::-webkit-scrollbar {
+  width: 4px;
+}
+
+.main-content .text::-webkit-scrollbar-thumb {
+  background: rgba(243, 198, 105, 0.5);
+  border-radius: 10px;
+}
+
+/* =========================================
+   7. TOMBOL & CONTAINER TOMBOL (GOLD & NAVY)
+   ========================================= */
+.btn-container {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-container:not(.show) .btn-blur {
+  transform: translateY(50px);
+  opacity: 0;
+}
+
+.btn-container button:not(.show) {
+  display: none;
+}
+
+.btn-container .btn-blur {
+  transition: 1s ease;
+  background: rgba(11, 22, 44, 0.55);
+  width: fit-content;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 50px;
+  border: 1px solid rgba(243, 198, 105, 0.45);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+  padding: 6px;
+  display: flex;
+  gap: 8px;
+}
+
+.btn,
+.btn-container button {
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #d89b3c 0%, #f5cf76 50%, #b97c22 100%);
+  border: 1px solid rgba(255, 248, 220, 0.7);
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: "Playfair Display", serif;
+  letter-spacing: 0.8px;
+  color: #141e30;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(243, 198, 105, 0.4);
+}
+
+.btn-container button:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 20px rgba(255, 215, 115, 0.75);
+}
+
+.btn-container button:active {
+  transform: scale(0.95);
+}
+
+/* =========================================
+   8. EFEK VISUAL (FIREWORKS, STARS, PETALS)
+   ========================================= */
+.fireworks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.stars-container {
+  position: absolute;
+  width: 100%;
+  height: 75%;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star {
+  position: absolute;
+  display: block;
+  object-fit: contain;
+  pointer-events: none;
+  animation-name: twinkle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: opacity, transform;
+}
+
+.shooting-star {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--star-size);
+  height: var(--star-size);
+  border-radius: 50%;
+  background: #fffbd5;
+  box-shadow: 0 0 4px #fff, 0 0 10px #ffe184, 0 0 16px rgba(255, 210, 90, 0.95);
+  opacity: 0;
+  transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle));
+  animation: shooting-star var(--duration) linear forwards;
+}
+
+.shooting-star::before {
+  content: "";
+  position: absolute;
+  width: var(--tail-length);
+  height: var(--tail-width);
+  top: 50%;
+  right: 50%;
+  border-radius: 100%;
+  background: linear-gradient(to left, #fffac8 0%, rgba(255, 224, 100, 0.75) 25%, rgba(255, 205, 70, 0.25) 65%, transparent 100%);
+  transform: translateY(-50%);
+  filter: blur(0.5px);
+}
+
+.petal {
+  position: absolute;
+  background: radial-gradient(circle at 30% 30%, #fff8e7, #f3d299);
+  border-radius: 50% 0 50% 50%;
+  pointer-events: none;
+  animation-name: fall-petal;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  box-shadow: 0 0 8px rgba(255, 232, 175, 0.65);
+  z-index: 2;
+}
+
+/* =========================================
+   9. SWEETALERT MODIFICATION
+   ========================================= */
+.swal2-popup {
+  background: rgba(11, 22, 44, 0.95) !important;
+  backdrop-filter: blur(14px);
+  border-radius: 24px !important;
+  border: 1px solid rgba(243, 198, 105, 0.45);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7) !important;
+}
+
+.swal2-title {
+  font-size: 1.4rem;
+  color: #ffebc2 !important;
+  font-family: "Playfair Display", serif !important;
+  font-weight: 600;
+}
+
+.swal2-popup textarea {
+  resize: none;
+  background: rgba(7, 14, 29, 0.8) !important;
+  border: 1px solid rgba(243, 198, 105, 0.35) !important;
+  border-radius: 14px !important;
+  padding: 12px !important;
+  font-family: "Cormorant Garamond", serif !important;
+  font-size: 1.05rem !important;
+  color: #fff6e0 !important;
+}
+
+.swal2-actions button {
+  font-family: "Playfair Display", serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 600;
+  color: #141e30 !important;
+  background: linear-gradient(135deg, #d89b3c, #f5cf76) !important;
+  border-radius: 50px !important;
+  padding: 9px 24px;
+}
+
+/* =========================================
+   10. KEYFRAME ANIMATIONS
+   ========================================= */
+@keyframes shimmerGold {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes goldPulse {
+  0% {
+    filter: drop-shadow(0 0 8px rgba(243, 198, 105, 0.45));
+  }
+  100% {
+    filter: drop-shadow(0 0 20px rgba(255, 224, 130, 0.9));
+  }
+}
+
+@keyframes anm-preload2 {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes anm-show {
+  from {
+    filter: blur(10px);
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.25); }
+}
+
+@keyframes shooting-star {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--start-x), var(--start-y), 0) rotate(var(--angle)) scale(0.6);
+  }
+  15%, 75% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translate3d(calc(var(--start-x) + var(--move-x)), calc(var(--start-y) + var(--move-y)), 0) rotate(var(--angle)) scale(1);
+  }
+}
+
+@keyframes fall-petal {
+  0% {
+    transform: translateY(0) rotate(0deg) translateX(0);
+    opacity: 0;
+  }
+  15% { opacity: 0.85; }
+  85% { opacity: 0.85; }
+  100% {
+    transform: translateY(105vh) rotate(360deg) translateX(45px);
+    opacity: 0;
+  }
+}
+
+.main-content .text,
+.sprite-foto {
+  animation: box-glow 4s ease-in-out infinite alternate;
+}
+
+@keyframes box-glow {
+  0% {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55), 0 0 12px rgba(243, 198, 105, 0.2);
+  }
+  100% {
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), 0 0 24px rgba(243, 198, 105, 0.5);
+  }
+}

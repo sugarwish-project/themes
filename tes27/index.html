@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="id" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark only" />
+    <meta name="theme-color" content="#091326" />
+    <title>Happy New Year 2027 - Our Story</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.4/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/asset/maintenance.css" />
+  </head>
+  <body>
+    <div class="main">
+      <div class="container">
+        <div class="preload">
+          <div></div>
+          <div></div>
+          <div></div>
+          <p>Menyiapkan Kenangan...</p>
+        </div>
+
+        <!-- Layer Latar Belakang -->
+        <div class="bg">
+          <div class="bg-overlay"></div>
+          <div class="stars-container" id="starsContainer"></div>
+          <canvas id="fireworksCanvas" class="fireworks"></canvas>
+        </div>
+
+        <!-- Halaman Pembuka -->
+        <div class="content open">
+          <div class="open-text">
+            <span class="subtitle-top">A Journey Through Time & Love</span>
+            <h1 class="gold-glow-title">
+              <span class="line-1">Happy New Year</span>
+              <span class="line-2">2027</span>
+            </h1>
+            <div class="divider-gold"></div>
+            <h2>Untuk Kamu, Rumah Terindahku</h2>
+            <p>Setelah semua badai yang hampir membuat kita menyerah, kita masih di sini—menatap langit yang sama.</p>
+          </div>
+        </div>
+
+        <!-- Navigasi Tombol -->
+        <div class="btn-container">
+          <div class="btn-blur">
+            <button class="btn btn-start show">Buka Kisah Kita</button>
+            <button class="btn btn-next">Lanjutkan Cerita</button>
+            <button class="btn btn-message">Kirim Pesan</button>
+            <button class="btn btn-restart">Baca Ulang</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="/asset/maintenance.js"></script>
+    <script>
+      document.addEventListener('click', function () {
+        const elem = document.documentElement;
+        if (!document.fullscreenElement) {
+          if (elem.requestFullscreen) {
+            elem.requestFullscreen().catch(() => {});
+          } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+          } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
