@@ -1,26 +1,30 @@
-// URL Sprite Sheet Kolase Foto
+// URL Sprite Sheet Kolase Foto (Total 6 Foto dalam Grid 3 Kolom x 2 Baris)
 const spriteImageUrl = '/asset/themes/img/Spring%20Daisy%20Romance/romantisfoto.webp';
 
 const konten = [
   {
-    indexFoto: 0, // Kolom 0, Baris 0 (Kiri Atas)
+    indexFoto: 0, // Kolom 0, Baris 1 (Kiri Atas)
     ucapan: "Hallo sayang, gimana kabarnya hari ini? Semoga kamu selalu sehat dan hatimu baik-baik saja ya. Di momen pergantian tahun ini, aku ingin menyapamu pelan-pelan dan mengirimkan doa terbaikku, semoga semua hal baik selalu mendekat kepadamu."
   },
   {
-    indexFoto: 1, // Kolom 1, Baris 0 (Tengah Atas)
-    ucapan: "Satu tahun terakhir penuh dengan cerita, tentang tawa, rindu, lelah, dan banyak hal yang kita lalui bersama. Tidak semuanya mudah, tapi kehadiranmu membuat semuanya terasa lebih ringan dan bermakna. Terima kasih sudah bertahan dan tetap ada, bahkan di hari-hari yang tidak sempurna."
+    indexFoto: 1, // Kolom 1, Baris 1 (Tengah Atas)
+    ucapan: "Satu tahun terakhir penuh dengan cerita, tentang tawa, rindu, lelah, dan banyak hal yang kita lalui bersama. Tidak semuanya mudah, tapi kehadiranmu membuat semuanya terasa lebih ringan dan bermakna. Terima kasih sudah bertahan dan tetap ada."
   },
   {
-    indexFoto: 2, // Kolom 2, Baris 0 (Kanan Atas)
-    ucapan: "Kamu adalah tempatku bercerita tanpa takut dihakimi, tempatku pulang saat dunia terasa terlalu ramai. Bersamamu, aku belajar tentang sabar, tentang mengerti, dan tentang menerima. Hal-hal kecil bersamamu justru jadi bagian yang paling aku syukuri."
+    indexFoto: 2, // Kolom 2, Baris 1 (Kanan Atas)
+    ucapan: "Kamu adalah tempatku bercerita tanpa takut dihakimi, tempatku pulang saat dunia terasa terlalu ramai. Bersamamu, aku belajar tentang sabar, tentang mengerti, dan tentang menerima hal-hal kecil yang paling aku syukuri."
   },
   {
-    indexFoto: 3, // Kolom 0, Baris 1 (Kiri Bawah)
-    ucapan: "Di langkah menuju tahun yang baru, aku berharap kita tetap saling menggenggam dan saling percaya. Semoga setiap impianmu dimudahkan jalannya, setiap lelahmu digantikan dengan kebahagiaan, dan setiap doamu menemukan jalannya untuk terkabul."
+    indexFoto: 3, // Kolom 0, Baris 2 (Kiri Bawah)
+    ucapan: "Di langkah menuju tahun yang baru, aku berharap kita tetap saling menggenggam dan saling percaya. Semoga setiap impianmu dimudahkan jalannya, setiap lelahmu digantikan dengan kebahagiaan yang melimpah."
   },
   {
-    indexFoto: 4, // Kolom 1, Baris 1 (Tengah Bawah)
-    ucapan: "Selamat Tahun Baru, sayang. Terima kasih sudah menjadi bagian terindah di perjalanan hidupku. Apa pun yang menanti di depan nanti, semoga kita masih berjalan berdampingan, pelan-pelan, saling menguatkan, dan tetap bersama"
+    indexFoto: 4, // Kolom 1, Baris 2 (Tengah Bawah)
+    ucapan: "Terima kasih sudah menjadi bagian terindah di perjalanan hidupku. Apa pun yang menanti di depan nanti, semoga kita masih berjalan berdampingan, pelan-pelan, saling menguatkan, dan tetap bersama."
+  },
+  {
+    indexFoto: 5, // Kolom 2, Baris 2 (Kanan Bawah)
+    ucapan: "Selamat Tahun Baru, sayangku! Mari kita sambut lembaran baru ini dengan cinta yang lebih hangat dan senyuman yang lebih banyak. Aku mencintaimu hari ini, esok, dan selamanya."
   }
 ];
 
@@ -92,7 +96,7 @@ function updateScreenSize() {
 updateScreenSize();
 window.onresize = updateScreenSize;
 
-// Pembuatan Konten Dinamis dengan Kolase Sprite
+// Pembuatan Konten Dinamis dengan Kolase Sprite (6 Foto: 3 Kolom, 2 Baris)
 let mainContents = [];
 
 function createMainContent() {
@@ -100,12 +104,12 @@ function createMainContent() {
     const contentDiv = document.createElement("div");
     contentDiv.classList.add("content", "main-content");
 
-    // Logika Kolase Sprite (3 Kolom, 2 Baris)
+    // Logika Kolase Sprite (3 Kolom x 2 Baris)
     const col = item.indexFoto % 3; 
     const row = Math.floor(item.indexFoto / 3); 
 
-    const posX = col * 50; 
-    const posY = row * 100;
+    const posX = col * 50;  // 0%, 50%, 100%
+    const posY = row * 100; // 0%, 100%
 
     let innerHTMLContent = "";
     
@@ -148,7 +152,7 @@ function nextContent(index) {
 }
 
 function startContent() {
-  musikAudio.play();
+  musikAudio.play().catch(() => {});
   openContainer.classList.add("hide");
   nextContent(0);
   btnContainer.classList.remove("show");
@@ -165,7 +169,7 @@ let nextIndex = 1;
 let isClick = 1;
 
 btnNext.addEventListener("click", () => {
-  if (isClick) {
+  if (isClick && nextIndex < konten.length) {
     isClick = 0;
     nextContent(nextIndex);
     nextIndex++;
@@ -209,22 +213,6 @@ async function kirimPesan() {
     });
     kirimPesan();
   }
-}
-
-function sendToDb(pesan, callback) {
-  const formData = new FormData();
-  formData.append("pesan", pesan);
-  
-  fetch("func.php?act=add", {
-    method: "POST",
-    body: formData
-  })
-    .then(res => res.json())
-    .then(async response => {
-      if (response.Status === 200) {
-        callback();
-      }
-    });
 }
 
 // Inisialisasi Window Load
