@@ -624,3 +624,27 @@ body {
   padding: 10px 26px !important;
   font-weight: 600 !important;
 }
+
+/* --- TAMBAHAN STYLE UNTUK TOMBOL ULANGI --- */
+.btn-secondary {
+  background: #fff;
+  color: var(--text-main);
+  border: 1.5px solid #d8c7c1;
+  box-shadow: 0 4px 12px rgba(51, 41, 39, 0.08);
+  animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-secondary:hover {
+  background: #f7f1ec;
+  border-color: var(--text-main);
+  transform: translateY(-2px);
+}
+
+/* Penyesuaian area tombol agar bisa menampung 2 tombol secara berdampingan */
+.controls {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding-bottom: 6px;
+}

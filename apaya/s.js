@@ -157,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
       else if (idx < currentIndex) dot.classList.add("done");
     });
 
+    // Kontrol visibilitas tombol di kartu terakhir
     if (currentIndex >= konten.length - 1) {
       btnNext.classList.add("hidden");
       btnSend.classList.remove("hidden");
@@ -209,15 +210,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isAnimating || currentIndex >= konten.length - 1) return;
     isAnimating = true;
 
-    // Putar SFX klik / ketik
     if (sfxAudio) {
       sfxAudio.currentTime = 0;
       sfxAudio.play().catch(() => {});
     }
-
-    const cards = cardStack.querySelectorAll(".polaroid-card");
-    const activeCard = cards[currentIndex];
-    activeCard.classList.add("fly-out");
 
     currentIndex++;
     updateStackVisuals();
@@ -236,7 +232,9 @@ document.addEventListener("DOMContentLoaded", () => {
     initCards();
   }
 
-  btnRestart.addEventListener("click", restartExperience);
+  if (btnRestart) {
+    btnRestart.addEventListener("click", restartExperience);
+  }
 
   // 9. Fitur Kirim Balasan (SweetAlert2 + WhatsApp / PHP Backend)
   const customSwal = Swal.mixin({
