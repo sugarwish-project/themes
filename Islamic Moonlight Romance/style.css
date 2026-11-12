@@ -293,14 +293,20 @@ body {
   pointer-events: none;
 }
 
-.btn-container button:not(.show),
-.end-buttons:not(.show) {
+/* Kontrol Tampilan Tombol */
+.btn-container .btn-next:not(.show),
+.btn-container .btn-start:not(.show),
+.btn-container .end-buttons:not(.show) {
+  display: none !important;
+}
+
+.end-buttons {
   display: none;
+  gap: 10px;
 }
 
 .end-buttons.show {
-  display: flex;
-  gap: 10px;
+  display: flex !important;
 }
 
 .btn-container .btn-blur {

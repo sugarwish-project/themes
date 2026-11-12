@@ -158,7 +158,7 @@ function nextContent(index) {
       btnNext.classList.remove("show");
       endButtons.classList.add("show");
       btnContainer.classList.add("show");
-    }, 800);
+    }, 400);
   }
 
   if (index < kontenList.length) {
@@ -225,7 +225,7 @@ function replayContent() {
     btnStart.classList.add("show");
     btnContainer.classList.add("show");
     isClick = 1;
-  }, 900);
+  }, 800);
 }
 
 btnStart.addEventListener("click", startContent);
